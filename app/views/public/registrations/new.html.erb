@@ -2,51 +2,40 @@
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "public/shared/error_messages", resource: resource %>
-
   <table class="table">
     <tr>
       <th>名前</th>
       <td>
-        <%= f.label :first_name, "姓" %>
-  　     <%= f.text_field :first_name, autofocus: true, placeholder:"田中" %>
- 
-        <%= f.label :last_name, "名" %>
-        <%= f.text_field :last_name, placeholder:"太郎" %>
+        <%= f.label :first_name, "姓" %><%= f.text_field :first_name, autofocus: true, placeholder:"田中" %>
+        <%= f.label :last_name, "名" %><%= f.text_field :last_name, placeholder:"太郎" %>
       </td>
     </tr>
-
     <tr>
       <th>フリガナ</th>
       <td>
-        <%= f.label :first_name_kana, "セイ" %>
-        <%= f.text_field :first_name_kana, placeholder:"タナカ" %>
- 
-        <%= f.label :last_name_kana, "メイ" %>
-        <%= f.text_field :last_name_kana, placeholder:"タロウ" %>
+        <%= f.label :first_name_kana, "セイ" %><%= f.text_field :first_name_kana, placeholder:"タナカ" %>
+        <%= f.label :last_name_kana, "メイ" %><%= f.text_field :last_name_kana, placeholder:"タロウ" %>
       </td>
     </tr>
     <tr>
-      <th>ニックネーム</th>
-      <td>
-        <%#= f.label :nickname %>
-        <%= f.text_field :nickname, placeholder:"たなやん" %>
-      </td>
+      <th><%= f.label :nickname, "ニックネーム" %></th>
+      <td><%= f.text_field :nickname, placeholder:"たなやん" %></td>
     </tr>
     <tr>
-      <th>年齢</th>
-      <td></td>
+      <th><%= f.label :age, "年齢" %></th>
+      <td><%= f.select :age, options_for_select((18..100).to_a), {include_blank: "選択してください"} %> 歳</td>
     </tr>
     <tr>
-      <th>性別</th>
-      <td><%= f.select :sex, options_for_select(EndUser.sexes_i18n.invert),{include_blank: "選択してください"}, { class: "form-control"} %></td>
+      <th><%= f.label :sex, "性別" %></th>
+      <td><%= f.select :sex, options_for_select(EndUser.sexes_i18n.invert), {include_blank: "選択してください"} %></td>
     </tr>
     <tr>
-      <th>主な活動エリア</th>
-      <td><%= f.select :sex, options_for_select(EndUser.activity_areas_i18n.invert),{include_blank: "選択してください"}, { class: "form-control"} %></td>
+      <th><%= f.label :activity_area, "主な活動エリア" %></th>
+      <td><%= f.select :activity_area, options_for_select(EndUser.activity_areas_i18n.invert), {include_blank: "選択してください"} %></td>
     </tr>
     <tr>
-      <th>自己紹介</th>
-      <td><%= f.text_area :introduction, placeholder:" " %></td>
+      <th><%= f.label :introduction, "自己紹介" %></th>
+      <td><%= f.text_area :introduction, placeholder:" ", rows:"5", class: "form-control" %></td>
     </tr>
     <tr>
       <th><%= f.label :email, "メールアドレス" %></th>
@@ -54,20 +43,15 @@
     </tr>
     <tr>
       <th><%= f.label :password, "パスワード(#{@minimum_password_length}文字以上)" %></th>
-    <td><%= f.password_field :password, autocomplete: "new-password" %></td>
+      <td><%= f.password_field :password, autocomplete: "new-password" %></td>
     </tr>
-
     <tr>
       <th><%= f.label :password_confirmation, "パスワード確認用" %></th>
-      <td>    <%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
+      <td><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
     </tr>
-
-
-</table>
-
-
+  </table>
   <div class="actions">
-    <%= f.submit "新規登録" %>
+    <%= f.submit "新規登録", class:"btn btn-primary" %>
   </div>
 <% end %>
 
