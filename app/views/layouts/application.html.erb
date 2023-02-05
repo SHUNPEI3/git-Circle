@@ -12,10 +12,12 @@
 
   <body>
     <header>
-
+      <%= render "layouts/header" %>
     </header>
     <main>
+      <div class="container-fluid"> 
       <%= yield %>
+      </div>
     </main>
     <footer>
 
