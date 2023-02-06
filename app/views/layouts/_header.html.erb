@@ -5,6 +5,12 @@
       <ul class="navbar-nav ml-auto">
         <% if end_user_signed_in? %>
           <li>
+            <%= link_to "ユーザーを探す", end_users_path, class:'nav-link text-light mx-3' %>
+          </li>
+          <li>
+            <%= link_to "マイページ", end_user_path(current_end_user), class:'nav-link text-light mx-3' %>
+          </li>
+          <li>
             <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class:'nav-link text-light mx-3' %>
           </li>
         <% else %>
