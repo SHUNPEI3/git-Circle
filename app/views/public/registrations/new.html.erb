@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row m-4">
-    <h2><i class="fas fa-user"></i>&nbsp;ユーザー登録</h2>
+    <h2><i class="fas fa-user-plus"></i>&nbsp;ユーザー登録</h2>
   </div>
 
   <%= form_with model:@end_user, url: registration_path(resource_name) do |f| %>
@@ -10,15 +10,15 @@
         <tr>
           <th class="align-middle pl-5">名前</th>
           <td>
-            <%= f.label :first_name, "姓：" %><%= f.text_field :first_name, autofocus: true, placeholder:"田中", class:"d-inline form-control w-25" %>&nbsp;
-            <%= f.label :last_name, "名：" %><%= f.text_field :last_name, placeholder:"太郎", class:"d-inline form-control w-25" %>
+            <%= f.label :last_name, "姓：" %><%= f.text_field :last_name, autofocus: true, placeholder:"田中", class:"d-inline form-control w-25" %>&nbsp;
+            <%= f.label :first_name, "名：" %><%= f.text_field :first_name, placeholder:"太郎", class:"d-inline form-control w-25" %>
           </td>
         </tr>
         <tr>
           <th class="align-middle pl-5">フリガナ</th>
           <td>
-            <%= f.label :first_name_kana, "姓：" %><%= f.text_field :first_name_kana, placeholder:"タナカ", class:"d-inline form-control w-25" %>&nbsp;
-            <%= f.label :last_name_kana, "名：" %><%= f.text_field :last_name_kana, placeholder:"タロウ", class:"d-inline form-control w-25" %>
+            <%= f.label :last_name_kana, "姓：" %><%= f.text_field :last_name_kana, placeholder:"タナカ", class:"d-inline form-control w-25" %>&nbsp;
+            <%= f.label :first_name_kana, "名：" %><%= f.text_field :first_name_kana, placeholder:"タロウ", class:"d-inline form-control w-25" %>
           </td>
         </tr>
         <tr>
@@ -56,7 +56,7 @@
       </table>
     </div>
     <div class="row justify-content-center">
-      <%= f.submit "新規登録", class:"btn btn-primary" %>
+      <%= f.submit "新規登録", class:"btn btn-primary", style:"width: 30%" %>
     </div>
   <% end %>
 

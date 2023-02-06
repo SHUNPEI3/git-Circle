@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row m-4">
+    <h2>ユーザー一覧</h2>
+  </div>
+
+  <div class="row">
+    <table class="table">
+      <thead class="thead-light">
+        <th>会員ID</th>
+        <th>名前</th>
+        <th>フリガナ</th>
+        <th>メースアドレス</th>
+        <th>会員ステータス</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @end_users.each do |end_user| %>
+          <tr>
+            <td><%= end_user.id %></td>
+            <td><%= end_user.last_name %><%= end_user.first_name %></td>
+            <td><%= end_user.last_name_kana %><%= end_user.first_name_kana %></td>
+            <th><%= end_user.email %></th>
+            <td>
+              <% if end_user.is_deleted? %>
+                <span class="text-active">退会済み</span>
+              <% else %>
+                <span class="text-success">有効</span>
+              <% end %>
+            </td>
+            <td><%= link_to "詳細",  class: "btn btn-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   </div>
+
+</div>
