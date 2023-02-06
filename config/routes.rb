@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  #顧客用サインアップ・ログイン・ログアウト用
+  #顧客用サインアップ・ログイン用
   devise_for :end_users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    get 'homes/top'
+    get 'homes/top', as: 'home'
+    resources 'end_users', only:[:show, :edit, :update]
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

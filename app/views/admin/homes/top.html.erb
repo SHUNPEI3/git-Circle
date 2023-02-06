@@ -10,7 +10,7 @@
         <th>名前</th>
         <th>フリガナ</th>
         <th>メースアドレス</th>
-        <th>会員ステータス</th>
+        <th>ユーザーステータス</th>
         <th></th>
       </thead>
       <tbody>
@@ -22,12 +22,12 @@
             <th><%= end_user.email %></th>
             <td>
               <% if end_user.is_deleted? %>
-                <span class="text-active">退会済み</span>
+                <span class="text-danger">退会済み</span>
               <% else %>
                 <span class="text-success">有効</span>
               <% end %>
             </td>
-            <td><%= link_to "詳細",  class: "btn btn-primary" %></td>
+            <td><%= link_to "詳細", admin_end_user_path(end_user), class: "btn btn-primary" %></td>
           </tr>
         <% end %>
       </tbody>
