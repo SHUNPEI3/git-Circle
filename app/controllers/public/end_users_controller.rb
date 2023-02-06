@@ -1,5 +1,6 @@
 class Public::EndUsersController < ApplicationController
-  before_action :find_end_user, only:[:show, :edit, :update]
+  before_action :find_end_user, only:[:show, :edit, :update, :unsubscribe, :withdraw]
+
   def index
     @end_users = EndUser.all.order(id: "DESC").page(params[:page]).per(4)  # 新着順で4件分取得
   end
@@ -22,6 +23,9 @@ class Public::EndUsersController < ApplicationController
   end
 
   def withdraw
+    @end_user.update(is_deleted: true)
+    reset_session
+    redirect_to root_path
   end
 
   private
