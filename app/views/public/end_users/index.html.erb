@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row m-4">
+    <h2><i class="fas fa-users"></i>&nbsp;新着ユーザー</h2>
+  </div>
+
+  <div class="row">
+    <% @end_users.each do |end_user| %>
+    　<% if end_user.is_deleted == false %>  <!--退会ではないユーザーを絞る-->
+        <div class="col-md-3 shadow">
+          <div class="p-3">
+            <%= link_to end_user_path(end_user) do %>
+              <%= image_tag end_user.get_profile_image(180, 180) %>
+              <h4><%= end_user.nickname %></h4>
+            <% end %>
+            年齢：<%= (end_user.age).to_s+"歳" %><br>
+            性別：<%= end_user.sex_i18n %><br>
+            活動エリア：<%= end_user.activity_area_i18n %><br>
+            趣味：<%= "趣味" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
