@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row m-4">
+    <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <%= image_tag @end_user.get_profile_image(200, 200) %>
+      <div class="row">
+        <%= "ブックマーク" %>&nbsp;<%= "フォロワー" %>
+      </div>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+        <table class="table table-borderless table-sm">
+
+  <tr>
+    <th>名前</th>
+    <td><%= @end_user.first_name %><%= @end_user.last_name %></td>
+  </tr>
+  <tr>
+    <th>ニックネーム</th>
+    <td><%= @end_user.nickname %></td>
+  </tr>
+  <tr>
+    <th>年齢</th>
+    <td><%= @end_user.age %>歳</td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td><%= @end_user.sex_i18n %></td>
+  </tr>
+  <tr>
+    <th>主な活動エリア</th>
+    <td><%= @end_user.activity_area_i18n %></td>
+  </tr>
+  <tr>
+    <th>趣味</th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>自己紹介</th>
+    <td><%= @end_user.introduction %></td>
+  </tr>
+        </table>
+
+  </div>
+  <div class="row m-4">
+    <h4>参加しているコミュニティ</h4>
+  </div>
+
+</div>

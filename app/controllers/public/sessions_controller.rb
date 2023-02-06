@@ -18,8 +18,15 @@ class Public::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # protected
-
+  protected
+  # ログイン後の遷移先設定 ※redirect_toを使わない
+  def after_sign_in_path_for(resource)
+    end_user_path(current_end_user.id)
+  end
+  # ログアウト後の遷移先設定
+  def after_sign_out_path_for(resource)
+    root_path
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])

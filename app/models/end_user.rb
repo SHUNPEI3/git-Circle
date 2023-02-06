@@ -3,6 +3,7 @@ class EndUser < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  has_one_attached :profile_image
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
@@ -17,5 +18,13 @@ class EndUser < ApplicationRecord
     tokushima: 36, kagawa: 37, ehime: 38, kochi: 39,
     fukuoka: 40, saga: 41, nagasaki: 42, kumamoto: 43, oita: 44, miyazaki: 45, kagoshima: 46, okinawa: 47
   }
+
+  def get_profile_image(width,height)
+    unless profile_image.attached?
+      file_path = Rails.root.join('app/assets/images/no_image.jpg')
+      profile_image.attach(io: File.open(file_path), filename: 'no-image.jpg', content_type: 'image/jpeg')
+    end
+    profile_image.variant(resize_to_limit:[width, height]).processed
+  end
 
 end
