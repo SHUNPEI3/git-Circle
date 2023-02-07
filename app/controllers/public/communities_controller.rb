@@ -15,10 +15,14 @@ class Public::CommunitiesController < ApplicationController
     community = Community.create(community_params)
     community.owner_id = current_end_user.id
     community.end_users << current_end_user
-    if community.save
-      redirect_to communities_path
-    else
-      render new
+    # 年齢制限入力欄の確認用　※後でモデルに書く！
+    # if community.community_details.age_min_limit < community.community_details.age_max_limit ではだめ。。
+    if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
+      if community.save
+        redirect_to communities_path
+      else
+        render new
+      end
     end
   end
 
@@ -39,7 +43,7 @@ class Public::CommunitiesController < ApplicationController
   private
 
   def community_params
-    params.require(:community).permit(:name, :introduction, :community_image, community_details_attributes: [:max_join_number, :sex_limit, :residence_limit, :_destroy, :id])
+    params.require(:community).permit(:name, :introduction, :community_image, community_details_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :_destroy, :id])
   end
 
   def find_community
