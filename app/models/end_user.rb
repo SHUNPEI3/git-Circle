@@ -6,7 +6,7 @@ class EndUser < ApplicationRecord
 
   has_one_attached :profile_image
   has_many :community_users, dependent: :destroy
-  has_many :communities, thorogh: :community_users, dependent: :destroy
+  has_many :communities, through: :community_users
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
