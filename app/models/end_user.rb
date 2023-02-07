@@ -3,7 +3,10 @@ class EndUser < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   has_one_attached :profile_image
+  has_many :community_users, dependent: :destroy
+  has_many :communities, thorogh: :community_users, dependent: :destroy
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
@@ -30,5 +33,5 @@ class EndUser < ApplicationRecord
   def active_for_authentication?
     super && (is_deleted == false)
   end
-  
+
 end
