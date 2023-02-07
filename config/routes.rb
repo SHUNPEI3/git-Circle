@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
-      resource 'community_user', only: [:create, :destroy]
+      resource 'community_users', only: [:create, :destroy]
     end
   end
 

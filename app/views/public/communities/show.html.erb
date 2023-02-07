@@ -26,10 +26,10 @@
           <td>
             <% if @community.owner_id == current_end_user.id %>
               <%= link_to 'Edit', edit_community_path(@community), class: "btn btn-sm btn-success" %>
-            <%# elsif @community.end_users.name.include(current_end_user.name)%>
-              <%#= link_to 'Leave this group', class: "btn btn-sm btn-danger" %>
-            <%# else %>
-              <%#= link_to 'Join this group', class: "btn btn-sm btn-success" %>
+            <% elsif @community.already_joined?(current_end_user) %>
+              <%= link_to 'Leave this group', community_community_users_path(@community), method: :delete, data: { confilm: "本当に退会しますか？" }, class: "btn btn-sm btn-danger" %>
+            <% else %>
+              <%= link_to 'Join this group', community_community_users_path(@community), method: :post, class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
         </tr>

@@ -16,4 +16,8 @@ class Community < ApplicationRecord
     community_image.variant(resize_to_limit:[width, height]).processed
   end
 
+  # コミュニティに参加済みかの確認メソッド
+  def already_joined?(end_user)
+    community_users.exists?(end_user_id: end_user.id)
+  end
 end
