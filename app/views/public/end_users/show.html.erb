@@ -1,25 +1,29 @@
 <div class="container">
   <div class="row m-4">
     <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
-
-    <% if @end_user == current_end_user %>
-      <%= link_to 'ユーザー情報を編集する', edit_end_user_path(@end_user) %>
-    <% end %>
-
   </div>
 
-  <div class="row">
+  <div class="row justify-content-around">
     <div class="col-md-3">
-      <%= image_tag @end_user.get_profile_image(200, 200) %>
-      <div class="row">
+
+      <%= image_tag @end_user.get_profile_image(220, 220), class:"d-block mx-auto img-thumbnail" %>
+
+      <div class="row justify-content-center mt-3">
         <%= "ブックマーク" %>&nbsp;<%= "フォロワー" %>
       </div>
+
+      <div class="row justify-content-center mt-3">
+        <% if @end_user == current_end_user %>
+          <%= link_to '編集する', edit_end_user_path(@end_user), data: { confilm: "本当に退出しますか？" }, class: "btn btn-danger", style:"width: 65%"%>
+        <% end %>
+      </div>
+
     </div>
 
-    <div class="col-md-8 offset-md-1">
-      <table class="table table-borderless table-sm">
+    <div class="col-md-8 border">
+      <table class="table table-borderless table-sm m-3">
         <tr>
-          <th class="col-md-3">名前</th>
+          <th class="col-md-4">名前</th>
           <td><%= @end_user.last_name %><%= @end_user.first_name %></td>
         </tr>
         <tr>
@@ -50,8 +54,22 @@
     </div>
   </div>
 
-  <div class="row mt-3">
-    <h4>参加しているコミュニティ</h4>
-  </div>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-md-3">
+        <h4 class="ml-5">所属コミュニティ</h4>
+      </div>
+    </div>
 
+    <div class="row mt-3">
+      <% @end_user.communities.each do |community| %>
+        <div class="col-md-2 shadow p-3 ml-5">
+          <%= link_to community_path(community) do %>
+            <%= image_tag community.get_community_image(150, 150), class:"d-block mx-auto img-thumbnail" %>
+            <h4 class="text-center mt-3"><%= community.name %></h4>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
