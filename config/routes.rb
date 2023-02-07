@@ -9,9 +9,14 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'about' => 'homes#about'
-    resources 'end_users', only:[:index, :show, :edit, :update]
+    
+    # ユーザー関連
+    resources 'end_users', only: [:index, :show, :edit, :update]
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
     patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
+
+    # コミュニティ関連
+    resources 'communities', except: [:destroy]
   end
 
   # 管理者用サインアップ用
