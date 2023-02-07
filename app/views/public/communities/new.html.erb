@@ -22,6 +22,17 @@
         <%= f.file_field :community_image, class: "form-control-file", accept: 'image/*' %>
       </div>
 
+        <%= f.fields_for :community_details do |i| %>
+          <%= i.label :max_join_number, '参加上限人数' %>
+          <%= i.select :max_join_number, (2..4).to_a, {include_blank: "設定しない"}, class:"d-inline form-control" %>&nbsp;歳
+
+          <%= i.label :sex_limit, '性別制限' %>
+          <%= i.select :sex_limit, (0..3).to_a, {include_blank: "設定しない"}, class:"d-inline form-control" %>
+
+          <%= i.label :activity_area_limit, '活動エリア制限' %>
+          <%= i.select :activity_area_limit, (0..47).to_a, {include_blank: "設定しない"}, class:"d-inline form-control" %>
+        <% end %>
+
       <div class="form-group">
         <%= f.submit class: 'btn btn-info' %>
       </div>

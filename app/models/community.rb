@@ -7,6 +7,7 @@ class Community < ApplicationRecord
   belongs_to :owner, class_name: 'EndUser'
 
   has_many :community_details, dependent: :destroy
+  accepts_nested_attributes_for :community_details, allow_destroy: true
 
   def get_community_image(width,height)
     unless community_image.attached?

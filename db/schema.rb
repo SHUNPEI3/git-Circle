@@ -61,10 +61,10 @@ ActiveRecord::Schema.define(version: 2023_02_07_012806) do
   end
 
   create_table "community_details", force: :cascade do |t|
-    t.integer "community_id", null: false
+    t.integer "community_id"
     t.integer "max_join_number"
-    t.integer "sex_limit", null: false
-    t.integer "residence_limit", null: false
+    t.integer "sex_limit"
+    t.integer "activity_area_limit"
     t.integer "age_min_limit"
     t.integer "age_max_limit"
     t.datetime "created_at", precision: 6, null: false

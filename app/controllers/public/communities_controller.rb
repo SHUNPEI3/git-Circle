@@ -8,6 +8,7 @@ class Public::CommunitiesController < ApplicationController
 
   def new
     @community = Community.new
+    @community.community_details.build
   end
 
   def create
@@ -38,7 +39,7 @@ class Public::CommunitiesController < ApplicationController
   private
 
   def community_params
-    params.require(:community).permit(:name, :introduction, :community_image)
+    params.require(:community).permit(:name, :introduction, :community_image, community_details_attributes: [:max_join_number, :sex_limit, :residence_limit, :_destroy, :id])
   end
 
   def find_community
