@@ -2,7 +2,9 @@ class Public::EndUsersController < ApplicationController
   before_action :find_end_user, only: [:show, :edit, :update, :unsubscribe, :withdraw]
 
   def index
-    @end_users = EndUser.all.order(id: "DESC").page(params[:page]).per(4)  # 新着順で4件分取得
+    # whereメソッドで退会ではないユーザーを取得
+    # order(id: "DESC")で、新規登録順に並び替え
+    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(4)  
   end
 
   def show

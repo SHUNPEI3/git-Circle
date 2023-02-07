@@ -5,9 +5,15 @@
   </div>
 
   <div class="row">
-    <% @communities.each do |end_user| %>
+    <% @communities.each do |community| %>
       <div class="col-md-3 shadow">
         <div class="p-3">
+          <%= link_to community_path(community) do %>
+            <%= image_tag community.get_community_image(180, 180) %><br>
+            <h4><%= community.name %></h4>
+          <% end %>
+          メンバー：<%= (community.end_users.count).to_s + "人" %><br>
+          タグ：<%= "tag" %>
         </div>
       </div>
     <% end %>

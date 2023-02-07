@@ -2,7 +2,8 @@ class Public::CommunitiesController < ApplicationController
   before_action :find_community, only: [:show, :edit, :update]
 
   def index
-    @communities = Community.all.order(id: "DESC").page(params[:page]).per(4)  # 新着順で4件分取得
+    # order(id: "DESC")で、新規登録順に並び替え
+    @communities = Community.all.order(id: "DESC").page(params[:page]).per(4)
   end
 
   def new
@@ -12,6 +13,7 @@ class Public::CommunitiesController < ApplicationController
   def create
     community = Community.create(community_params)
     community.owner_id = current_end_user.id
+    community.end_users << current_end_user
     if community.save
       redirect_to communities_path
     else
@@ -26,12 +28,17 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def update
+    if @community.update(community_params)
+      redirect_to community_path
+    else
+      render edit
+    end
   end
 
   private
 
   def community_params
-    params.require(:community).permit(:name, :introduction)
+    params.require(:community).permit(:name, :introduction, :community_image)
   end
 
   def find_community
