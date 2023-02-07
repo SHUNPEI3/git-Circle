@@ -6,14 +6,12 @@
 
   <div class="row">
     <% @communities.each do |community| %>
-      <div class="col-md-3 shadow">
-        <div class="p-3">
-          <%= link_to community_path(community) do %>
-            <%= image_tag community.get_community_image(180, 180) %><br>
-            <h4><%= community.name %></h4>
-          <% end %>
-          メンバー：<%= (community.end_users.count).to_s + "人" %><br>
-          タグ：<%= "tag" %>
+      <div class="col-md-3 shadow p-3">
+        <%= image_tag community.get_community_image(200, 200), class:"d-block mx-auto img-thumbnail" %>
+        <div class="pt-3 px-3">
+          <h4 class="text-center"><%= link_to community.name, community_path(community)  %></h4>
+          <i class="fas fa-user"></i>&nbsp;&nbsp;<%= (community.end_users.count).to_s + "人が参加中" %></br>
+          <i class="fas fa-tag"></i>&nbsp;&nbsp;<%= "tag" %>
         </div>
       </div>
     <% end %>
