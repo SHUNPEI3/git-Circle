@@ -1,3 +1,4 @@
+<%= flash[:notice] %>
 <div class="container">
   <div class="row m-4">
     <h2><i class="fas fa-user-group"></i>&nbsp;コミュニティ詳細</h2>
@@ -48,21 +49,34 @@
       <div class="border m-3">
         <table class="table table-borderless">
           <tr>
-            <th>参加条件</th>
-            <td></td>
+            <th class="col-md-3">参加条件</th>
+            <td>
+              <% @community.community_details.each do |detail| %>
+                <% unless detail.max_join_number == nil %>
+                  <li><%= detail.max_join_number %>人まで&nbsp;&nbsp;（現在<%= @community.end_users.count %>人参加中）</li>
+                <% end %>
+                <li><%= detail.sex_limit_i18n %></li>
+                <li><%= detail.activity_area_limit_i18n %></li>
+                <li><%= detail.age_min_limit %>〜<%= detail.age_max_limit %>歳まで</li>
+              <% end %>
+            </td>
           </tr>
           <tr>
             <th>グループ紹介</th>
-            <td><%= @community.introduction %></td>
+            <td><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></td>
+
           </tr>
         </table>
       </div>
 
       <div class="border m-3">
-        <h3 class="col-md-8 m-3">新着トピック</h3>
+        <h3 class="col-md-8 my-3">新着トピック</h3>
       </div>
     </div>
   </div>
+
+
+
 
 
 
