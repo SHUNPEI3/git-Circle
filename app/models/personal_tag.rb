@@ -1,0 +1,2 @@
+class PersonalTag < ApplicationRecord
+end
