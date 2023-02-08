@@ -10,7 +10,7 @@ class EndUser < ApplicationRecord
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
-    }
+  }
   enum activity_area: {
     activity_area_secret: 0,
     hokkaido: 1, aomori: 2, iwate: 3, miyagi: 4, akita: 5, yamagata: 6, fukushima: 7,
