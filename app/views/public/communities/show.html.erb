@@ -46,6 +46,12 @@
 
     <div class="col-md-8 border">
       <h1 class="col-md-8 border m-3"><%= @community.name %></h1>
+      <div class="m-3">
+        <i class="fas fa-tag"></i>
+          <% @community.tags.each do |community_tag| %>
+            &nbsp;<%= "#" + community_tag.name %>
+          <% end %>
+        </div>
       <div class="border m-3">
         <table class="table table-borderless">
           <tr>
