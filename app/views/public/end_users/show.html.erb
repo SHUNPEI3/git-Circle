@@ -43,8 +43,12 @@
           <td><%= @end_user.activity_area_i18n %></td>
         </tr>
         <tr>
-          <th>趣味</th>
-          <td></td>
+          <th>マイタグ</th>
+          <td>
+            <% @end_user.personal_tags.each do |personal_tag| %>
+              &nbsp;<%= "#" + personal_tag.name %>
+            <% end %>
+          </td>
         </tr>
         <tr>
           <th>自己紹介</th>

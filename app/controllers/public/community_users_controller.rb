@@ -12,7 +12,7 @@ class Public::CommunityUsersController < ApplicationController
     if community_detail.max_join_number == nil
       ## 2.コミュニティの性別制限が設定されていなければ次へ
       if community_detail.sex_limit == nil
-     　　 ## 3.コミュニティの活動エリア制限が設定されていなければ次へ
+        ## 3.コミュニティの活動エリア制限が設定されていなければ次へ
         if community_detail.activity_area_limit == nil
           ## 4.コミュニティの年齢制限が設定されていなければそのまま加入
           if (community_detail.age_min_limit == nil) && (community_detail.age_max_limit == nil)
