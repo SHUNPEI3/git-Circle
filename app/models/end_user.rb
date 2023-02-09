@@ -11,6 +11,8 @@ class EndUser < ApplicationRecord
   has_many :user_personal_tags, dependent: :destroy
   # accepts_nested_attributes_for :user_personal_tags
   has_many :personal_tags, through: :user_personal_tags
+  
+  has_many :topics, dependent: :destroy
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
