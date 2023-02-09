@@ -1,0 +1,28 @@
+<!--<div class="container">-->
+<!--  <div class="row m-4">-->
+<!--    <h2><i class="fas fa-user-group"></i>&nbsp;トピック一覧</h2>-->
+<!--  </div>-->
+
+<!--  <div class="row">-->
+<!--    <table class="table">-->
+<!--      <thead>-->
+
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <% @community.topics.each do |topic| %>-->
+<!--          <tr>-->
+<!--            <td>-->
+<!--              <%= link_to end_user_path(topic.end_user) do %>-->
+<!--                <%= image_tag topic.end_user.get_profile_image(75, 75) %>-->
+<!--                <%= topic.end_user.nickname %>-->
+<!--              <% end %>-->
+<!--            </td>-->
+<!--            <td><h3><%= link_to topic.title, topic_path(topic) %></h3></td>-->
+<!--            <td><%= topic.created_at.strftime("%Y/%m/%d") %></td>-->
+<!--            <td>いいね</td>-->
+<!--          </tr>-->
+<!--        <% end %>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->

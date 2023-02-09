@@ -12,6 +12,8 @@ class Community < ApplicationRecord
   has_many :community_tags, dependent: :destroy
   has_many :tags, through: :community_tags
 
+  has_many :topics, dependent: :destroy
+
   def get_community_image(width,height)
     unless community_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')

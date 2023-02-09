@@ -1,5 +1,5 @@
 class Public::CommunitiesController < ApplicationController
-  before_action :find_community, only: [:show, :edit, :update]
+  before_action :find_community, only: [:show, :topics, :edit, :update]
 
   def index
     # order(id: "DESC")で、新規登録順に並び替え
@@ -30,7 +30,11 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def show
+    @topics = @community.topics
   end
+  
+  # def topics
+  # end
 
   def edit
     @tag_list = @community.tags.pluck(:name).join(' ')
