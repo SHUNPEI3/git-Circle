@@ -18,9 +18,10 @@ Rails.application.routes.draw do
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
       resource 'community_users', only: [:create, :destroy]
-      resources 'topics'
+      resources 'topics', except: [:destroy] do
+        resources 'topic_comments', only: [:create, :destroy]
+      end
     end
-    #get '/communities/:id/topics' => 'communities#topics', as: 'community_topics'
   end
 
   # 管理者用サインアップ用

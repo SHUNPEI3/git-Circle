@@ -10,11 +10,11 @@
         <h5 class="text-center"><%= @topic.end_user.nickname %></h5>
       <% end %>
     </div>
-    <div class="col-md-9 border">
-      <h3 class="col-md-9 border"><%= @topic.title %></h3>
-      <div class="col-md-12 border">
-        <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d") %></p>
-        <h5><%= @topic.body %></h5>
+    <div class="col-md-9">
+      <h3 class="col-md-10 border py-3"><%= @topic.title %></h3>
+      <div class="col-md-12 border py-3">
+        <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d\ %R") %></p>
+        <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
         <div class="row justify-content-end m-2">
           <% if current_end_user.id == @topic.end_user_id %>
             <%= link_to '＋編集する', edit_community_topic_path(@topic.community, @topic), class: "btn btn-sm btn-success"%>
@@ -22,6 +22,38 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <div class="row m-4">
+    <div class="col-md-12 px-5">
+      <table class="table">
+        <% @topic.topic_comments.each do |comment| %>
+          <tr>
+            <td class="col-md-1">
+              <%= link_to end_user_path(comment.end_user) do %>
+                <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block mx-auto img-thumbnail" %>
+              <% end %>
+            </td>
+            <td class="col-md-8">
+              <%= comment.end_user.nickname %><br>
+              <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
+              <%= comment.comment %>
+            </td>
+            <td class="col-md-1 align-bottom">
+              <% if current_end_user.id == comment.end_user_id %>
+                <%= link_to '削除', community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, class:"btn btn-danger" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="col-md-12 px-5">
+      <%= form_with model: [@community, @topic, @topic_comment] do |f| %>
+        <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力", class:"form-control" %>
+        <%= f.submit "コメントを投稿する", class:"btn btn-success mt-3" , style:"width: 100%" %>
+      <% end %>
     </div>
   </div>
 </div>

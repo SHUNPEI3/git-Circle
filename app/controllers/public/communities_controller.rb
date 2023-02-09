@@ -30,11 +30,8 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def show
-    @topics = @community.topics
+    @topics = @community.topics.page(params[:page]).order(id: "DESC").per(5)
   end
-  
-  # def topics
-  # end
 
   def edit
     @tag_list = @community.tags.pluck(:name).join(' ')

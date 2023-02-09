@@ -14,6 +14,8 @@ class EndUser < ApplicationRecord
   
   has_many :topics, dependent: :destroy
 
+  has_many :topic_comments, dependent: :destroy
+
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
   }
