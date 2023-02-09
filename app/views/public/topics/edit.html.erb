@@ -3,7 +3,7 @@
     <h2><i class="fas fa-user-group"></i>&nbsp;トピック編集</h2>
   </div>
 
-  <%= form_with model:@topic, url: topic_path(@topic), method: :patch do |f| %>
+  <%= form_with model:[@community, @topic] do |f| %>
 
     <div class="form-group row">
       <%= f.label :title,'トピック名', class:"col-sm-2 col-form-label" %>

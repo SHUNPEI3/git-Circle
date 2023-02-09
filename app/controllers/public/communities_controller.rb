@@ -33,8 +33,8 @@ class Public::CommunitiesController < ApplicationController
     @topics = @community.topics
   end
   
-  def topics
-  end
+  # def topics
+  # end
 
   def edit
     @tag_list = @community.tags.pluck(:name).join(' ')

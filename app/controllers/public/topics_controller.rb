@@ -1,17 +1,21 @@
 class Public::TopicsController < ApplicationController
-  before_action :find_topic, only: [:show, :edit, :update, :destroy]
+  before_action :find_topic, only: [:show, :edit, :update]
+
+  def index
+    @topics = Topic.where(community_id: params[:community_id])
+  end
 
   def new
     @topic = Topic.new
-    #binding.pry
-    @topic.community_id = params[:community_id]
+    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
   end
 
   def create
-    topic = Topic.new(topic_params)
-    topic.end_user_id = current_end_user.id
+    community = Community.find(params[:community_id])
+    topic = current_end_user.topics.new(topic_params)
+    topic.community_id = community.id
     if topic.save
-      redirect_to topics_path
+      redirect_to community_topics_path
     end
   end
 
@@ -19,18 +23,15 @@ class Public::TopicsController < ApplicationController
   end
 
   def edit
+    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
   end
 
   def update
     if  @topic.update(topic_params)
-      redirect_to topic_path(@topic)
+      redirect_to community_topic_path(@topic.community_id, @topic)
     else
       render edit
     end
-  end
-
-  def destroy
-
   end
 
   private
@@ -42,6 +43,5 @@ class Public::TopicsController < ApplicationController
   def find_topic
     @topic = Topic.find(params[:id])
   end
-
 
 end

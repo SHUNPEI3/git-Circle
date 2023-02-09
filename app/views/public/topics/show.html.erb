@@ -17,7 +17,7 @@
         <h5><%= @topic.body %></h5>
         <div class="row justify-content-end m-2">
           <% if current_end_user.id == @topic.end_user_id %>
-            <%= link_to '＋編集する', edit_topic_path(@topic), class: "btn btn-sm btn-success"%>
+            <%= link_to '＋編集する', edit_community_topic_path(@topic.community, @topic), class: "btn btn-sm btn-success"%>
           <% end %>
         </div>
 
