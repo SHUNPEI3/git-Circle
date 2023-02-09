@@ -10,9 +10,14 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    @end_user = EndUser.new(configure_sign_up_params)
+    tag_list = params[:end_user][:personal_tag_name].split(nil)
+    @end_user.save
+    # binding.pry
+    @end_user.save_tag(tag_list)
+  end
 
   # GET /resource/edit
   # def edit

@@ -15,10 +15,8 @@ class Public::CommunitiesController < ApplicationController
     community = Community.create(community_params)
     community.owner_id = current_end_user.id
     community.end_users << current_end_user
-
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
-
     # 年齢制限入力欄の確認用　※後でモデルに書く！
     ## if community.community_details.age_min_limit < community.community_details.age_max_limit ではだめ。。
     if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
@@ -32,7 +30,6 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def show
-    
   end
 
   def edit

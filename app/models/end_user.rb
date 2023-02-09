@@ -8,9 +8,14 @@ class EndUser < ApplicationRecord
   has_many :community_users, dependent: :destroy
   has_many :communities, through: :community_users
 
+  has_many :user_personal_tags, dependent: :destroy
+  # accepts_nested_attributes_for :user_personal_tags
+  has_many :personal_tags, through: :user_personal_tags
+
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
   }
+
   enum activity_area: {
     activity_area_secret: 0,
     hokkaido: 1, aomori: 2, iwate: 3, miyagi: 4, akita: 5, yamagata: 6, fukushima: 7,
@@ -30,6 +35,24 @@ class EndUser < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
+  # タグの保存メソッド
+  def save_tag(sent_tags)
+    current_tags = self.personal_tags.pluck(:name) unless self.personal_tags.nil?
+    old_tags = current_tags - sent_tags
+    new_tags = sent_tags - current_tags
+    # 古いタグを消す
+    old_tags.each do |old_name|
+      self.personal_tags.delete PersonalTag.find_by(name: old_name)
+    end
+    # 新しいいタグを保存
+    new_tags.each do |new_name|
+      post_tag = PersonalTag.find_or_create_by(name: new_name)
+      # self.user_personal_tags.new(end_user_id: @end_user.id, personal_tag_id: post_tag.id).save
+      self.personal_tags << post_tag
+    end
+  end
+
+  # 退会済みユーザーの判定メソッド
   def active_for_authentication?
     super && (is_deleted == false)
   end
