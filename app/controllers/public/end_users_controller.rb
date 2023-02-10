@@ -1,5 +1,5 @@
 class Public::EndUsersController < ApplicationController
-  before_action :find_end_user, only: [:show, :edit, :update, :follower, :unsubscribe, :withdraw]
+  before_action :find_end_user, only: [:show, :edit, :update, :follower, :bookmark, :unsubscribe, :withdraw]
 
   def index
     # whereメソッドで退会ではないユーザーを取得
@@ -26,6 +26,10 @@ class Public::EndUsersController < ApplicationController
 
   def follower
     @followers = @end_user.followers
+  end
+
+  def bookmark
+    @bookmarks = @end_user.bookmarks
   end
 
   def unsubscribe

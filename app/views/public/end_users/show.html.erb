@@ -10,8 +10,8 @@
 
       <div class="row justify-content-center mt-3">
         <div>
-          <%= "ブックマーク" %>&nbsp;
-          <%= link_to "フォロワー(#{@end_user.followers.count})",follower_end_user_path(@end_user) %>
+          <i class="fas fa-bookmark"></i><%= link_to "ブックマーク(#{@end_user.bookmarks.count})",bookmark_end_user_path(@end_user) %>&nbsp;
+          <i class="fas fa-user"></i><%= link_to "フォロワー(#{@end_user.followers.count})",follower_end_user_path(@end_user) %>
         </div>
       </div>
 
