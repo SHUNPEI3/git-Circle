@@ -13,10 +13,10 @@ class EndUser < ApplicationRecord
   has_many :personal_tags, through: :user_personal_tags
 
   has_many :topics, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 
   has_many :topic_comments, dependent: :destroy
-
-  has_many :bookmarks, dependent: :destroy
+  has_many :goods, dependent: :destroy
 
   has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id, dependent: :destroy
   has_many :followings, through: :active_relationships, source: :follower

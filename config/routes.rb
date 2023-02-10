@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  #顧客用サインアップ・ログイン用
+  #会員用サインアップ・ログイン用
   devise_for :end_users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -23,9 +23,12 @@ Rails.application.routes.draw do
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
       resource 'community_users', only: [:create, :destroy]
+      # トピック関連
       resources 'topics', except: [:destroy] do
-        resources 'topic_comments', only: [:create, :destroy]
         resource 'bookmarks', only: [:create, :destroy]
+        resources 'topic_comments', only: [:create, :destroy] do
+          resource 'goods', only: [:create, :destroy]
+        end
       end
     end
   end
