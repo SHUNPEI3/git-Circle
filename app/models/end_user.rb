@@ -16,6 +16,8 @@ class EndUser < ApplicationRecord
 
   has_many :topic_comments, dependent: :destroy
 
+  has_many :bookmarks, dependent: :destroy
+
   has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id, dependent: :destroy
   has_many :followings, through: :active_relationships, source: :follower
   has_many :passive_relationships, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy

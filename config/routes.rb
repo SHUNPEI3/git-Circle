@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resource 'relationships', only: [:create, :destroy]
       #get :follows, on: :member
       get :follower, on: :member
+      get :bookmark, on: :member
     end
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
     patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
       resource 'community_users', only: [:create, :destroy]
       resources 'topics', except: [:destroy] do
         resources 'topic_comments', only: [:create, :destroy]
+        resource 'bookmarks', only: [:create, :destroy]
       end
     end
   end

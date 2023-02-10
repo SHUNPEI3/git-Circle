@@ -12,15 +12,29 @@
     </div>
     <div class="col-md-9">
       <h3 class="col-md-10 border py-3"><%= @topic.title %></h3>
+      <div>
+        <% if current_end_user.id == @topic.end_user_id %>
+          <%= link_to '＋編集する', edit_community_topic_path(@topic.community, @topic), class: "btn btn-sm btn-success"%>
+        <% end %>
+      </div>
       <div class="col-md-12 border py-3">
         <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d\ %R") %></p>
         <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
-        <div class="row justify-content-end m-2">
-          <% if current_end_user.id == @topic.end_user_id %>
-            <%= link_to '＋編集する', edit_community_topic_path(@topic.community, @topic), class: "btn btn-sm btn-success"%>
-          <% end %>
+        <div class="row justify-content-end mx-2">
+          <small class="mx-2">
+            <% if @topic.bookmarked_by?(current_end_user) %>
+              <%= link_to community_topic_bookmarks_path(@topic.community,@topic), method: :delete do %>
+                <i class="fas fa-heart"></i>
+              <% end %>
+            <% else %>
+              <%= link_to community_topic_bookmarks_path(@topic.community,@topic), method: :post do %>
+                <i class="far fa-heart"></i>
+              <% end %>
+            <% end %>
+            <span>&nbsp;<%= @topic.bookmarks.count %></span>
+          </small>
+          <small class="mx-2"><%= "#{@topic.topic_comments.count}" + "コメント" %></small>
         </div>
-
       </div>
     </div>
   </div>
