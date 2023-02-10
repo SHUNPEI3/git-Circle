@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row m-4">
-    <h2><i class="fas fa-user-group"></i>&nbsp;トピック一覧</h2>
+    <h2><i class="fas fa-star"></i>&nbsp;トピック一覧</h2>
   </div>
 
   <%= link_to 'トピックを作成する', new_community_topic_path %>
@@ -19,7 +19,7 @@
                 <%= topic.end_user.nickname %>
               <% end %>
             </td>
-            <td class="col-md-8 align-middle"><h4><%= link_to topic.title, community_topic_path(topic.community, topic) %></h4></td>
+            <td class="col-md-8 align-middle"><h4 class="text-truncate"><%= link_to topic.title, community_topic_path(topic.community, topic) %></h4></td>
             <td class="col-md-1 align-middle"><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></td>
             <td class="col-md-1 align-middle">いいね</td>
           </tr>
