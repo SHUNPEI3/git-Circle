@@ -5,16 +5,21 @@ class EndUser < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one_attached :profile_image
+
   has_many :community_users, dependent: :destroy
   has_many :communities, through: :community_users
 
   has_many :user_personal_tags, dependent: :destroy
-  # accepts_nested_attributes_for :user_personal_tags
   has_many :personal_tags, through: :user_personal_tags
-  
+
   has_many :topics, dependent: :destroy
 
   has_many :topic_comments, dependent: :destroy
+
+  has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id, dependent: :destroy
+  has_many :followings, through: :active_relationships, source: :follower
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :following
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
@@ -39,6 +44,16 @@ class EndUser < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
+  # 退会済みユーザーの判定メソッド
+  def active_for_authentication?
+    super && (is_deleted == false)
+  end
+
+  # すでにフォローしているかの判定メソッド
+  def followed_by?(user)
+    passive_relationships.find_by(following_id: user.id).present?
+  end
+
   # タグの保存メソッド
   def save_tag(sent_tags)
     current_tags = self.personal_tags.pluck(:name) unless self.personal_tags.nil?
@@ -54,11 +69,6 @@ class EndUser < ApplicationRecord
       # self.user_personal_tags.new(end_user_id: @end_user.id, personal_tag_id: post_tag.id).save
       self.personal_tags << post_tag
     end
-  end
-
-  # 退会済みユーザーの判定メソッド
-  def active_for_authentication?
-    super && (is_deleted == false)
   end
 
 end

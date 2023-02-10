@@ -11,7 +11,11 @@ Rails.application.routes.draw do
     get 'about' => 'homes#about'
 
     # ユーザー関連
-    resources 'end_users', only: [:index, :show, :edit, :update]
+    resources 'end_users', only: [:index, :show, :edit, :update] do
+      resource 'relationships', only: [:create, :destroy]
+      #get :follows, on: :member
+      get :follower, on: :member
+    end
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
     patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
 
