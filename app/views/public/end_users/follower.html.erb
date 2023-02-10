@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row m-4">
+    <h2><i class="fas fa-user"></i>&nbsp;Users#followers</h2>
+  </div>
+
+  <div class="row">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="col-md-2">ニックネーム</th>
+          <th class="col-md-2">マイタグ</th>
+          <th class="col-md-6">自己紹介</th>
+          <th class="col-md-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @followers.each do |user| %>
+          <tr>
+            <td>
+              <%= link_to end_user_path(user.id) do %>
+                <%= image_tag user.get_profile_image(50, 50) %><br>
+                <%= user.nickname %>
+              <% end %>
+            </td>
+            <td>
+              <% user.personal_tags.each do |tag| %>
+                <%= "#" + tag.name %>
+              <% end %>
+            </td>
+            <td><span class="d-inline-block text-truncate" style="width: 500px;"><%= user.introduction %></span></td><!--修正必要-->
+            <td>
+              <% unless current_end_user == user %>
+                <% if user.followed_by?(current_end_user) %>
+                  <%=link_to "フォロー中", end_user_relationships_path(user.id), method: :delete, class: "btn btn-light", style:"width: 100%"  %>
+                <% else %>
+                  <%=link_to "フォローする", end_user_relationships_path(user.id), method: :post, class: "btn btn-primary", style:"width: 100%" %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+
+
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

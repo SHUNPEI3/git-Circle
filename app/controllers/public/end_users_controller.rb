@@ -1,5 +1,5 @@
 class Public::EndUsersController < ApplicationController
-  before_action :find_end_user, only: [:show, :edit, :update, :unsubscribe, :withdraw]
+  before_action :find_end_user, only: [:show, :edit, :update, :follower, :unsubscribe, :withdraw]
 
   def index
     # whereメソッドで退会ではないユーザーを取得
@@ -22,6 +22,10 @@ class Public::EndUsersController < ApplicationController
     else
       render edit
     end
+  end
+
+  def follower
+    @followers = @end_user.followers
   end
 
   def unsubscribe
