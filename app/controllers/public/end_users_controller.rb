@@ -1,5 +1,6 @@
 class Public::EndUsersController < ApplicationController
   before_action :find_end_user, only: [:show, :edit, :update, :follower, :bookmark, :unsubscribe, :withdraw]
+  before_action :ensure_guest_user, only: [:edit, :update]
 
   def index
     # whereメソッドで退会ではないユーザーを取得
@@ -51,6 +52,12 @@ class Public::EndUsersController < ApplicationController
 
   def find_end_user
     @end_user = EndUser.find(params[:id])
+  end
+
+  def ensure_guest_user
+    if @end_user.last_name == "guest" && @end_user.first_name == "user" && @end_user.nickname == "ゲストユーザー"
+      redirect_to end_user_path(current_end_user) , notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    end
   end
 
   def end_user_params

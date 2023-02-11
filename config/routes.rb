@@ -5,9 +5,9 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-
-  devise_scope :enduser do
-    post 'guest_sign_in', to: 'public/sessions#guest_sign_in'
+  #ゲスト用ログイン機能
+  devise_scope :end_user do
+    post 'end_user/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
 
   scope module: :public do
