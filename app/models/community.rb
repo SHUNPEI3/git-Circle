@@ -44,4 +44,9 @@ class Community < ApplicationRecord
   def already_joined?(end_user)
     community_users.exists?(end_user_id: end_user.id)
   end
+
+  def self.search_for(content)
+    Community.where("name Like?", "%#{content}%")
+  end
+
 end

@@ -47,6 +47,12 @@ class Public::CommunitiesController < ApplicationController
     end
   end
 
+  def search_community_tag
+    @tag_list = Tag.all
+    @tag = Tag.find(params[:id])
+    @communities = @tag.communitys
+  end
+
   private
 
   def community_params

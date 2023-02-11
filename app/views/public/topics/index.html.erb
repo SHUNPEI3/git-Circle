@@ -13,15 +13,15 @@
       <tbody>
         <% @topics.each do |topic| %>
           <tr>
-            <td class="col-md-2 align-middle">
+            <td class="col-sm-2 align-middle">
               <%= link_to end_user_path(topic.end_user) do %>
-                <%= image_tag topic.end_user.get_profile_image(75, 75) %><br>
+                <%= image_tag topic.end_user.get_profile_image(75, 75), class: "rounded-circle" %><br>
                 <%= topic.end_user.nickname %>
               <% end %>
             </td>
-            <td class="col-md-8 align-middle">
+            <td class="col-sm-8 align-middle">
               <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
-              <h4 class="text-truncate"><%= link_to topic.title, community_topic_path(topic.community, topic) %></h4>
+              <h4><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
             </td>
             <td class="align-bottom">
               <small>

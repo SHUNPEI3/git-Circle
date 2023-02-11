@@ -32,6 +32,12 @@ class Public::EndUsersController < ApplicationController
     @bookmarks = @end_user.bookmarks
   end
 
+  def search_personal_tag
+    @tag_list = PersonalTag.all
+    @tag = PersonalTag.find(params[:id])
+    @end_users = @tag.end_users
+  end
+
   def unsubscribe
   end
 

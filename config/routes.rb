@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       #get :follows, on: :member
       get :follower, on: :member
       get :bookmark, on: :member
+      get :search_personal_tag, on: :member
     end
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
     patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
       resource 'community_users', only: [:create, :destroy]
+      get :search_community_tag, on: :member
       # トピック関連
       resources 'topics', except: [:destroy] do
         resource 'bookmarks', only: [:create, :destroy]
