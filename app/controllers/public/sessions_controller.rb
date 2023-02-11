@@ -13,6 +13,13 @@ class Public::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def guest_sign_in
+    # binding.pry
+    user = EndUser.guest
+    sign_in user
+    redirect_to end_user_path(user), notice: 'guestuserでログインしました。'
+  end
+
   # DELETE /resource/sign_out
   # def destroy
   #   super

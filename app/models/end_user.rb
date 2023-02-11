@@ -46,6 +46,21 @@ class EndUser < ApplicationRecord
     profile_image.variant(resize_to_limit:[width, height]).processed
   end
 
+  def self.guest
+    find_or_create_by!(last_name: 'guest' ,email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.last_name = "guest"
+      user.first_name = "user"
+      user.last_name_kana = "ゲスト"
+      user.first_name_kana = "ユーザー"
+      user.nickname = "ゲストユーザー"
+      user.sex = ""
+      user.age = "nil"
+      user.activity_area = ""
+      user.introduction =""
+    end
+  end
+
   # 退会済みユーザーの判定メソッド
   def active_for_authentication?
     super && (is_deleted == false)

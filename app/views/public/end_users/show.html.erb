@@ -15,11 +15,10 @@
         </div>
       </div>
 
-
       <div class="row justify-content-center mt-3">
-        <% if @end_user == current_end_user %>
+        <% if (@end_user == current_end_user) && (@end_user.last_name != "guest") %>
           <%= link_to '編集する', edit_end_user_path(@end_user), class: "btn btn-danger", style:"width: 65%"%>
-        <% else %>
+        <% elsif current_end_user.last_name != "guest" %>
           <% if @end_user.followed_by?(current_end_user) %>
             <%= link_to 'フォロー中', end_user_relationships_path(@end_user), method: :delete, class: "btn btn-light", style:"width: 65%" %>
           <% else %>
