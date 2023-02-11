@@ -73,4 +73,8 @@ class EndUser < ApplicationRecord
     end
   end
 
+  def self.search_for(content)
+    EndUser.where("nickname Like?", "%#{content}%")
+  end
+
 end

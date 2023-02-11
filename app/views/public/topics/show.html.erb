@@ -46,7 +46,7 @@
           <tr>
             <td class="col-md-1">
               <%= link_to end_user_path(comment.end_user) do %>
-                <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block mx-auto img-thumbnail" %>
+                <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block rounded-circle mx-auto " %>
               <% end %>
             </td>
             <td class="col-md-9">

@@ -56,7 +56,7 @@
           <th>マイタグ</th>
           <td>
             <% @end_user.personal_tags.each do |personal_tag| %>
-              &nbsp;<%= "#" + personal_tag.name %>
+              &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
             <% end %>
           </td>
         </tr>
