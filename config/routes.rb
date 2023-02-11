@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'about' => 'homes#about'
+    get 'search' => 'searches#search'
 
     # ユーザー関連
     resources 'end_users', only: [:index, :show, :edit, :update] do
