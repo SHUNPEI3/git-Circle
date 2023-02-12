@@ -8,6 +8,15 @@
             <%= link_to "ユーザー一覧", admin_home_path, class:'nav-link text-light mx-3' %>
           </li>
           <li>
+            <%= link_to "コミュニティ一覧", admin_communities_path, class:'nav-link text-light mx-3' %>
+          </li>
+          <li>
+            <%= link_to "トピックス一覧", admin_topics_path, class:'nav-link text-light mx-3' %>
+          </li>
+          <li>
+            <%= link_to "コメント一覧", admin_topic_comments_path, class:'nav-link text-light mx-3' %>
+          </li>
+          <li>
             <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:'nav-link text-light mx-3' %>
           </li>
         <% elsif end_user_signed_in? %>

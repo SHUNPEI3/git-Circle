@@ -1,5 +1,5 @@
 class Public::CommunitiesController < ApplicationController
-  before_action :find_community, only: [:show, :topics, :edit, :update]
+  before_action :find_community, only: [:show, :edit, :update]
 
   def index
     # order(id: "DESC")で、新規登録順に並び替え

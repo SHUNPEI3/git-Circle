@@ -2,6 +2,7 @@ class Admin::EndUsersController < ApplicationController
   before_action :find_end_user, only:[:show, :edit, :update]
 
   def show
+    @communities = @end_user.communities
   end
 
   def edit

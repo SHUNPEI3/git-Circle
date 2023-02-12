@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row m-4">
+    <h2><i class="fas fa-object-group"></i>&nbsp;コミュニティ詳細</h2>
+  </div>
+
+  <div class="row justify-content-around">
+    <div class="col-md-3">
+
+      <%= image_tag @community.get_community_image(220, 220), class:"d-block mx-auto img-thumbnail" %>
+
+      <div class="border mt-2 mx-3 p-3">
+        <div>
+          <h6>リーダー(作成者)</h6>
+          <%= link_to admin_end_user_path(@community.owner) do %>
+            <%= image_tag @community.owner.get_profile_image(50, 50), class:"rounded-circle mr-3" %>
+            <%= @community.owner.last_name %>&nbsp;<%= @community.owner.first_name %>
+          <% end %>
+        </div>
+        <div class="mt-3">
+          <h6>メンバー(参加者)</h6>
+          <% @community.end_users.each do |member| %>
+            <% unless !member.active_for_authentication? || @community.owner == member %>
+              <li style="list-style: none;">
+                <%= link_to admin_end_user_path(member) do %>
+                  <%= image_tag member.get_profile_image(50, 50), class:"rounded-circle mr-3 mb-3" %>
+                  <%= member.last_name %>&nbsp;<%= member.first_name %>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row justify-content-center mt-2">
+        <%= link_to '編集する', edit_admin_community_path(@community), class: "btn btn-success", style:"width: 65%" %>
+      </div>
+    </div>
+
+    <div class="col-md-9 border">
+      <h1 class="col-md-8 m-3"><%= @community.name %></h1>
+      <div class="m-3">
+        <i class="fas fa-tag"></i>
+          <% @community.tags.each do |community_tag| %>
+            &nbsp;<%= "#" + community_tag.name  %>
+          <% end %>
+        </div>
+      <div class="border m-3">
+        <table class="table table-borderless">
+          <tr>
+            <th>作成日</th>
+            <td><%= @community.created_at.strftime("%Y/%m/%d\ %R") %></td>
+          </tr>
+          <tr>
+            <th class="col-md-3">参加条件</th>
+            <td>
+              <% @community.community_details.each do |detail| %>
+                <% if detail.max_join_number? %>
+                 <li><%= detail.max_join_number %>人まで&nbsp;&nbsp;（現在<%= @community.end_users.count %>人参加中）</li>
+                <% end %>
+                <% if detail.sex_limit? %>
+                  <li><%= detail.sex_limit_i18n %></li>
+                <% end %>
+                <% if detail.activity_area_limit? %>
+                  <li><%= detail.activity_area_limit_i18n %></li>
+                <% end %>
+                <% if detail.age_min_limit || detail.age_max_limit %>
+                  <li><%= detail.age_min_limit %>〜<%= detail.age_max_limit %>歳まで</li>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th>グループ紹介</th>
+            <td><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <h3 class="col-md-8 mx-3">トピックス一覧</h3>
+        <%= link_to 'トピックをもっと見る', admin_community_topics_path(@community), class:"mr-5 mt-3" %>
+      </div>
+      <div class="border mx-3"></div>
+      <div class=" col-md-12 mt-3">
+        <table class="table">
+          <thead class="thead-light">
+            <th>ID</th>
+            <th>タイトル</th>
+            <th>投稿者</th>
+            <th>投稿日</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <% @topics.each do |topic| %>
+              <tr>
+                <td><%= topic.id %></td>
+                <td><%= topic.title.truncate(20) %></td>
+                <td><%= topic.end_user.last_name %>&nbsp;<%= topic.end_user.first_name %></td>
+                <td><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small></td>
+                <td><%= link_to "詳細", admin_community_topic_path(topic.community_id, topic), class: "btn btn-primary" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
