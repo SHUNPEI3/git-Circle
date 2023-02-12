@@ -43,9 +43,11 @@
               <td class="align-middle"><%= community.introduction.truncate(35) %></td>
               <td class="align-middle">
                 <% community.end_users.each do |member| %>
-                  <li class="list-unstyled">
-                    <%= link_to "#{member.nickname}", end_user_path(member.id) %>
-                  </li>
+                  <% if member.active_for_authentication? %>
+                    <li class="list-unstyled">
+                      <%= link_to "#{member.nickname}", end_user_path(member.id) %>
+                    </li>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

@@ -17,7 +17,13 @@
       <tbody>
         <% @bookmarks.each do |bookmark| %>
           <tr>
-            <td><%= link_to bookmark.topic.title, community_topic_path(bookmark.topic.community,bookmark.topic) %></td>
+            <td>
+            <% unless bookmark.topic.end_user.is_deleted %>
+              <%= link_to bookmark.topic.title, community_topic_path(bookmark.topic.community,bookmark.topic) %>
+            <% else %>
+              <%= bookmark.topic.title %><br><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
+            <% end %>
+            </td>
             <td><%= "#{bookmark.topic.topic_comments.count}" + "コメント" %></td>
             <td><%= link_to bookmark.topic.community.name, community_path(bookmark.topic.community) %></td>
             <td>

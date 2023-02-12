@@ -14,14 +14,23 @@
         <% @topics.each do |topic| %>
           <tr>
             <td class="col-sm-2 align-middle">
-              <%= link_to end_user_path(topic.end_user) do %>
-                <%= image_tag topic.end_user.get_profile_image(75, 75), class: "rounded-circle" %><br>
+              <% if topic.end_user.active_for_authentication? %>
+                <%= link_to end_user_path(topic.end_user) do %>
+                  <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
+                  <%= topic.end_user.nickname %>
+                <% end %>
+              <% else %>
+                <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
                 <%= topic.end_user.nickname %>
               <% end %>
             </td>
             <td class="col-sm-8 align-middle">
               <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
-              <h4><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
+              <% if topic.end_user.active_for_authentication? %>
+                <h4><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
+              <% else %>
+                <h4><%= topic.title.truncate(35) %></h4><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
+              <% end %>
             </td>
             <td class="align-bottom">
               <small>

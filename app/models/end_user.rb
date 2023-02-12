@@ -61,6 +61,11 @@ class EndUser < ApplicationRecord
     end
   end
 
+  # ゲストユーザーかの判定メソッド
+  def guest_user?
+    self.email == 'guest@example.com'
+  end
+
   # 退会済みユーザーの判定メソッド
   def active_for_authentication?
     super && (is_deleted == false)
