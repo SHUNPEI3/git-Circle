@@ -20,9 +20,9 @@
         <div class="mt-3">
           <h6>メンバー</h6>
           <% @community.end_users.each do |member| %>
-            <% unless !member.active_for_authentication? || @community.owner == memuber %>
+            <% unless !member.active_for_authentication? || @community.owner == member %>
               <li style="list-style: none;">
-                <%= link_to end_user_path(memuber) do %>
+                <%= link_to end_user_path(member) do %>
                   <%= image_tag member.get_profile_image(50, 50), class:"rounded-circle mr-3 mb-3" %>
                   <%= member.last_name %>&nbsp;<%= member.first_name %>
                 <% end %>
