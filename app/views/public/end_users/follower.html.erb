@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <% @followers.each do |user| %>
-          <% unless user.is_deleted == true %>
+          <% if user.active_for_authentication? %>
             <tr>
               <td class="align-middle text-center">
                 <%= link_to end_user_path(user.id) do %>

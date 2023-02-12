@@ -26,7 +26,7 @@
           </thead>
           <tbody>
             <% @end_users.each do |user| %>
-              <% unless user.is_deleted == true %>
+              <% if user.active_for_authentication? %>
                 <tr>
                   <td class="align-middle text-center">
                     <%= link_to end_user_path(user.id) do %>
@@ -41,7 +41,7 @@
                   </td>
                   <td class="align-middle"><%= user.introduction.truncate(35) %></td>
                   <td class="align-middle">
-                    <% unless current_end_user == user %>
+                    <% unless current_end_user.guest_user? || current_end_user == user %>
                       <% if user.followed_by?(current_end_user) %>
                         <%=link_to "フォロー中", end_user_relationships_path(user.id), method: :delete, class: "btn btn-light", style:"width: 100%"  %>
                       <% else %>

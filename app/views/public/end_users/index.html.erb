@@ -22,19 +22,21 @@
 
   <div class="row">
     <% @end_users.each do |end_user| %>
-      <div class="col-md-3 shadow p-3">
-        <%= image_tag end_user.get_profile_image(200, 200), class:"d-block mx-auto img-thumbnail" %>
-        <div class="p-3">
-          <h4 class="text-center"><%= link_to end_user.nickname, end_user_path(end_user) %></h4>
-          年齢：<%= (end_user.age).to_s + "歳" %><br>
-          性別：<%= end_user.sex_i18n %><br>
-          活動エリア：<%= end_user.activity_area_i18n %><br>
-          <i class="fas fa-tag"></i>
-          <% end_user.personal_tags.each do |personal_tag| %>
-            &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
-          <% end %>
+      <% unless end_user.guest_user? %>
+        <div class="col-md-3 shadow p-3">
+          <%= image_tag end_user.get_profile_image(200, 200), class:"d-block mx-auto img-thumbnail" %>
+          <div class="p-3">
+            <h4 class="text-center"><%= link_to end_user.nickname, end_user_path(end_user) %></h4>
+            年齢：<%= (end_user.age).to_s + "歳" %><br>
+            性別：<%= end_user.sex_i18n %><br>
+            活動エリア：<%= end_user.activity_area_i18n %><br>
+            <i class="fas fa-tag"></i>
+            <% end_user.personal_tags.each do |personal_tag| %>
+              &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 

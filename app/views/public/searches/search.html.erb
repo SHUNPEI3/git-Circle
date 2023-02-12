@@ -16,7 +16,7 @@
         </thead>
         <tbody>
           <% @records.each do |user| %>
-            <% unless user.is_deleted == true %>
+            <% unless user.guest_user? || !user.active_for_authentication? %>
               <tr>
                 <td class="align-middle text-center">
                   <%= link_to end_user_path(user.id) do %>
@@ -31,7 +31,7 @@
                 </td>
                 <td class="align-middle"><%= user.introduction.truncate(35) %></td>
                 <td class="align-middle">
-                  <% unless current_end_user == user %>
+                  <% unless current_end_user.guest_user? || current_end_user == user %>
                     <% if user.followed_by?(current_end_user) %>
                       <%=link_to "フォロー中", end_user_relationships_path(user.id), method: :delete, class: "btn btn-light", style:"width: 100%"  %>
                     <% else %>
@@ -60,7 +60,7 @@
         <tbody>
           <% @records.each do |tag| %>
             <% tag.end_users.each do |user| %>
-              <% unless user.is_deleted == true %>
+              <% if user.active_for_authentication? %>
                 <tr>
                   <td class="align-middle text-center">
                     <%= link_to end_user_path(user.id) do %>
@@ -71,7 +71,7 @@
                   <td class="align-middle"><%= "#" + tag.name %></td>
                   <td class="align-middle"><%= user.introduction.truncate(35) %></td>
                   <td class="align-middle">
-                    <% unless current_end_user == user %>
+                    <% unless current_end_user.guest_user? || current_end_user == user %>
                       <% if user.followed_by?(current_end_user) %>
                         <%= link_to "フォロー中", end_user_relationships_path(user.id), method: :delete, class: "btn btn-light", style:"width: 100%"  %>
                       <% else %>
@@ -115,9 +115,11 @@
               <td class="align-middle"><%= community.introduction.truncate(35) %></td>
               <td class="align-middle">
                 <% community.end_users.each do |member| %>
-                  <li class="list-unstyled">
-                    <%= link_to "#{member.nickname}", end_user_path(member.id) %>
-                  </li>
+                  <% if member.active_for_authentication? %>
+                    <li class="list-unstyled">
+                      <%= link_to "#{member.nickname}", end_user_path(member.id) %>
+                    </li>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
@@ -151,9 +153,11 @@
                   <td class="align-middle"><%= community.introduction.truncate(35) %></td>
                   <td class="align-middle">
                     <% community.end_users.each do |member| %>
-                      <li class="list-unstyled">
-                        <%= link_to "#{member.nickname}", end_user_path(member.id) %>
-                      </li>
+                      <% if member.active_for_authentication? %>
+                        <li class="list-unstyled">
+                          <%= link_to "#{member.nickname}", end_user_path(member.id) %>
+                        </li>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>
