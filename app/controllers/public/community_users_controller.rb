@@ -3,8 +3,6 @@ class Public::CommunityUsersController < ApplicationController
   def create
     @community = Community.find(params[:community_id])
     community_user = current_end_user.community_users.new(community_id: @community.id)
-
-
     community_detail = CommunityDetail.find_by(community_id: @community.id)
 
     #参加制限の照会
@@ -230,11 +228,11 @@ class Public::CommunityUsersController < ApplicationController
 
   private
 
-    def community_invitation_notification_delete
-      notification = Notification.find_by(visited_id: current_end_user.id, community_id: @community.id, action: "invitation")
-      if notification
-        notification.destroy
-      end
+  def community_invitation_notification_delete
+    notification = Notification.find_by(visited_id: current_end_user.id, community_id: @community.id, action: "invitation")
+    if notification
+      notification.destroy
     end
+  end
 
 end
