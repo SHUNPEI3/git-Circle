@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="row justify-content-end m-4">
     <div class="col-md-6">
       <%= form_with url: search_path, method: :get do |f| %>
@@ -7,7 +6,7 @@
          <%= f.text_field :content, placeholder:"キーワードを入力", class:"form-control", style:"width: 45%" %>
          <%= f.select :model, options_for_select({"ユーザー"=>"end_user", "タグ"=>"personal_tag"}), {}, {class:"form-control"} %>
          <span class="input-group-btn input-group-append">
-          <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+          <%= button_tag(type: "submit", class: "btn btn-warning") do %>
             <i class="fas fa-search"></i>検索
           <% end %>
          </span>
@@ -23,21 +22,25 @@
   <div class="row">
     <% @end_users.each do |end_user| %>
       <% unless end_user.guest_user? %>
-        <div class="col-md-3 shadow p-3">
-          <%= image_tag end_user.get_profile_image(200, 200), class:"d-block mx-auto img-thumbnail" %>
-          <div class="p-3">
-            <h4 class="text-center"><%= link_to end_user.nickname, end_user_path(end_user) %></h4>
-            年齢：<%= (end_user.age).to_s + "歳" %><br>
-            性別：<%= end_user.sex_i18n %><br>
-            活動エリア：<%= end_user.activity_area_i18n %><br>
-            <i class="fas fa-tag"></i>
-            <% end_user.personal_tags.each do |personal_tag| %>
-              &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
-            <% end %>
+        <div class="col-md-3 mb-3" >
+          <div class="card shadow">
+            <%= image_tag end_user.get_profile_image(200, 200), class:"card-img-top p-1" %>
+            <div class="card-body">
+              <h4 class="card-title text-center"><%= link_to end_user.nickname, end_user_path(end_user) %></h4>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">年齢：<%= (end_user.age).to_s + "歳" %></li>
+              <li class="list-group-item">性別：<%= end_user.sex_i18n %></li>
+              <li class="list-group-item">活動エリア：<%= end_user.activity_area_i18n %></li>
+              <li class="list-group-item"><i class="fas fa-tag"></i>
+                <% end_user.personal_tags.each do |personal_tag| %>
+                  <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                <% end %>
+              </li>
+            </ul>
           </div>
         </div>
       <% end %>
     <% end %>
   </div>
-
 </div>
