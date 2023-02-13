@@ -21,53 +21,19 @@
         <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d\ %R") %></p>
         <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
         <div class="row justify-content-end mx-2">
-          <small class="mx-2" id="bookmark_buttons_<%= @topic.id %>">
-              <%= render 'public/bookmarks/bookmark', topic: @topic %>
-          </small>
-          <small class="mx-2"><%= "#{@topic.topic_comments.count}" + "コメント" %></small>
+          <small class="mx-2" id="bookmark_buttons_<%= @topic.id %>"><%= render 'public/bookmarks/bookmark', topic: @topic %></small>
+          <small class="topic-comments-count mx-2"><%= render 'public/topic_comments/comment_count', topic: @topic %></small>
         </div>
       </div>
     </div>
   </div>
 
   <div class="row m-4">
-    <div class="col-md-12 px-5">
-      <table class="table">
-        <% @topic.topic_comments.each do |comment| %>
-          <tr>
-            <td class="col-md-1">
-              <% if comment.is_active %>
-                <%= link_to end_user_path(comment.end_user) do %>
-                  <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block rounded-circle mx-auto" %>
-                <% end %>
-              <% end %>
-            </td>
-            <td class="col-md-9">
-              <% if comment.is_active %>
-                <%= comment.end_user.nickname %><br>
-                <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
-                <%= comment.comment %>
-              <% else %>
-                <span>このコメントは管理者によって不適切と判定されました。</span>
-              <% end %>
-            </td>
-            <td class="col-md-1 align-bottom" id="good_buttons_<%= comment.id %>">
-              <%= render 'public/goods/good_btn', comment: comment %>
-            </td>
-            <td class="col-md-1 align-bottom">
-              <% if current_end_user.id == comment.end_user_id %>
-                <%= link_to '削除', community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, class:"btn btn-sm btn-danger" %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
+    <div class="topic-comments-index col-md-12 px-5">
+      <%= render 'public/topic_comments/comment_index', topic: @topic %>
     </div>
-    <div class="col-md-12 px-5">
-      <%= form_with model: [@community, @topic, @topic_comment] do |f| %>
-        <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力", class:"form-control" %>
-        <%= f.submit "コメントを投稿する", class:"btn btn-success mt-3" , style:"width: 100%" %>
-      <% end %>
+    <div class="col-md-12 px-5 ">
+      <%= render 'public/topic_comments/comment_form', community: @community, topic: @topic, topic_comment: @topic_comment %>
     </div>
   </div>
 </div>

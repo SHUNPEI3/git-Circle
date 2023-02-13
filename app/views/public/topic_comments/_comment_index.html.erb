@@ -1,0 +1,30 @@
+      <table class="table">
+        <% topic.topic_comments.each do |comment| %>
+          <tr>
+            <td class="col-md-1">
+              <% if comment.is_active %>
+                <%= link_to end_user_path(comment.end_user) do %>
+                  <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block rounded-circle mx-auto" %>
+                <% end %>
+              <% end %>
+            </td>
+            <td class="col-md-9">
+              <% if comment.is_active %>
+                <%= comment.end_user.nickname %><br>
+                <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
+                <%= comment.comment %>
+              <% else %>
+                <span>このコメントは管理者によって不適切と判定されました。</span>
+              <% end %>
+            </td>
+            <td class="col-md-1 align-bottom" id="good_buttons_<%= comment.id %>">
+              <%= render 'public/goods/good_btn', comment: comment %>
+            </td>
+            <td class="col-md-1 align-bottom">
+              <% if current_end_user.id == comment.end_user_id %>
+                <%= link_to '削除', community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, remote: true, class:"btn btn-sm btn-danger" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
