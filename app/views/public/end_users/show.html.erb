@@ -19,7 +19,14 @@
         <% unless current_end_user.guest_user? %>
           <div class="col-md-10 text-center">
             <% if @end_user == current_end_user %>
-              <%= link_to '編集する', edit_end_user_path(@end_user), class: "btn btn-danger", style:"width: 100%"%>
+              <%= link_to '編集する', edit_end_user_path(@end_user), class: "btn btn-success my-2", style:"width: 100%" %>
+              <%= link_to  notifications_path, class: "btn btn-outline-danger my-2", style:"width: 100%" do %>
+                <% if unchecked_notifications.any? %>
+                  新着メッセージが届いています！
+                <% else %>
+                  新着メッセージはありません
+                <% end %>
+              <% end %>
             <% end %>
           </div>
           <div class="col-md-10 text-center" id="favorite-buttons-<%= @end_user.id %>">
@@ -31,7 +38,7 @@
 
     </div>
 
-    <div class="col-md-8 border">
+    <div class="col-md-8 border rounded-lg">
       <table class="table table-borderless table-sm m-3">
         <tr>
           <th class="col-md-3">名前</th>

@@ -9,7 +9,7 @@
 
       <%= image_tag @community.get_community_image(220, 220), class:"d-block mx-auto img-thumbnail" %>
 
-      <div class="border mt-5 mx-3 p-3">
+      <div class="border m-3 p-3">
         <div>
           <h6>リーダー</h6>
           <%= link_to end_user_path(@community.owner) do %>
@@ -32,7 +32,14 @@
         </div>
       </div>
 
-      <div class="row justify-content-center mt-5">
+
+      <%= form_with model: @community, url: community_invitation_path(@community.id), method: :post do |f| %>
+        <%= f.select :user_id, options_from_collection_for_select(@other_users, :id, :nickname) %>
+        <%= f.submit "招待する" %>
+      <% end %>
+
+
+      <div class="row justify-content-center mt-3">
         <% unless current_end_user.guest_user? %>
           <% if @community.owner_id == current_end_user.id %>
             <%= link_to '編集する', edit_community_path(@community), class: "btn btn-success", style:"width: 65%" %>
