@@ -10,24 +10,24 @@
 
       <div class="row justify-content-center mt-3">
         <div>
-          <i class="fas fa-bookmark"></i><%= link_to "ブックマーク(#{@end_user.bookmarks.count})",bookmark_end_user_path(@end_user) %>&nbsp;
-          <i class="fas fa-user"></i><%= link_to "フォロワー(#{@end_user.followers.count})",follower_end_user_path(@end_user) %>
+          <span><i class="fas fa-bookmark"></i><%= link_to "ブックマーク(#{@end_user.bookmarks.count})",bookmark_end_user_path(@end_user) %>&nbsp;</span>
+          <span class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></span>
         </div>
       </div>
 
       <div class="row justify-content-center mt-3">
         <% unless current_end_user.guest_user? %>
-          <% if @end_user == current_end_user %>
-            <%= link_to '編集する', edit_end_user_path(@end_user), class: "btn btn-danger", style:"width: 65%"%>
-          <% else %>
-            <% if @end_user.followed_by?(current_end_user) %>
-              <%= link_to 'フォロー中', end_user_relationships_path(@end_user), method: :delete, class: "btn btn-light", style:"width: 65%" %>
-            <% else %>
-              <%= link_to 'フォローする', end_user_relationships_path(@end_user), method: :post, class: "btn btn-primary", style:"width: 65%" %>
+          <div class="col-md-10 text-center">
+            <% if @end_user == current_end_user %>
+              <%= link_to '編集する', edit_end_user_path(@end_user), class: "btn btn-danger", style:"width: 100%"%>
             <% end %>
-          <% end %>
+          </div>
+          <div class="col-md-10 text-center" id="favorite-buttons-<%= @end_user.id %>">
+            <%= render "public/relationships/favorite_btn", end_user: @end_user %>
+          </div>
         <% end %>
       </div>
+
 
     </div>
 

@@ -21,7 +21,7 @@
         <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d\ %R") %></p>
         <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
         <div class="row justify-content-end mx-2">
-          <small class="mx-2" id="bookmark_buttons_<%= @topic.id %>"><%= render 'public/bookmarks/bookmark', topic: @topic %></small>
+          <small class="mx-2" id="bookmark-buttons-<%= @topic.id %>"><%= render 'public/bookmarks/bookmark', topic: @topic %></small>
           <small class="topic-comments-count mx-2"><%= render 'public/topic_comments/comment_count', topic: @topic %></small>
         </div>
       </div>

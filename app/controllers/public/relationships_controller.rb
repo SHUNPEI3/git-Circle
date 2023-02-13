@@ -5,14 +5,13 @@ class Public::RelationshipsController < ApplicationController
     relationship = current_end_user.active_relationships.new
     relationship.follower_id = @follower_user.id
     relationship.save
-    redirect_to request.referer
+    render 'relationship'
   end
 
   def destroy
-    #end_user = EndUser.find(params[:end_user_id])
     relationship = Relationship.find_by(following_id: current_end_user.id, follower_id: @follower_user.id)
     relationship.destroy
-    redirect_to request.referer
+    render 'relationship'
   end
 
   private
