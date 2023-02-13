@@ -51,19 +51,8 @@
                 <span>このコメントは管理者によって不適切と判定されました。</span>
               <% end %>
             </td>
-            <td class="col-md-1 align-bottom">
-              <small class="mx-2">
-                <% if comment.good_by?(current_end_user) %>
-                  <%= link_to community_topic_topic_comment_goods_path(comment.topic.community, comment.topic, comment), method: :delete do %>
-                    <i class="fas fa-heart"></i>
-                  <% end %>
-                <% else %>
-                  <%= link_to community_topic_topic_comment_goods_path(comment.topic.community, comment.topic, comment), method: :post do %>
-                    <i class="far fa-heart"></i>
-                  <% end %>
-                <% end %>
-                <span>&nbsp;<%= comment.goods.count %></span>
-              </small>
+            <td class="col-md-1 align-bottom" id="good_buttons_<%= comment.id %>">
+              <%= render 'public/goods/good_btn', comment: comment %>
             </td>
             <td class="col-md-1 align-bottom">
               <% if current_end_user.id == comment.end_user_id %>

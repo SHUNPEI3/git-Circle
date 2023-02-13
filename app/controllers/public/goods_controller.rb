@@ -5,12 +5,12 @@ class Public::GoodsController < ApplicationController
     good = current_end_user.goods.new
     good.topic_comment_id = @topic_comment.id
     good.save
-    redirect_to request.referer
+    render 'replace_btn'
   end
   def destroy
     good = Good.find_by(end_user_id: current_end_user.id, topic_comment_id: @topic_comment.id)
     good.destroy
-    redirect_to request.referer
+    render 'replace_btn'
   end
 
   private
