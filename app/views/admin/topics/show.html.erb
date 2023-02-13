@@ -10,7 +10,8 @@
         <h5 class="text-center"><%= @topic.end_user.nickname %></h5>
       <% end %>
       <div class="text-center">
-        <%= link_to '＋トピックを編集する', edit_admin_community_topic_path(@topic.community, @topic), class: "btn btn-sm btn-success" %>
+        <%= link_to 'トピックを編集する', edit_admin_community_topic_path(@topic.community, @topic), class: "btn btn-sm btn-success" %>
+        <%= link_to 'トピックを削除する', admin_community_topic_path(@topic.community, @topic), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-sm btn-danger mt-2" %>
       </div>
     </div>
     <div class="col-md-9">
@@ -20,11 +21,7 @@
         <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
         <div class="row justify-content-end mx-2">
           <small class="mx-2">
-                <i class="fas fa-heart"></i>
-
-                <i class="far fa-heart"></i>
-
-            <span>&nbsp;<%= @topic.bookmarks.count %></span>
+            <span><i class="far fa-heart"></i>&nbsp;<%= @topic.bookmarks.count %></span>
           </small>
           <small class="mx-2"><%= "#{@topic.topic_comments.count}" + "コメント" %></small>
         </div>
@@ -37,29 +34,34 @@
       <table class="table">
         <% @topic.topic_comments.each do |comment| %>
           <tr>
-            <td class="col-md-1">
-              <%= link_to end_user_path(comment.end_user) do %>
-                <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block rounded-circle mx-auto " %>
+            <td class="col-md-1 align-middle">
+              <% if comment.is_active %>
+                <%= link_to admin_end_user_path(comment.end_user) do %>
+                  <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block rounded-circle mx-auto " %>
+                <% end %>
               <% end %>
             </td>
-            <td class="col-md-9">
-              <%= comment.end_user.nickname %><br>
-              <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
-              <%= comment.comment %>
+            <td class="col-md-8 align-middle">
+              <% if comment.is_active %>
+                <%= comment.end_user.nickname %><br>
+                <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
+                <%= comment.comment %>
+              <% else %>
+                <span>このコメントは管理者によって不適切と判定されました。</span>
+              <% end %>
             </td>
-
             <td class="col-md-1 align-bottom">
               <small class="mx-2">
                 <span><i class="far fa-heart"></i>&nbsp;<%= comment.goods.count %></span>
               </small>
             </td>
-            <td class="col-md-1 align-bottom">
-              <%= link_to '削除', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, class:"btn btn-sm btn-danger" %>
+            <td class="col-md-2 align-middle text-center">
+              <%= link_to '非表示にする', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :patch, class:"btn btn-sm btn-secondary my-1",style:"width:100%" %>
+              <%= link_to '削除する', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, class:"btn btn-sm btn-danger my-1", style:"width:100%" %>
             </td>
           </tr>
         <% end %>
       </table>
-
     </div>
   </div>
 </div>

@@ -9,7 +9,7 @@
         <th>ComuID</th>
         <th>コミュニティ名</th>
         <th>作成者</th>
-        <th>メンバー</th>
+        <th>参加者数</th>
         <th>参加条件設定</th>
         <th></th>
       </thead>
@@ -23,18 +23,7 @@
                 <%= community.owner.last_name %>&nbsp;<%= community.owner.first_name %>
               <% end %>
               </td>
-            <td>
-              <% community.end_users.each do |member| %>
-                <% unless community.owner == member %>
-                  <li style="list-style: none;">
-                    <%= link_to "#{member.last_name + member.first_name }", admin_end_user_path(member) %>
-                    <% if member.is_deleted? %>
-                      <span class="text-danger">&nbsp; ※退会済み</span>
-                    <% end %>
-                  </li>
-                <% end %>
-              <% end %>
-            </td>
+            <td><%= "#{community.end_users.count}" + "人" %></td>
             <td>
               <% community.community_details.each do |detail| %>
                 <% if detail.max_join_number? %>

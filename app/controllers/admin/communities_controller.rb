@@ -1,5 +1,5 @@
 class Admin::CommunitiesController < ApplicationController
-  before_action :find_community, only: [:show, :edit, :update]
+  before_action :find_community, only: [:show, :edit, :update, :destroy]
 
   def index
     @communities = Community.all.order(id: "DESC")
@@ -21,6 +21,11 @@ class Admin::CommunitiesController < ApplicationController
     else
       render edit
     end
+  end
+
+  def destroy
+    @community.destroy
+    redirect_to admin_communities_path
   end
 
   private

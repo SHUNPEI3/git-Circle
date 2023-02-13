@@ -1,7 +1,7 @@
 class Admin::TopicsController < ApplicationController
-  before_action :find_topic, only: [:show, :edit, :update]
+  before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
-  def top
+  def topic_list
     @topics = Topic.all
   end
 
@@ -24,6 +24,11 @@ class Admin::TopicsController < ApplicationController
     else
       render edit
     end
+  end
+
+  def destroy
+    @topic.destroy
+    redirect_to admin_topics_path
   end
 
   private
