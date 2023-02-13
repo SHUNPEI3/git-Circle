@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row m-4">
+    <h2>コミュニティ一覧</h2>
+  </div>
+
+  <div class="row">
+    <table class="table">
+      <thead class="thead-light">
+        <th>ComuID</th>
+        <th>コミュニティ名</th>
+        <th>作成者</th>
+        <th>参加者数</th>
+        <th>参加条件設定</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @communities.each do |community| %>
+          <tr>
+            <td><%= community.id %></td>
+            <td><%= community.name %></td>
+            <td>
+              <%= link_to admin_end_user_path(community.owner) do %>
+                <%= community.owner.last_name %>&nbsp;<%= community.owner.first_name %>
+              <% end %>
+              </td>
+            <td><%= "#{community.end_users.count}" + "人" %></td>
+            <td>
+              <% community.community_details.each do |detail| %>
+                <% if detail.max_join_number? %>
+                 <li>上限数：<%= detail.max_join_number %>人まで</li>
+                <% end %>
+                <% if detail.sex_limit? %>
+                  <li>性別：<%= detail.sex_limit_i18n %></li>
+                <% end %>
+                <% if detail.activity_area_limit? %>
+                  <li>活動地：<%= detail.activity_area_limit_i18n %></li>
+                <% end %>
+                <% if detail.age_min_limit || detail.age_max_limit %>
+                  <li>年齢：<%= detail.age_min_limit %>〜<%= detail.age_max_limit %>歳まで</li>
+                <% end %>
+              <% end %>
+              </td>
+            <td><%= link_to "詳細", admin_community_path(community), class: "btn btn-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   </div>
+
+</div>

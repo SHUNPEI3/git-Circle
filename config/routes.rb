@@ -47,7 +47,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'homes/top', as: 'home'
-    resources 'end_users', only:[:show, :edit, :update]
+    resources 'end_users', only: [:show, :edit, :update]
+    resources 'communities', only: [:index, :show, :edit, :update, :destroy] do
+      resources 'topics', only: [:index, :show, :edit, :update, :destroy] do
+        resources 'topic_comments', only: [:update, :destroy]
+      end
+    end
+    get 'topics/topic_list', as: 'topics'
+    get 'topic_comments/topic_comment_list', as: 'topic_comments'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
