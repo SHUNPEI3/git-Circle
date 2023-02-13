@@ -7,51 +7,38 @@
 
   <div class="row">
     <table class="table">
-      <thead>
-
-      </thead>
-      <tbody>
-        <% @topics.each do |topic| %>
-          <tr>
-            <td class="col-sm-2 align-middle">
-              <% if topic.end_user.active_for_authentication? %>
-                <%= link_to end_user_path(topic.end_user) do %>
-                  <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
-                  <%= topic.end_user.nickname %>
-                <% end %>
-              <% else %>
+      <% @topics.each do |topic| %>
+        <tr>
+          <td class="col-sm-1 align-middle text-center">
+            <% if topic.end_user.active_for_authentication? %>
+              <%= link_to end_user_path(topic.end_user) do %>
                 <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
                 <%= topic.end_user.nickname %>
               <% end %>
-            </td>
-            <td class="col-sm-8 align-middle">
-              <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
-              <% if topic.end_user.active_for_authentication? %>
-                <h4><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
-              <% else %>
-                <h4><%= topic.title.truncate(35) %></h4><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
-              <% end %>
-            </td>
-            <td class="align-bottom">
-              <small>
-                <% if topic.bookmarked_by?(current_end_user) %>
-                  <%= link_to community_topic_bookmarks_path(topic.community,topic), method: :delete do %>
-                    <i class="fas fa-heart"></i>
-                  <% end %>
-                <% else %>
-                  <%= link_to community_topic_bookmarks_path(topic.community,topic), method: :post do %>
-                    <i class="far fa-heart"></i>
-                  <% end %>
-                <% end %>
-                <span>&nbsp;<%= topic.bookmarks.count %></span>
-              </small>
-            </td>
-            <td class="align-bottom">
-              <small><%= "#{topic.topic_comments.count}" + "コメント" %></small>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
+            <% else %>
+              <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
+              <%= topic.end_user.nickname %>
+            <% end %>
+          </td>
+          <td class="col-sm-8 align-middle">
+            <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
+            <% if topic.end_user.active_for_authentication? %>
+              <h4><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
+            <% else %>
+              <h4><%= topic.title.truncate(35) %></h4><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
+            <% end %>
+          </td>
+          <td class="align-bottom">
+            <small id="bookmark_buttons_<%= topic.id %>">
+              <%= render 'public/bookmarks/bookmark', topic: topic %>
+            </small>
+          </td>
+          <td class="align-bottom">
+            <small><%= "#{topic.topic_comments.count}" + "コメント" %></small>
+          </td>
+        </tr>
+      <% end %>
     </table>
   </div>
+
 </div>
