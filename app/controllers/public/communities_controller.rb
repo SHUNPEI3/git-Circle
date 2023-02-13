@@ -3,7 +3,7 @@ class Public::CommunitiesController < ApplicationController
 
   def index
     # order(id: "DESC")で、新規登録順に並び替え
-    @communities = Community.all.order(id: "DESC").page(params[:page]).per(4)
+    @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
   end
 
   def new
