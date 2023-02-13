@@ -16,6 +16,8 @@ class Community < ApplicationRecord
 
   has_many :topic_comments, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+
   def get_community_image(width,height)
     unless community_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -47,6 +49,15 @@ class Community < ApplicationRecord
 
   def self.search_for(content)
     Community.where("name Like?", "%#{content}%")
+  end
+
+  # コミュニティへの招待メソッド（通知を作成）
+  def community_invitation_notification(current_end_user, visited_id, community_id)
+    temp = Notification.where(visitor_id: current_end_user.id, visited_id: visited_id, community_id: community_id)
+    if temp.blank?
+      notification = current_end_user.active_notifications.new(visited_id: visited_id, community_id: community_id, action: "invitation")
+      notification.save if notification.valid?
+    end
   end
 
 end

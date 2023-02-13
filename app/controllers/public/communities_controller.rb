@@ -31,6 +31,7 @@ class Public::CommunitiesController < ApplicationController
 
   def show
     @topics = @community.topics.page(params[:page]).order(id: "DESC").per(5)
+    @other_users = current_end_user.followings
   end
 
   def edit
@@ -44,6 +45,20 @@ class Public::CommunitiesController < ApplicationController
       redirect_to community_path
     else
       render edit
+    end
+  end
+
+  def invitation
+    #binding.pry
+    @community = Community.find(params[:community_id])
+    @user = EndUser.find_by(id: params[:community][:user_id])
+
+    notification = Notification.where(visited_id: @user.id, community_id: @community.id, action: "invitation")
+    unless notification.exists?
+      @community.community_invitation_notification(current_end_user, @user.id, @community.id)
+      redirect_to request.referer, notice: "招待を送りました。"
+    else
+      redirect_to request.referer, alert: "すでに招待しています。"
     end
   end
 
