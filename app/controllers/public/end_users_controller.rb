@@ -20,10 +20,10 @@ class Public::EndUsersController < ApplicationController
     tag_list = params[:end_user][:personal_tag_name].split(nil)
     if @end_user.update(end_user_params)
       @end_user.save_tag(tag_list)
-      flash[:notice] = "保存に成功しました"
+      flash[:notice] = "更新に成功しました"
       redirect_to end_user_path(@end_user)
     else
-      flash[:alert] = "保存に失敗しました"
+      flash[:alert] = "更新に失敗しました"
       render 'edit'
     end
   end

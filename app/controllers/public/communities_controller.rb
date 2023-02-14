@@ -2,7 +2,6 @@ class Public::CommunitiesController < ApplicationController
   before_action :find_community, only: [:show, :edit, :update]
 
   def index
-    # order(id: "DESC")で、新規登録順に並び替え
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
   end
 
@@ -17,14 +16,16 @@ class Public::CommunitiesController < ApplicationController
     community.end_users << current_end_user
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
-    # 年齢制限入力欄の確認用　※後でモデルに書く！
+    # 年齢制限入力欄の確認
     ## if community.community_details.age_min_limit < community.community_details.age_max_limit ではだめ。。
     if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
       if community.save
         community.save_tag(tag_list)
+        flash[:notice] = "作成完了しました！"
         redirect_to communities_path
       else
-        render new
+        flash[:alert] = "作成に失敗しました"
+        render "new"
       end
     end
   end
@@ -42,21 +43,20 @@ class Public::CommunitiesController < ApplicationController
     tag_list = params[:community][:community_tag_name].split(nil)
     if @community.update(community_params)
       @community.save_tag(tag_list)
-      redirect_to community_path
+      redirect_to community_path, notice: "更新完了しました！"
     else
-      render edit
+      flash[:alert] = "更新に失敗しました"
+      render 'edit'
     end
   end
 
   def invitation
-    #binding.pry
     @community = Community.find(params[:community_id])
     @user = EndUser.find_by(id: params[:community][:user_id])
-
     notification = Notification.where(visited_id: @user.id, community_id: @community.id, action: "invitation")
     unless notification.exists?
       @community.community_invitation_notification(current_end_user, @user.id, @community.id)
-      redirect_to request.referer, notice: "招待を送りました。"
+      redirect_to request.referer, notice: "招待を送りました！！"
     else
       redirect_to request.referer, alert: "すでに招待しています。"
     end
