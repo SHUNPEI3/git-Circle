@@ -1,2 +1,19 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 border mt-5">
+      <h1 class="m-5">［画像］</h1>
+      <h1 class="font-weight-bold m-3">あなたとだれかを繋ぐ場所</h1>
+      <h1 class="font-weight-bold m-3">さぁ、始めてみよう！</h1>
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-md-4 border rounded-lg mt-2">
+      <div class="rounded-pill bg-warning  text-center m-4 p-3">
+        <%= link_to "新規登録はこちら！", new_end_user_registration_path, class:'text-light font-weight-bold' %>
+      </div>
+      <div class="border rounded-pill text-center m-4 p-1">
+        <%= link_to "アカウントをお持ちの方", new_end_user_session_path, class:'text-warning font-weight-bold' %>
+      </div>
+    </div>
+  </div>
+</div>

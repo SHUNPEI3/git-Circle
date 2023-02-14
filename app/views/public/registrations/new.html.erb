@@ -1,72 +1,71 @@
 <div class="container">
-  <div class="row m-4">
-    <h2><i class="fas fa-user-plus"></i>&nbsp;ユーザー登録</h2>
+  <div class="row justify-content-center">
+    <h2 class="m-5"><i class="fas fa-user-plus"></i>&nbsp;ユーザー登録</h2>
   </div>
 
   <%= form_with model:@end_user, url: registration_path(resource_name) do |f| %>
-    <%= render "public/shared/error_messages", resource: resource %>
-    <div class="row">
-      <table class="table">
-        <tr>
-          <th class="align-middle pl-5">名前</th>
-          <td>
-            <%= f.label :last_name, "姓：" %><%= f.text_field :last_name, autofocus: true, placeholder:"田中", class:"d-inline form-control w-25" %>&nbsp;
-            <%= f.label :first_name, "名：" %><%= f.text_field :first_name, placeholder:"太郎", class:"d-inline form-control w-25" %>
-          </td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5">フリガナ</th>
-          <td>
-            <%= f.label :last_name_kana, "姓：" %><%= f.text_field :last_name_kana, placeholder:"タナカ", class:"d-inline form-control w-25" %>&nbsp;
-            <%= f.label :first_name_kana, "名：" %><%= f.text_field :first_name_kana, placeholder:"タロウ", class:"d-inline form-control w-25" %>
-          </td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :nickname, "ニックネーム", class:"col-form-label" %></th>
-          <td><%= f.text_field :nickname, placeholder:"たなやん", class:"form-control w-50" %></td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :age, "年齢", class:"col-form-label" %></th>
-          <td><%= f.select :age, options_for_select((18..100).to_a), {include_blank: "選択してください"}, class:"d-inline form-control w-25" %>&nbsp;歳</td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :sex, "性別", class:"col-form-label" %></th>
-          <td><%= f.select :sex, options_for_select(EndUser.sexes_i18n.invert), {include_blank: "選択してください"}, class:"form-control w-25" %></td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :activity_area, "主な活動エリア", class:"col-form-label" %></th>
-          <td><%= f.select :activity_area, options_for_select(EndUser.activity_areas_i18n.invert), {include_blank: "選択してください"}, class:"form-control w-25"%></td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :introduction, "自己紹介", class:"col-form-label" %></th>
-          <td><%= f.text_area :introduction, rows:"4", class:"form-control" %></td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :personal_tag_name, "パーソナルタグ", class:"col-form-label" %></th>
-          <td>
-            <%= f.text_field :personal_tag_name, placeholder:"例）スポーツ 音楽", class:"form-control w-50" %>
-            <small> ※半角スペースを入力することで、複数のタグを付けることができます</small>
-          </td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :email, "メールアドレス", class:"col-form-label" %></th>
-          <td><%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", class:"form-control w-50" %></td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :password, "パスワード(#{@minimum_password_length}文字以上)", class:"col-form-label" %></th>
-          <td><%= f.password_field :password, autocomplete: "new-password", class:"form-control w-50" %></td>
-        </tr>
-        <tr>
-          <th class="align-middle pl-5"><%= f.label :password_confirmation, "パスワード確認", class:"col-form-label" %></th>
-          <td ><%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control w-50" %></td>
-        </tr>
-      </table>
-    </div>
     <div class="row justify-content-center">
-      <%= f.submit "新規登録", class:"btn btn-primary", style:"width: 30%" %>
+      <%= render "public/shared/error_messages", resource: resource %>
+
+      <div class="col-lg-6">
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <small><%= f.label :last_name, "姓" %></small><%= f.text_field :last_name, autofocus: true, placeholder:"田中", class:"form-control" %>
+          </div>
+          <div class="form-group col-md-6">
+            <small><%= f.label :first_name, "名" %></small><%= f.text_field :first_name, placeholder:"太郎", class:"form-control" %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <small><%= f.label :last_name_kana, "セイ" %></small><%= f.text_field :last_name_kana, placeholder:"タナカ", class:"form-control" %>
+          </div>
+          <div class="form-group col-md-6">
+            <small><%= f.label :first_name_kana, "メイ" %></small><%= f.text_field :first_name_kana, placeholder:"タロウ", class:"form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :nickname, "ニックネーム", class:"col-form-label" %></small>
+          <%= f.text_field :nickname, placeholder:"ニックネームを入力", class:"form-control" %>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <small><%= f.label :age, "年齢", class:"col-form-label" %></small>
+            <%= f.select :age, options_for_select((18..100).to_a), {include_blank: "選択してください"}, class:"d-inline form-control" %>
+          </div>
+          <div class="form-group col-md-6">
+            <small><%= f.label :sex, "性別", class:"col-form-label" %></small>
+            <%= f.select :sex, options_for_select(EndUser.sexes_i18n.invert), {include_blank: "選択してください"}, class:"form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :activity_area, "主な活動エリア", class:"col-form-label" %></small>
+          <%= f.select :activity_area, options_for_select(EndUser.activity_areas_i18n.invert), {include_blank: "選択してください"}, class:"form-control", style:"width:70%" %>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :personal_tag_name, "パーソナルタグ", class:"col-form-label" %></small>
+          <%= f.text_field :personal_tag_name, placeholder:"例）スポーツ 音楽", class:"form-control" %>
+          <small> ※半角スペースを入力することで、複数のタグを付けることができます</small>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :introduction, "自己紹介", class:"col-form-label" %></small>
+          <%= f.text_area :introduction, rows:"4", class:"form-control" %>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :email, "メールアドレス", class:"col-form-label" %></small>
+          <%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", class:"form-control" %>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :password, "パスワード(半角#{@minimum_password_length}文字以上)", class:"col-form-label" %></small>
+          <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :password_confirmation, "パスワード確認", class:"col-form-label" %></small>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control" %>
+        </div>
+        <%= f.submit "新規登録", class:"btn btn-primary mt-3 py-2", style:"width: 100%" %>
+      </div>
     </div>
   <% end %>
-
-  <h5>既に登録済みの方</h5>
-  <%= render "public/shared/links" %>
 </div>

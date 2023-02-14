@@ -1,4 +1,5 @@
 class Public::EndUsersController < ApplicationController
+  before_action :authenticate_end_user!
   before_action :find_end_user, only: [:show, :edit, :update, :follower, :bookmark, :unsubscribe, :withdraw]
   before_action :ensure_guest_user, only: [:edit, :update]
 

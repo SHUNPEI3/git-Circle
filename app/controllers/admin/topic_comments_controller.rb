@@ -1,4 +1,5 @@
 class Admin::TopicCommentsController < ApplicationController
+  before_action :authenticate_admin!
 
   def topic_comment_list
     @topic_comments = TopicComment.all

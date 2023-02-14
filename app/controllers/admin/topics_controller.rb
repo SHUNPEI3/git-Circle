@@ -1,4 +1,5 @@
 class Admin::TopicsController < ApplicationController
+  before_action :authenticate_admin!
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def topic_list
