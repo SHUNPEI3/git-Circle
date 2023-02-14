@@ -1,11 +1,11 @@
 <small class="mx-2">
   <% if comment.good_by?(current_end_user) %>
     <%= link_to community_topic_topic_comment_goods_path(comment.topic.community, comment.topic, comment), method: :delete, remote: true do %>
-      <i class="fas fa-heart"></i>
+      <i class="fas fa-thumbs-up"></i>
     <% end %>
   <% else %>
     <%= link_to community_topic_topic_comment_goods_path(comment.topic.community, comment.topic, comment), method: :post, remote: true  do %>
-      <i class="far fa-heart"></i>
+      <i class="far fa-thumbs-up"></i>
     <% end %>
   <% end %>
   <span>&nbsp;<%= comment.goods.count %></span>

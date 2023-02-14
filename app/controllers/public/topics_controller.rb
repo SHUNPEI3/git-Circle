@@ -12,11 +12,15 @@ class Public::TopicsController < ApplicationController
   end
 
   def create
-    community = Community.find(params[:community_id])
-    topic = current_end_user.topics.new(topic_params)
-    topic.community_id = community.id
-    if topic.save
+    @community = Community.find(params[:community_id])
+    @topic = current_end_user.topics.new(topic_params)
+    @topic.community_id = @community.id
+    if @topic.save
+      flash[:notice] = "投稿完了しました！"
       redirect_to community_topics_path
+    else
+      flash[:alert] = "投稿に失敗しました"
+      render 'new'
     end
   end
 
@@ -31,9 +35,11 @@ class Public::TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
+      flash[:notice] = "投稿完了しました！"
       redirect_to community_topic_path(@topic.community_id, @topic)
     else
-      render edit
+      flash[:alert] = "投稿に失敗しました"
+      render 'edit'
     end
   end
 

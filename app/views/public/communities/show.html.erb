@@ -16,7 +16,7 @@
                 <%= f.submit "招待する", class:"btn btn-primary mt-2 py-1", style:"width: 100%" %>
               <% end %>
             <% elsif @community.already_joined?(current_end_user) %>
-              <%= link_to '退出する', community_community_users_path(@community), method: :delete, data: { confilm: "本当に退出しますか？" }, class: "btn btn-danger", style:"width: 100%" %>
+              <%= link_to '退出する', community_community_users_path(@community), method: :delete, data: {confirm: "本当にを退出しますか？"}, class: "btn btn-danger", style:"width: 100%" %>
             <% else %>
               <%= link_to '参加する', community_community_users_path(@community), method: :post, class: "btn btn-success", style:"width: 100%" %>
             <% end %>
