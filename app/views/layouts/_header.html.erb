@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-warning p-2">
   <div class="container">
-    <a class="navbar-brand" href="/">Navbar</a>
+    <a class="navbar-brand" href="/">
+      <img src="/assets/logo.png" width="140" height="60" class="d-inline-block align-top" alt="Logo">
+    </a>
     <div class="collapse navbar-collapse" id="navmenu">
       <ul class="navbar-nav ml-auto">
         <% if admin_signed_in? %>
@@ -14,23 +16,23 @@
             <%= link_to "トピックス一覧", admin_topics_path, class:'nav-link text-light mx-2' %>
           </li>
           <li>
-            <%= link_to "コメント一覧", admin_topic_comments_path, class:'nav-link text-light mx-2' %>
+            <%= link_to "コメント一覧", admin_topic_comments_path, class:'nav-link text-light font-weight-bold mx-2' %>
           </li>
           <li>
-            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:'nav-link text-light mx-2' %>
+            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:'nav-link text-light font-weight-bold mx-2' %>
           </li>
         <% elsif end_user_signed_in? %>
           <li>
-            <%= link_to "コミュニティを探す", communities_path, class:'nav-link text-light mx-2' %>
+            <%= link_to "コミュニティを探す", communities_path, class:'nav-link text-light font-weight-bold mx-2' %>
           </li>
           <li>
-            <%= link_to "ユーザーを探す", end_users_path, class:'nav-link text-light mx-2' %>
+            <%= link_to "ユーザーを探す", end_users_path, class:'nav-link text-light font-weight-bold mx-2' %>
           </li>
-          <li>
-            <%= link_to "マイページ", end_user_path(current_end_user), class:'nav-link text-light mx-2' %>
+          <li class="border rounded-pill bg-white mx-2">
+            <%= link_to "マイページ", end_user_path(current_end_user), class:'nav-link text-warning font-weight-bold mx-2' %>
           </li>
-          <li>
-            <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class:'nav-link text-light mx-2' %>
+          <li class="border rounded-pill mx-2">
+            <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class:'nav-link text-light font-weight-bold mx-2' %>
           </li>
         <% else %>
           <li class="border rounded-pill bg-white mx-2">

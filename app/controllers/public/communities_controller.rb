@@ -1,5 +1,6 @@
 class Public::CommunitiesController < ApplicationController
   before_action :find_community, only: [:show, :edit, :update]
+  before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
@@ -77,4 +78,12 @@ class Public::CommunitiesController < ApplicationController
   def find_community
     @community = Community.find(params[:id])
   end
+
+  def is_matching_community_owner
+    @community = Community.find(params[:id])
+    unless @community.owner == current_end_user
+     redirect_to end_user_path(current_end_user), notice: '作成者以外はコミュニティ編集画面へ遷移できません。'
+    end
+  end
+
 end

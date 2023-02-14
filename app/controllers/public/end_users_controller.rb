@@ -1,6 +1,7 @@
 class Public::EndUsersController < ApplicationController
   before_action :authenticate_end_user!
   before_action :find_end_user, only: [:show, :edit, :update, :follower, :bookmark, :unsubscribe, :withdraw]
+  before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit, :update]
 
   def index
@@ -10,6 +11,7 @@ class Public::EndUsersController < ApplicationController
 
   def show
     @community_users = @end_user.community_users.order(id: "DESC").page(params[:page]).per(6)
+    @topics = @end_user.topics.order(id: "DESC").page(params[:page]).per(6)
   end
 
   def edit
@@ -60,6 +62,12 @@ class Public::EndUsersController < ApplicationController
   def ensure_guest_user
     if @end_user.last_name == "guest" && @end_user.first_name == "user" && @end_user.nickname == "ゲストユーザー"
       redirect_to end_user_path(current_end_user) , notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    end
+  end
+
+  def is_matching_login_user
+    unless current_end_user.id == params[:id].to_i
+     redirect_to end_user_path(current_end_user), notice: '他のユーザーはプロフィール編集画面へ遷移できません。'
     end
   end
 

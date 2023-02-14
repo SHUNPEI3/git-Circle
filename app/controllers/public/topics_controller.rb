@@ -1,6 +1,7 @@
 class Public::TopicsController < ApplicationController
-  before_action :ensure_community_mennber, only: [:index, :show]
   before_action :find_topic, only: [:show, :edit, :update]
+  before_action :ensure_community_mennber, only: [:index, :show, :edit]
+  before_action :is_matching_topic_author, only: [:edit, :update]
 
   def index
     @topics = Topic.where(community_id: params[:community_id])
@@ -61,4 +62,12 @@ class Public::TopicsController < ApplicationController
       redirect_to request.referer
     end
   end
+
+  def is_matching_topic_author
+    @topic = Topic.find(params[:id])
+    unless @topic.end_user == current_end_user
+     redirect_to end_user_path(current_end_user), notice: '投稿者以外はトピック編集画面へ遷移できません。'
+    end
+  end
+
 end

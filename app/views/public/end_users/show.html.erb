@@ -1,6 +1,10 @@
 <div class="container">
   <div class="row m-4">
-    <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
+    <% if @end_user == current_end_user %>
+      <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
+    <% else %>
+      <h2><i class="fas fa-user"></i>&nbsp; <%= @end_user.nickname %> さんの詳細ページ</h2>
+    <% end %>
   </div>
   <div class="row justify-content-around">
     <div class="col-md-4">
@@ -66,8 +70,13 @@
               <h6><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h6>
             </div>
             <div id="contents3" class="tab-pane">
-              <p>最近の投稿</p>
-           </div>
+              <% @topics.each do |topic|  %>
+                <div class="d-flex justify-content-between mt-2">
+                  <h6><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h6>
+                  <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
+                </div>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
