@@ -2,89 +2,88 @@
   <div class="row m-4">
     <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
   </div>
-
   <div class="row justify-content-around">
-    <div class="col-md-3">
-
-      <%= image_tag @end_user.get_profile_image(220, 220), class:"d-block mx-auto img-thumbnail" %>
-
-      <div class="row justify-content-center mt-3">
+    <div class="col-md-4">
+      <div class="row justify-content-center">
+        <%= image_tag @end_user.get_profile_image(240, 240), class:"img-thumbnail" %>
         <div>
           <span><i class="fas fa-bookmark"></i><%= link_to "ブックマーク(#{@end_user.bookmarks.count})",bookmark_end_user_path(@end_user) %>&nbsp;</span>
           <span class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></span>
         </div>
-      </div>
-
-      <div class="row justify-content-center mt-3">
         <% unless current_end_user.guest_user? %>
           <div class="col-md-10 text-center">
             <% if @end_user == current_end_user %>
-              <%= link_to '編集する', edit_end_user_path(@end_user), class: "btn btn-success my-2", style:"width: 100%" %>
-              <%= link_to  notifications_path, class: "btn btn-outline-danger my-2", style:"width: 100%" do %>
+              <%= link_to 'プロフィール編集', edit_end_user_path(@end_user), class: "btn btn-success my-2", style:"width: 85%" %>
+              <%= link_to  notifications_path, class: "btn btn-outline-danger my-2", style:"width: 85%" do %>
                 <% if unchecked_notifications.any? %>
                   新着メッセージが届いています！
                 <% else %>
-                  新着メッセージはありません
+                  メッセージを確認する
                 <% end %>
               <% end %>
             <% end %>
           </div>
-          <div class="col-md-10 text-center" id="favorite-buttons-<%= @end_user.id %>">
+          <div class="col-md-10 text-center mt-2" id="favorite-buttons-<%= @end_user.id %>">
             <%= render "public/relationships/favorite_btn", end_user: @end_user %>
           </div>
         <% end %>
       </div>
-
-
     </div>
-
-    <div class="col-md-8 border rounded-lg">
-      <table class="table table-borderless table-sm m-3">
-        <tr>
-          <th>ニックネーム</th>
-          <td><%= @end_user.nickname %></td>
-       </tr>
-        <tr>
-          <th>年齢</th>
-          <td><%= (@end_user.age).to_s + "歳" %></td>
-        </tr>
-        <tr>
-          <th>性別</th>
-          <td><%= @end_user.sex_i18n %></td>
-        </tr>
-        <tr>
-          <th>主な活動エリア</th>
-          <td><%= @end_user.activity_area_i18n %></td>
-        </tr>
-        <tr>
-          <th>マイタグ</th>
-          <td>
-            <% @end_user.personal_tags.each do |personal_tag| %>
-              &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <th>自己紹介</th>
-          <td><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></td>
-        </tr>
-      </table>
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a href="#contents1" class="nav-link active" data-toggle="tab">基本情報</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contents2" class="nav-link" data-toggle="tab">自己紹介</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contents3" class="nav-link" data-toggle="tab">タブ3</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div id="contents1" class="tab-pane active">
+              <table class="table table-borderless">
+                <tr><th>ニックネーム</th><td><%= @end_user.nickname %></td></tr>
+                <tr><th>年齢</th><td><%= (@end_user.age).to_s + "歳" %></td></tr>
+                <tr><th>性別</th><td><%= @end_user.sex_i18n %></td></tr>
+                <tr><th>主な活動エリア</th><td><%= @end_user.activity_area_i18n %></td></tr>
+                <tr>
+                  <th>マイタグ</th>
+                  <td>
+                    <% @end_user.personal_tags.each do |personal_tag| %>
+                      &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div id="contents2" class="tab-pane">
+              <p><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></p>
+            </div>
+            <div id="contents3" class="tab-pane">
+              <p>タブ3のコンテンツ</p>
+           </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="container">
-    <div class="row mt-4">
-      <div class="col-md-3">
-        <h4 class="ml-5">所属コミュニティ</h4>
-      </div>
+    <div class="row offset-md-1 mt-3">
+      <h5>最近のコミュニティ加入履歴</h5>
     </div>
-
-    <div class="row mt-3">
-      <% @end_user.communities.each do |community| %>
-        <div class="col-md-2 shadow p-3 ml-5">
-          <%= link_to community_path(community) do %>
-            <%= image_tag community.get_community_image(150, 150), class:"d-block mx-auto img-thumbnail" %>
-            <h4 class="text-center mt-3"><%= community.name %></h4>
+    <div class="row offset-md-1 mt-3">
+      <% @community_users.each do |community_user| %>
+        <div class="col-md-2 text-center">
+          <%= link_to community_path(community_user.community) do %>
+            <%= image_tag community_user.community.get_community_image(125, 125), class:"img-thumbnail" %>
+            <h6 class=" mt-2"><%= community_user.community.name %></h6>
           <% end %>
         </div>
       <% end %>

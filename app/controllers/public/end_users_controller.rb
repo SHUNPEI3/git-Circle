@@ -4,12 +4,12 @@ class Public::EndUsersController < ApplicationController
   before_action :ensure_guest_user, only: [:edit, :update]
 
   def index
-    # whereメソッドで退会ではないユーザーを取得
-    # order(id: "DESC")で、新規登録順に並び替え
-    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(4)
+    # whereメソッドで退会ではないユーザーを取得 + order(id: "DESC")で、新規登録順に並び替え
+    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(8)
   end
 
   def show
+    @community_users = @end_user.community_users.order(id: "DESC").page(params[:page]).per(6)
   end
 
   def edit
@@ -20,9 +20,11 @@ class Public::EndUsersController < ApplicationController
     tag_list = params[:end_user][:personal_tag_name].split(nil)
     if @end_user.update(end_user_params)
       @end_user.save_tag(tag_list)
+      flash[:notice] = "保存に成功しました"
       redirect_to end_user_path(@end_user)
     else
-      render edit
+      flash[:alert] = "保存に失敗しました"
+      render 'edit'
     end
   end
 

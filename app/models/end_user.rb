@@ -14,7 +14,6 @@ class EndUser < ApplicationRecord
 
   has_many :topics, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
-
   has_many :topic_comments, dependent: :destroy
   has_many :goods, dependent: :destroy
 
@@ -22,14 +21,22 @@ class EndUser < ApplicationRecord
   has_many :followings, through: :active_relationships, source: :follower
   has_many :passive_relationships, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :following
-  
+
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
+
+
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+  validates :first_name_kana, presence: true
+  validates :last_name_kana, presence: true
+  validates :nickname, presence: true
+  validates :age, presence: true
+
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
   }
-
   enum activity_area: {
     activity_area_secret: 0,
     hokkaido: 1, aomori: 2, iwate: 3, miyagi: 4, akita: 5, yamagata: 6, fukushima: 7,
@@ -40,6 +47,7 @@ class EndUser < ApplicationRecord
     tokushima: 36, kagawa: 37, ehime: 38, kochi: 39,
     fukuoka: 40, saga: 41, nagasaki: 42, kumamoto: 43, oita: 44, miyazaki: 45, kagoshima: 46, okinawa: 47
   }
+
 
   def get_profile_image(width,height)
     unless profile_image.attached?

@@ -25,7 +25,7 @@ class Public::CommunityUsersController < ApplicationController
       ensure_limit_of_sex
     # それ以外の場合は加入できない
     else
-      flash[:notice] = '参加上限数に達したため、加入ができません'
+      flash[:alert] = '参加上限数に達したため、加入ができません'
       redirect_to request.referer
     end
   end
@@ -35,7 +35,7 @@ class Public::CommunityUsersController < ApplicationController
     if (@community_detail.sex_limit == nil) || (@community_detail.sex_limit_before_type_cast == (@current_end_user.sex_before_type_cast - 1))
       ensure_limit_of_area
     else
-      flash[:notice] = '参加条件(性別）に一致していないため、加入ができません'
+      flash[:alert] = '参加条件(性別）に一致していないため、加入ができません'
       redirect_to request.referer
     end
   end
@@ -45,7 +45,7 @@ class Public::CommunityUsersController < ApplicationController
     if (@community_detail.activity_area_limit) == nil || (@community_detail.activity_area_limit_before_type_cast == (@current_end_user.activity_area_before_type_cast - 1))
      ensure_limit_of_age
     else
-      flash[:notice] = '参加条件（活動エリア）に一致していないため、加入ができません'
+      flash[:alert] = '参加条件（活動エリア）に一致していないため、加入ができません'
       redirect_to request.referer
     end
   end
@@ -68,11 +68,11 @@ class Public::CommunityUsersController < ApplicationController
       redirect_to community_path(@community)
       community_invitation_notification_delete
       else
-        flash[:notice] = '参加条件（年齢）に一致していないため、加入ができません'
+        flash[:alert] = '参加条件（年齢）に一致していないため、加入ができません'
         redirect_to request.referer
       end
     else
-      flash[:notice] = '参加条件（年齢）に一致していないため、加入ができません'
+      flash[:alert] = '参加条件（年齢）に一致していないため、加入ができません'
       redirect_to request.referer
     end
   end
