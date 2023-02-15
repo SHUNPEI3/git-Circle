@@ -20,7 +20,7 @@
               <%= link_to 'プロフィール編集', edit_end_user_path(@end_user), class: "btn btn-success my-2", style:"width: 85%" %>
               <%= link_to  notifications_path, class: "btn btn-outline-danger my-2", style:"width: 85%" do %>
                 <% if unchecked_notifications.any? %>
-                  新着メッセージが届いています！
+                  新着メッセージがあります！
                 <% else %>
                   メッセージを確認する
                 <% end %>
