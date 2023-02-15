@@ -24,9 +24,9 @@
       <% unless end_user.guest_user? %>
         <div class="col-md-3 mb-3" >
           <div class="card shadow">
-            <%= image_tag end_user.get_profile_image(200, 200), class:"card-img-top p-1" %>
+            <%= image_tag end_user.get_profile_image(180, 180), class:"card-img-top p-1" %>
             <div class="card-body">
-              <h4 class="card-title text-center"><%= link_to end_user.nickname, end_user_path(end_user) %></h4>
+              <h4 class="card-title text-info"><%= end_user.nickname %></h4>
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">年齢：<%= (end_user.age).to_s + "歳" %></li>
@@ -38,6 +38,9 @@
                 <% end %>
               </li>
             </ul>
+            <div class="card-body">
+              <%= link_to '詳細をチェック', end_user_path(end_user), class:"btn btn-info" %></h4>
+            </div>
           </div>
         </div>
       <% end %>

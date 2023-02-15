@@ -13,10 +13,14 @@ class Community < ApplicationRecord
   has_many :tags, through: :community_tags
 
   has_many :topics, dependent: :destroy
-
   has_many :topic_comments, dependent: :destroy
 
   has_many :notifications, dependent: :destroy
+
+
+  validates :name, presence: true
+  validates :introduction, presence: true
+
 
   def get_community_image(width,height)
     unless community_image.attached?

@@ -1,15 +1,17 @@
 <div class="container">
-  <div class="row m-4">
-    <h2><i class="fas fa-star"></i>&nbsp;トピック一覧</h2>
+  <div class="row justify-content-between m-4">
+    <h2><i class="fas fa-memo"></i>&nbsp;トピック一覧</h2>
+    <h4 class="mt-3">
+      <%= link_to new_community_topic_path, class:"" do  %>
+        <i class="fas fa-plus"></i>&nbsp;新規投稿
+      <% end %>
+    </h4>
   </div>
-
-  <%= link_to 'トピックを作成する', new_community_topic_path %>
-
   <div class="row">
     <table class="table">
       <% @topics.each do |topic| %>
         <tr>
-          <td class="col-sm-1 align-middle text-center">
+          <td class="align-middle text-center", style="width: 10%">
             <% if topic.end_user.active_for_authentication? %>
               <%= link_to end_user_path(topic.end_user) do %>
                 <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
@@ -20,7 +22,7 @@
               <%= topic.end_user.nickname %>
             <% end %>
           </td>
-          <td class="col-sm-8 align-middle">
+          <td class="align-middle", style="width: 65%">
             <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
             <% if topic.end_user.active_for_authentication? %>
               <h4><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
@@ -28,17 +30,16 @@
               <h4><%= topic.title.truncate(35) %></h4><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
             <% end %>
           </td>
-          <td class="align-bottom">
+          <td class="align-bottom", style="width: 10%">
             <small id="bookmark-buttons-<%= topic.id %>">
               <%= render 'public/bookmarks/bookmark', topic: topic %>
             </small>
           </td>
-          <td class="align-bottom">
-            <small><%= "#{topic.topic_comments.count}" + "コメント" %></small>
+          <td class="align-bottom", style="width: 15%">
+            <small><i class="far fa-comments"></i>&nbsp;&nbsp;<%= "#{topic.topic_comments.count}" + "コメント" %></small>
           </td>
         </tr>
       <% end %>
     </table>
   </div>
-
 </div>

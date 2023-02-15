@@ -1,6 +1,7 @@
 class Public::TopicsController < ApplicationController
-  before_action :ensure_community_mennber, only: [:index, :show]
   before_action :find_topic, only: [:show, :edit, :update]
+  before_action :ensure_community_mennber, only: [:index, :show, :edit]
+  before_action :is_matching_topic_author, only: [:edit, :update]
 
   def index
     @topics = Topic.where(community_id: params[:community_id])
@@ -12,11 +13,15 @@ class Public::TopicsController < ApplicationController
   end
 
   def create
-    community = Community.find(params[:community_id])
-    topic = current_end_user.topics.new(topic_params)
-    topic.community_id = community.id
-    if topic.save
+    @community = Community.find(params[:community_id])
+    @topic = current_end_user.topics.new(topic_params)
+    @topic.community_id = @community.id
+    if @topic.save
+      flash[:notice] = "投稿完了しました！"
       redirect_to community_topics_path
+    else
+      flash[:alert] = "投稿に失敗しました"
+      render 'new'
     end
   end
 
@@ -31,9 +36,11 @@ class Public::TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
+      flash[:notice] = "投稿完了しました！"
       redirect_to community_topic_path(@topic.community_id, @topic)
     else
-      render edit
+      flash[:alert] = "投稿に失敗しました"
+      render 'edit'
     end
   end
 
@@ -55,4 +62,12 @@ class Public::TopicsController < ApplicationController
       redirect_to request.referer
     end
   end
+
+  def is_matching_topic_author
+    @topic = Topic.find(params[:id])
+    unless @topic.end_user == current_end_user
+     redirect_to end_user_path(current_end_user), notice: '投稿者以外はトピック編集画面へ遷移できません。'
+    end
+  end
+
 end

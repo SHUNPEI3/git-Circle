@@ -5,16 +5,16 @@
 
   <%= form_with model:@end_user, url: end_user_path(@end_user), methd: :patch do |f| %>
     <div class="row">
-      <div class="col-md-3">
-        <%= image_tag @end_user.get_profile_image(250, 250) %>
+      <div class="col-md-3 text-center">
+        <%= image_tag @end_user.get_profile_image(250, 250), class:"img-thumbnail" %>
         <%= f.label :profile_image do %>
-          <span class="text-primary ml-5"><i class="fas fa-camera"></i>&nbsp;画像を選択する</span>
+          <span class="text-primary"><i class="fas fa-camera"></i>&nbsp;画像を選択する</span>
           <%= f.file_field :profile_image, accept:'image/*', style:"display:none;" %>
         <% end %>
       </div>
 
       <div class="col-md-9">
-        <table class="table">
+        <table class="table table-borderless">
           <tr>
             <th class="align-middle pl-3">名前</th>
             <td>
@@ -31,7 +31,7 @@
           </tr>
           <tr>
             <th class="align-middle pl-3"><%= f.label :nickname, "ニックネーム", class:"col-form-label" %></th>
-            <td><%= f.text_field :nickname, placeholder:"たなやん", class:"form-control w-50" %></td>
+            <td><%= f.text_field :nickname, placeholder:"ニックネームを入力", class:"form-control w-50" %></td>
           </tr>
           <tr>
             <th class="align-middle pl-3"><%= f.label :age, "年齢", class:"col-form-label" %></th>
@@ -65,8 +65,8 @@
 
     </div>
     <div class="row justify-content-center">
-      <%= f.submit "変更を保存する", class:"btn btn-primary mx-5" %>
-      <%= link_to "退会する", unsubscribe_end_user_path(@end_user), class: "btn btn-secondary mx-5" %>
+      <%= f.submit "変更を保存する", class:"btn btn-primary mx-5 py-2", style:"width:30%" %>
+      <%= link_to "退会する", unsubscribe_end_user_path(@end_user), class: "btn btn-secondary mx-5 py-2" %>
     </div>
   <% end %>
 </div>
