@@ -35,7 +35,7 @@
             <li class="list-group-item"><i class="fas fa-user"></i>&nbsp;&nbsp;<%= (community.end_users.count).to_s + "人が参加中" %></li>
             <li class="list-group-item"><i class="fas fa-tag"></i>
               <% community.tags.each do |community_tag| %>
-                 &nbsp;<%= link_to "#{"#" + community_tag.name}", search_community_tag_community_path(community_tag) %>
+                 &nbsp;<%= link_to "#" + community_tag.name, search_community_tag_community_path(community_tag) %>
               <% end %>
             </li>
           </ul>

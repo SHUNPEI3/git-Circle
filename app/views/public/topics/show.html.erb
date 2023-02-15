@@ -3,7 +3,7 @@
     <h2><i class="fas fa-user-group"></i>&nbsp;トピック詳細</h2>
   </div>
   <div class="row justify-content-around">
-    <div class="col-md-2 text-center">
+    <div class="col-sm-2 text-center">
       <%= link_to end_user_path(@topic.end_user) do %>
         <%= image_tag @topic.end_user.get_profile_image(120, 120), class:"img-thumbnail" %>
         <h5><%= @topic.end_user.nickname %></h5>
@@ -14,12 +14,12 @@
         <% end %>
       </div>
     </div>
-    <div class="col-md-9">
-      <div class="col-md-10">
+    <div class="col-sm-9">
+      <div class="col-sm-10">
         <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d\ %R") %></p>
         <h3 class="font-weight-bold"><%= @topic.title %></h3>
       </div>
-      <div class="col-md-12 py-3">
+      <div class="col-sm-12 py-3">
         <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
         <div class="row justify-content-end mx-2">
           <small class="mx-2" id="bookmark-buttons-<%= @topic.id %>"><%= render 'public/bookmarks/bookmark', topic: @topic %></small>
@@ -29,10 +29,10 @@
     </div>
   </div>
   <div class="row m-4">
-    <div class="topic-comments-index col-md-12 px-5">
+    <div class="topic-comments-index col-sm-12">
       <%= render 'public/topic_comments/comment_index', topic: @topic %>
     </div>
-    <div class="col-md-12 px-5 ">
+    <div class="col-sm-12 px-5 ">
       <%= render 'public/topic_comments/comment_form', community: @community, topic: @topic, topic_comment: @topic_comment %>
     </div>
   </div>
