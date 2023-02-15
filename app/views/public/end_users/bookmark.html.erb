@@ -1,35 +1,45 @@
 <div class="container">
   <div class="row m-4">
-    <h2><i class="fas fa-user"></i>&nbsp;Users#bookmarks</h2>
+    <h2><i class="fas fa-bookmark"></i>&nbsp;<%=@end_user.nickname %>&nbsp;さんのブックマーク</h2>
   </div>
-
   <div class="row">
-
-    <table class="table">
-      <thead>
+    <table class="table table-hover">
+      <thead class="thead-light">
         <tr>
-          <th class="col-md-5">トピック名</th>
-          <th class="col-md-2">コメント数</th>
-          <th class="col-md-3">コミュニティ名</th>
-          <th class="col-md-2">タグ</th>
+          <th class="text-center", style="width: 10%">投稿者</th>
+          <th style="width: 90%", colspan="3">トピック名</th>
         </tr>
       </thead>
       <tbody>
         <% @bookmarks.each do |bookmark| %>
           <tr>
-            <td>
-            <% unless bookmark.topic.end_user.is_deleted %>
-              <%= link_to bookmark.topic.title, community_topic_path(bookmark.topic.community,bookmark.topic) %>
-            <% else %>
-              <%= bookmark.topic.title %><br><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
-            <% end %>
-            </td>
-            <td><%= "#{bookmark.topic.topic_comments.count}" + "コメント" %></td>
-            <td><%= link_to bookmark.topic.community.name, community_path(bookmark.topic.community) %></td>
-            <td>
-              <% bookmark.topic.community.tags.each do |tag| %>
-                <%= "#" + tag.name %>
+            <td class="align-middle text-center", style="width: 10%">
+              <% if bookmark.topic.end_user.active_for_authentication? %>
+                <%= link_to end_user_path(bookmark.topic.end_user) do %>
+                  <%= image_tag bookmark.topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
+                  <%= bookmark.topic.end_user.nickname %>
+                <% end %>
+              <% else %>
+                <%= image_tag bookmark.topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
+                <%= bookmark.topic.end_user.nickname %>
               <% end %>
+            </td>
+            <td class="align-middle", style="width: 65%">
+              <small><%= bookmark.topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
+              <% if bookmark.topic.end_user.active_for_authentication? %>
+                <h5><%= link_to bookmark.topic.title.truncate(35), community_topic_path(bookmark.topic.community, bookmark.topic) %></h5>
+              <% else %>
+                <h5><%= bookmark.topic.title.truncate(35) %></h5><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
+              <% end %>
+              <div class="text-right"><small>コミュニティ名：<%= link_to bookmark.topic.community.name, community_path(bookmark.topic.community) %></small></div>
+            </td>
+            <td class="align-bottom text-right", style="width: 10%">
+              <small id="bookmark-buttons-<%= bookmark.topic.id %>">
+                <%= render 'public/bookmarks/bookmark', topic: bookmark.topic %>
+              </small>
+            </td>
+            <td class="align-bottom text-right", style="width: 15%">
+              <small><i class="far fa-comments"></i>&nbsp;&nbsp;<%= "#{bookmark.topic.topic_comments.count}" + "コメント" %></small>
             </td>
           </tr>
         <% end %>
