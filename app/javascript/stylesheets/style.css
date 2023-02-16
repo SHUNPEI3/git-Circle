@@ -1,4 +1,25 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .site-thema {
   background-color: #fffaf0;
+}
+
+.obg-darkorange{
+  background-color: #ff8c00;
+}
+
+.text-warming {
+  color: #ff8c00;
+}
+
+.border-warning {
+  border-color: #ff8c00;
+}
+
+.navbar-light .navbar-toggler {
+    border-color: rgba(0,0,0,0);
 }

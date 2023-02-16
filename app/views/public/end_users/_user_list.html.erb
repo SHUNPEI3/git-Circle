@@ -13,7 +13,7 @@
           <td class="align-middle text-center">
             <%= link_to end_user_path(user.id) do %>
               <%= image_tag user.get_profile_image(60, 60), class: "rounded-circle" %><br>
-              <small><%= user.nickname %></small>
+              <small class="text-info"><%= user.nickname %></small>
             <% end %>
           </td>
           <td class="align-middle">

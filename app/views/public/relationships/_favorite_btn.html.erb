@@ -1,4 +1,4 @@
-<% unless current_end_user == end_user %>
+<% unless current_end_user.guest_user? || (current_end_user == end_user) %>
   <% if end_user.followed_by?(current_end_user) %>
     <%= link_to 'フォロー中', end_user_relationships_path(end_user), method: :delete, remote: true, class: "btn btn-light", style:"width: 85%" %>
   <% else %>

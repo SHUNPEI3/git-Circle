@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row m-4">
     <% if @end_user == current_end_user %>
       <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
@@ -38,13 +38,13 @@
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-              <a href="#contents1" class="nav-link active" data-toggle="tab">基本情報</a>
+              <a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
             </li>
             <li class="nav-item">
-              <a href="#contents2" class="nav-link" data-toggle="tab">自己紹介</a>
+              <a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a>
             </li>
             <li class="nav-item">
-              <a href="#contents3" class="nav-link" data-toggle="tab">最近の投稿</a>
+              <a href="#contents3" class="nav-link text-dark" data-toggle="tab">最近の投稿</a>
             </li>
           </ul>
         </div>
@@ -52,22 +52,34 @@
           <div class="tab-content">
             <div id="contents1" class="tab-pane active">
               <table class="table table-borderless">
-                <tr><th>ニックネーム</th><td><%= @end_user.nickname %></td></tr>
-                <tr><th>年齢</th><td><%= (@end_user.age).to_s + "歳" %></td></tr>
-                <tr><th>性別</th><td><%= @end_user.sex_i18n %></td></tr>
-                <tr><th>主な活動エリア</th><td><%= @end_user.activity_area_i18n %></td></tr>
                 <tr>
-                  <th>マイタグ</th>
-                  <td>
+                  <th style="width: 40%">ニックネーム</th>
+                  <td style="width: 60%"><h5><%= @end_user.nickname %></h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">年齢</th>
+                  <td style="width: 60%"><h5><%= (@end_user.age).to_s + "歳" %></h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">性別</th>
+                  <td style="width: 60%"><h5><%= @end_user.sex_i18n %></h5></td>
+                  </tr>
+                <tr>
+                  <th style="width: 40%">主な活動エリア</th>
+                  <td style="width: 60%"><h5><%= @end_user.activity_area_i18n %></h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">マイタグ</th>
+                  <td style="width: 60%">
                     <% @end_user.personal_tags.each do |personal_tag| %>
-                      &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                      <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag), class:"mr-2" %>
                     <% end %>
                   </td>
                 </tr>
               </table>
             </div>
             <div id="contents2" class="tab-pane p-2">
-              <h6><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h6>
+              <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
             </div>
             <div id="contents3" class="tab-pane">
               <% @topics.each do |topic|  %>

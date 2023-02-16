@@ -1,9 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-warning p-2">
+<nav class="navbar navbar-expand-lg navbar-light p-2">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <img src="/assets/logo.png" width="140" height="60" class="d-inline-block align-top" alt="Logo">
+      <img src="/assets/logo.png" width="100" height="45" class="d-inline-block align-top" alt="Logo">
     </a>
-    <div class="collapse navbar-collapse" id="navmenu">
+<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+    <div class="collapse navbar-collapse"  id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <% if admin_signed_in? %>
           <li>
@@ -22,24 +25,24 @@
             <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:'nav-link text-light font-weight-bold mx-2' %>
           </li>
         <% elsif end_user_signed_in? %>
-          <li>
-            <%= link_to "コミュニティを探す", communities_path, class:'nav-link text-light font-weight-bold mx-2' %>
+          <li class="nav-item mx-2 my-1 px-2">
+            <%= link_to "コミュニティを探す", communities_path, class:'nav-link text-secondary' %>
           </li>
-          <li>
-            <%= link_to "ユーザーを探す", end_users_path, class:'nav-link text-light font-weight-bold mx-2' %>
+          <li class="nav-item mx-2 my-1 px-2">
+            <%= link_to "ユーザーを探す", end_users_path, class:'nav-link text-secondary' %>
           </li>
-          <li class="border rounded-pill bg-white mx-2">
-            <%= link_to "マイページ", end_user_path(current_end_user), class:'nav-link text-warning font-weight-bold mx-2' %>
+          <li class="nav-item rounded-pill obg-darkorange mx-2 my-1 px-3">
+            <%= link_to "マイページ", end_user_path(current_end_user), class:'nav-link text-light font-weight-bold' %>
           </li>
-          <li class="border rounded-pill mx-2">
-            <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class:'nav-link text-light font-weight-bold mx-2' %>
+          <li class="border border-warning rounded-pill mx-2 my-1 px-3">
+            <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class:'nav-link text-warning font-weight-bold' %>
           </li>
         <% else %>
-          <li class="border rounded-pill bg-white mx-2">
-            <%= link_to "新規登録", new_end_user_registration_path, class:'nav-link text-warning font-weight-bold mx-2' %>
+          <li class="rounded-pill obg-darkorange mx-2 my-1 px-3">
+            <%= link_to "新規登録", new_end_user_registration_path, class:'nav-link text-light font-weight-bold mx-3' %>
           </li>
-          <li class="border rounded-pill mx-2">
-            <%= link_to "ログイン", new_end_user_session_path, class:'nav-link text-light font-weight-bold mx-2' %>
+          <li class="border border-warning rounded-pill mx-2 my-1 px-3">
+            <%= link_to "ログイン", new_end_user_session_path, class:'nav-link text-warning font-weight-bold mx-3' %>
           </li>
         <% end %>
       </ul>

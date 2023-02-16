@@ -6,7 +6,7 @@
     <div class="col-sm-2 text-center">
       <%= link_to end_user_path(@topic.end_user) do %>
         <%= image_tag @topic.end_user.get_profile_image(120, 120), class:"img-thumbnail" %>
-        <h5><%= @topic.end_user.nickname %></h5>
+        <h5 class="text-info"><%= @topic.end_user.nickname %></h5>
       <% end %>
       <div>
         <% if current_end_user.id == @topic.end_user_id %>

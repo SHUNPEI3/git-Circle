@@ -15,11 +15,11 @@
             <% if topic.end_user.active_for_authentication? %>
               <%= link_to end_user_path(topic.end_user) do %>
                 <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
-                <%= topic.end_user.nickname %>
+                <span class="text-info"><%= topic.end_user.nickname %></span>
               <% end %>
             <% else %>
               <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
-              <%= topic.end_user.nickname %>
+              <span class="text-info"><%= topic.end_user.nickname %></span>
             <% end %>
           </td>
           <td class="align-middle", style="width: 65%">

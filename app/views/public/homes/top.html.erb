@@ -1,19 +1,14 @@
-<div class="container">
-  <div class="row justify-content-around my-5">
-    <div class="col-sm-12 my-5"></div>
-    <div class="col-sm-7 my-3">
-      <h1 class="m-3"><%= image_tag 'logo.png', :size =>'560x280' %></h1>
+<div class="container py-5">
+  <div class="row justify-content-around py-5">
+    <div class="col-sm-7">
+      <div class=""><%= image_tag 'logo.png', class:"img-fluid mx-auto" %></div>
       <h1 class="font-weight-bold m-3">あなたとだれかを繋ぐ場所</h1>
       <h1 class="font-weight-bold m-3">さぁ、始めてみよう！</h1>
-      <p class="example">test</p>
     </div>
-    <div class="col-sm-4 align-self-center border rounded-lg mt-5 p-4">
-      <div class="rounded-pill bg-warning  text-center p-3">
+    <div class="col-sm-4 border rounded-lg bg-white align-self-center mt-5 mx-2 p-4">
+      <div class="rounded-pill obg-darkorange text-center p-3">
         <%= link_to "新規登録はこちら！", new_end_user_registration_path, class:'text-light font-weight-bold' %>
       </div>
-      <!--<div class="border rounded-pill text-center m-4 p-2">-->
-      <!--  <%#= link_to "アカウントをお持ちの方", new_end_user_session_path, class:'text-warning font-weight-bold' %>-->
-      <!--</div>-->
       <%= form_with model:@end_user, url: end_user_session_path, method: :post do |f| %>
         <div class="form-group mt-3">
           <small><%= f.label :email, "メールアドレス" %></small>
@@ -23,7 +18,7 @@
           <small><%= f.label :password, "パスワード" %></small>
           <%= f.password_field :password, autocomplete: "current-password", class:"form-control" %>
         </div>
-        <%= f.submit "ログイン", class:"btn btn-primary mt-3 py-2", style:"width: 100%"%>
+        <%= f.submit "ログイン", class:"btn btn-info mt-3 py-2", style:"width: 100%"%>
         <p class="text-center mt-3">─── または ───</p>
         <%= link_to "ゲストでログイン", end_user_guest_sign_in_path, method: :post, class:"btn btn-outline-secondary my-1 py-2", style:"width: 100%" %>
       <% end %>

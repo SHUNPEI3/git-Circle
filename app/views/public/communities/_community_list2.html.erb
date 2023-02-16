@@ -25,7 +25,11 @@
           <td class="align-middle text-center">
             <% community.end_users.each do |member| %>
               <% if member.active_for_authentication? %>
-                <li class="list-unstyled my-2"><%= link_to "#{member.nickname}", end_user_path(member.id) %></li>
+                <li class="list-unstyled text-info my-2">
+                  <%= link_to end_user_path(member.id) do %>
+                    <span class="text-info"><%= "#{member.nickname}" %></span>
+                  <% end %>
+                </li>
               <% end %>
             <% end %>
           </td>
