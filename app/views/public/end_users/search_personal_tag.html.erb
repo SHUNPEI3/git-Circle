@@ -15,38 +15,7 @@
   <div class="row justify-content-around">
     <div class="col-md-12 mt-2">
       <div class="card">
-        <table class="table table-hover">
-          <thead class="thead-light">
-            <tr>
-              <th class="text-center", style="width: 15%">ユーザー</th>
-              <th style="width: 70%">自己紹介</th>
-              <th style="width: 15%"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @end_users.each do |user| %>
-              <% if user.active_for_authentication? %>
-                <tr>
-                  <td class="align-middle text-center">
-                    <%= link_to end_user_path(user.id) do %>
-                      <%= image_tag user.get_profile_image(60, 60), class: "rounded-circle" %><br>
-                      <small><%= user.nickname %></small>
-                    <% end %>
-                  </td>
-                  <td class="align-middle">
-                    <p><%= user.introduction.truncate(45) %></p>
-                    <% user.personal_tags.each do |tag| %>
-                      <small class="mr-2"><%= link_to "#" + tag.name, search_personal_tag_end_user_path(tag) %></small>
-                    <% end %>
-                  </td>
-                  <td class="align-middle" id="favorite-buttons-<%= user.id %>">
-                    <%= render 'public/relationships/favorite_btn', end_user: user %>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        </table>
+        <%= render 'public/end_users/user_list', end_users: @end_users %>
       </div>
     </div>
   </div>
