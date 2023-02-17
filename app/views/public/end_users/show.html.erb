@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row m-4">
     <% if @end_user == current_end_user %>
       <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
@@ -7,72 +7,95 @@
     <% end %>
   </div>
   <div class="row justify-content-around">
-    <div class="col-md-4">
-      <div class="row justify-content-center">
-        <%= image_tag @end_user.get_profile_image(240, 240), class:"img-thumbnail" %>
-        <div>
-          <span><i class="fas fa-bookmark"></i><%= link_to "ブックマーク(#{@end_user.bookmarks.count})",bookmark_end_user_path(@end_user) %>&nbsp;</span>
-          <span class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></span>
-        </div>
+    <div class="col-md-4 col-sm-12 text-center mb-3">
+      <!--<div class="row justify-content-center">-->
+        <div><%= image_tag @end_user.get_profile_image(220, 220), class:"img-thumbnail" %></div>
+        <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
+        <div class="bookmark-count my-2"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
         <% unless current_end_user.guest_user? %>
-          <div class="col-md-10 text-center">
-            <% if @end_user == current_end_user %>
-              <%= link_to 'プロフィール編集', edit_end_user_path(@end_user), class: "btn btn-success my-2", style:"width: 85%" %>
-              <%= link_to  notifications_path, class: "btn btn-outline-danger my-2", style:"width: 85%" do %>
+          <% if @end_user == current_end_user %>
+            <div class="text-center mx-auto my-1">
+              <%= link_to  notifications_path, class: "btn btn-warning text-light", style:"" do %>
                 <% if unchecked_notifications.any? %>
                   新着メッセージがあります！
                 <% else %>
                   メッセージを確認する
                 <% end %>
               <% end %>
-            <% end %>
-          </div>
-          <div class="col-md-10 text-center my-2" id="favorite-buttons-<%= @end_user.id %>">
+            </div>
+          <% end %>
+          <div class="text-center mx-auto my-1" id="favorite-buttons-<%= @end_user.id %>">
             <%= render "public/relationships/favorite_btn", end_user: @end_user %>
           </div>
         <% end %>
-      </div>
+      <!--</div>-->
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7 col-sm-12">
       <div class="card">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-              <a href="#contents1" class="nav-link active" data-toggle="tab">基本情報</a>
+              <a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
             </li>
             <li class="nav-item">
-              <a href="#contents2" class="nav-link" data-toggle="tab">自己紹介</a>
+              <a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a>
             </li>
             <li class="nav-item">
-              <a href="#contents3" class="nav-link" data-toggle="tab">最近の投稿</a>
+              <a href="#contents3" class="nav-link text-dark" data-toggle="tab">最近の投稿</a>
             </li>
           </ul>
         </div>
         <div class="card-body">
           <div class="tab-content">
             <div id="contents1" class="tab-pane active">
-              <table class="table table-borderless">
-                <tr><th>ニックネーム</th><td><%= @end_user.nickname %></td></tr>
-                <tr><th>年齢</th><td><%= (@end_user.age).to_s + "歳" %></td></tr>
-                <tr><th>性別</th><td><%= @end_user.sex_i18n %></td></tr>
-                <tr><th>主な活動エリア</th><td><%= @end_user.activity_area_i18n %></td></tr>
+              <table class="table table-borderless table-sm">
                 <tr>
-                  <th>マイタグ</th>
-                  <td>
+                  <th style="width: 40%">ニックネーム</th>
+                  <td style="width: 60%"><h5 class="font-weight-bold"><%= @end_user.nickname %></h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">年齢</th>
+                  <td style="width: 60%"><h5><%= (@end_user.age).to_s + "歳" %></h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">性別</th>
+                  <td style="width: 60%"><h5><%= @end_user.sex_i18n %></h5></td>
+                  </tr>
+                <tr>
+                  <th style="width: 40%">主な活動エリア</th>
+                  <td style="width: 60%"><h5><%= @end_user.activity_area_i18n %></h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">参加コミュニティ数</th>
+                  <td style="width: 60%"><h5><%= @end_user.communities.count %>&nbsp;つ</h5></td>
+                </tr>
+                <tr>
+                  <th style="width: 40%">マイタグ</th>
+                  <td style="width: 60%">
                     <% @end_user.personal_tags.each do |personal_tag| %>
-                      &nbsp;<%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                      <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag), class:"mr-2" %>
                     <% end %>
                   </td>
                 </tr>
               </table>
+              <div class="row justify-content-end mr-3">
+                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
+                <% end %>
+              </div>
             </div>
             <div id="contents2" class="tab-pane p-2">
-              <h6><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h6>
+              <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
+              <div class="row justify-content-end mr-3">
+                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
+                <% end %>
+              </div>
             </div>
             <div id="contents3" class="tab-pane">
               <% @topics.each do |topic|  %>
                 <div class="d-flex justify-content-between mt-2">
-                  <h6><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h6>
+                  <h5><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h5>
                   <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
                 </div>
               <% end %>
@@ -89,10 +112,10 @@
     </div>
     <div class="row offset-md-1 mt-3">
       <% @community_users.each do |community_user| %>
-        <div class="col-md-2 text-center">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
           <%= link_to community_path(community_user.community) do %>
-            <%= image_tag community_user.community.get_community_image(125, 125), class:"img-thumbnail" %>
-            <h6 class=" mt-2"><%= community_user.community.name %></h6>
+            <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+            <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
           <% end %>
         </div>
       <% end %>

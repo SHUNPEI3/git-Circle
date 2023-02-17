@@ -1,6 +1,6 @@
 class Public::EndUsersController < ApplicationController
   before_action :authenticate_end_user!
-  before_action :find_end_user, only: [:show, :edit, :update, :follower, :bookmark, :unsubscribe, :withdraw]
+  before_action :find_end_user, only: [:show, :edit, :update, :follower, :following, :bookmark, :unsubscribe, :withdraw]
   before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit, :update]
 
@@ -28,6 +28,10 @@ class Public::EndUsersController < ApplicationController
       flash[:alert] = "更新に失敗しました"
       render 'edit'
     end
+  end
+
+  def following
+    @followings = @end_user.followings
   end
 
   def follower
