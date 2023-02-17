@@ -1,14 +1,14 @@
 <table class="table">
   <% topic.topic_comments.each do |comment| %>
     <tr>
-      <td style="width: 10%">
+      <td class="col-2 col-md-1  text-center">
         <% if comment.is_active %>
           <%= link_to end_user_path(comment.end_user) do %>
-            <%= image_tag comment.end_user.get_profile_image(70, 70), class:"d-block rounded-circle mx-auto" %>
+            <%= image_tag comment.end_user.get_profile_image(70, 70), class:"rounded-circle" %>
           <% end %>
         <% end %>
       </td>
-      <td style="width: 70%">
+      <td class="col-10 col-md-11">
         <% if comment.is_active %>
           <span class="text-info"><%= comment.end_user.nickname %></span><br>
           <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
@@ -16,15 +16,14 @@
         <% else %>
           <span>このコメントは管理者によって不適切と判定されました。</span>
         <% end %>
+        <div class="row justify-content-end align-items-center mx-2">
+          <% if current_end_user.id == comment.end_user_id %>
+            <%= link_to '削除', community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, remote: true, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger mx-2" %>
+          <% end %>
+          <span id="good-buttons-<%= comment.id %>"><%= render 'public/goods/good_btn', comment: comment %></span>
+        </div>
       </td>
-      <td class="align-bottom" id="good-buttons-<%= comment.id %>", style="width: 10%">
-        <%= render 'public/goods/good_btn', comment: comment %>
-      </td>
-      <td class="align-bottom", style="width: 10%">
-        <% if current_end_user.id == comment.end_user_id %>
-          <%= link_to '削除', community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, remote: true, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger" %>
-        <% end %>
-      </td>
+
     </tr>
   <% end %>
 </table>

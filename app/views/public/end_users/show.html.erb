@@ -7,15 +7,15 @@
     <% end %>
   </div>
   <div class="row justify-content-around">
-    <div class="col-sm-4">
+    <div class="col-md-4 col-sm-12 text-center mb-3">
       <!--<div class="row justify-content-center">-->
-        <div><%= image_tag @end_user.get_profile_image(250, 250), class:"img-thumbnail" %></div>
-        <span class="favorite-count my-1"><%= render 'public/relationships/favorite_count', end_user: @end_user %></span><br>
-        <span class="bookmark-count my-1"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></span>
+        <div><%= image_tag @end_user.get_profile_image(220, 220), class:"img-thumbnail" %></div>
+        <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
+        <div class="bookmark-count my-2"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
         <% unless current_end_user.guest_user? %>
           <% if @end_user == current_end_user %>
-            <div class="col-md-10 text-center my-1">
-              <%= link_to  notifications_path, class: "btn btn-outline-danger", style:"width: 85%" do %>
+            <div class="text-center mx-auto my-1">
+              <%= link_to  notifications_path, class: "btn btn-warning text-light", style:"" do %>
                 <% if unchecked_notifications.any? %>
                   新着メッセージがあります！
                 <% else %>
@@ -24,13 +24,13 @@
               <% end %>
             </div>
           <% end %>
-          <div class="col-md-10 text-center my-2" id="favorite-buttons-<%= @end_user.id %>">
+          <div class="text-center mx-auto my-1" id="favorite-buttons-<%= @end_user.id %>">
             <%= render "public/relationships/favorite_btn", end_user: @end_user %>
           </div>
         <% end %>
       <!--</div>-->
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7 col-sm-12">
       <div class="card">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
@@ -51,7 +51,7 @@
               <table class="table table-borderless table-sm">
                 <tr>
                   <th style="width: 40%">ニックネーム</th>
-                  <td style="width: 60%"><h5><%= @end_user.nickname %></h5></td>
+                  <td style="width: 60%"><h5 class="font-weight-bold"><%= @end_user.nickname %></h5></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">年齢</th>
@@ -68,7 +68,8 @@
                 <tr>
                   <th style="width: 40%">参加コミュニティ数</th>
                   <td style="width: 60%"><h5><%= @end_user.communities.count %>&nbsp;つ</h5></td>
-                </tr>                <tr>
+                </tr>
+                <tr>
                   <th style="width: 40%">マイタグ</th>
                   <td style="width: 60%">
                     <% @end_user.personal_tags.each do |personal_tag| %>
@@ -79,7 +80,7 @@
               </table>
               <div class="row justify-content-end mr-3">
                 <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-success", style:"" %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
                 <% end %>
               </div>
             </div>
@@ -87,14 +88,14 @@
               <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
               <div class="row justify-content-end mr-3">
                 <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-success", style:"" %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
                 <% end %>
               </div>
             </div>
             <div id="contents3" class="tab-pane">
               <% @topics.each do |topic|  %>
                 <div class="d-flex justify-content-between mt-2">
-                  <h6><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h6>
+                  <h5><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h5>
                   <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
                 </div>
               <% end %>
@@ -111,10 +112,10 @@
     </div>
     <div class="row offset-md-1 mt-3">
       <% @community_users.each do |community_user| %>
-        <div class="col-md-2 text-center">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
           <%= link_to community_path(community_user.community) do %>
-            <%= image_tag community_user.community.get_community_image(125, 125), class:"img-thumbnail" %>
-            <h6 class=" mt-2"><%= community_user.community.name %></h6>
+            <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+            <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
           <% end %>
         </div>
       <% end %>

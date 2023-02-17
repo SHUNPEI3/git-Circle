@@ -1,12 +1,12 @@
 <div class="container py-5">
   <div class="row justify-content-around py-5">
-    <div class="col-sm-7">
+    <div class="col-lg-7">
       <div class=""><%= image_tag 'logo.png', class:"img-fluid mx-auto" %></div>
       <h1 class="font-weight-bold m-3">あなたとだれかを繋ぐ場所</h1>
       <h1 class="font-weight-bold m-3">さぁ、始めてみよう！</h1>
     </div>
-    <div class="col-sm-4 border rounded-lg bg-white align-self-center mt-5 mx-2 p-4">
-      <div class="rounded-pill obg-darkorange text-center p-3">
+    <div class="col-lg-4 border rounded-lg bg-white align-self-center mt-5 mx-2 p-4">
+      <div class="rounded-pill bg-warning text-center p-3">
         <%= link_to "新規登録はこちら！", new_end_user_registration_path, class:'text-light font-weight-bold' %>
       </div>
       <%= form_with model:@end_user, url: end_user_session_path, method: :post do |f| %>

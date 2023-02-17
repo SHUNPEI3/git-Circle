@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <% if @model == "end_user" || @model == "personal_tag" %>
     <div class="row justify-content-end m-4">
       <div class="col-md-6">
@@ -29,7 +29,7 @@
     </div>
   <% elsif @model == "community_tag" %>
     <div class="row">
-      <%= render 'public/communities/community_list2', communities: @records %>
+      <%= render 'public/communities/community_list2', community_tags: @records %>
     </div>
   <% end %>
 </div>

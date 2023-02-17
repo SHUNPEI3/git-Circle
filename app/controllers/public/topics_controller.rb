@@ -58,7 +58,7 @@ class Public::TopicsController < ApplicationController
   def ensure_community_mennber
     community = Community.find(params[:community_id])
     unless community.community_users.exists?(end_user_id: current_end_user.id)
-      flash[:notice] = '〔注意〕コミュニティの参加者のみ閲覧が可能です。'
+      flash[:alert] = '〔注意〕コミュニティの参加者のみ閲覧が可能です。'
       redirect_to request.referer
     end
   end
@@ -66,7 +66,8 @@ class Public::TopicsController < ApplicationController
   def is_matching_topic_author
     @topic = Topic.find(params[:id])
     unless @topic.end_user == current_end_user
-     redirect_to end_user_path(current_end_user), notice: '投稿者以外はトピック編集画面へ遷移できません。'
+     flash[:alert] = '投稿者以外はトピック編集画面へ遷移できません。'
+     redirect_to end_user_path(current_end_user)
     end
   end
 

@@ -31,14 +31,14 @@
           <li class="nav-item mx-2 my-1 px-2">
             <%= link_to "ユーザーを探す", end_users_path, class:'nav-link text-secondary' %>
           </li>
-          <li class="nav-item rounded-pill obg-darkorange mx-2 my-1 px-3">
+          <li class="nav-item rounded-pill bg-warning mx-2 my-1 px-3">
             <%= link_to "マイページ", end_user_path(current_end_user), class:'nav-link text-light font-weight-bold' %>
           </li>
           <li class="border border-warning rounded-pill mx-2 my-1 px-3">
             <%= link_to "ログアウト", destroy_end_user_session_path, method: :delete, class:'nav-link text-warning font-weight-bold' %>
           </li>
         <% else %>
-          <li class="rounded-pill obg-darkorange mx-2 my-1 px-3">
+          <li class="rounded-pill bg-warning mx-2 my-1 px-3">
             <%= link_to "新規登録", new_end_user_registration_path, class:'nav-link text-light font-weight-bold mx-3' %>
           </li>
           <li class="border border-warning rounded-pill mx-2 my-1 px-3">
