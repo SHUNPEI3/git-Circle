@@ -1,1 +1,7 @@
-<i class="fas fa-user"></i><%= link_to "フォロワー(#{end_user.followers.count})",follower_end_user_path(end_user) %>
+<%= link_to follower_end_user_path(end_user), class:"text-secondary" do %>
+  <i class="fas fa-user"></i>フォロワー<strong><%= end_user.followers.count %>人</strong>
+<% end %>
+&thinsp;
+<%= link_to following_end_user_path(end_user), class:"text-secondary" do %>
+  <i class="fas fa-user"></i>フォロー中<strong><%= end_user.followings.count %>人</strong>
+<% end %>

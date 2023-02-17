@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row m-4">
     <h2><i class="fas fa-bookmark"></i>&nbsp;<%=@end_user.nickname %>&nbsp;さんのブックマーク</h2>
   </div>
@@ -35,7 +35,7 @@
             </td>
             <td class="align-bottom text-right", style="width: 10%">
               <small id="bookmark-buttons-<%= bookmark.topic.id %>">
-                <%= render 'public/bookmarks/bookmark', topic: bookmark.topic %>
+                <%= render 'public/bookmarks/bookmark_btn', topic: bookmark.topic %>
               </small>
             </td>
             <td class="align-bottom text-right", style="width: 15%">

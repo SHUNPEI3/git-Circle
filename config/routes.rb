@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     # ユーザー関連
     resources 'end_users', only: [:index, :show, :edit, :update] do
       resource 'relationships', only: [:create, :destroy]
+      get :following, on: :member
       get :follower, on: :member
       get :bookmark, on: :member
       get :search_personal_tag, on: :member

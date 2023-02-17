@@ -7,31 +7,28 @@
     <% end %>
   </div>
   <div class="row justify-content-around">
-    <div class="col-md-4">
-      <div class="row justify-content-center">
-        <%= image_tag @end_user.get_profile_image(240, 240), class:"img-thumbnail" %>
-        <div>
-          <span><i class="fas fa-bookmark"></i><%= link_to "ブックマーク(#{@end_user.bookmarks.count})",bookmark_end_user_path(@end_user) %>&nbsp;</span>
-          <span class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></span>
-        </div>
+    <div class="col-sm-4">
+      <!--<div class="row justify-content-center">-->
+        <div><%= image_tag @end_user.get_profile_image(250, 250), class:"img-thumbnail" %></div>
+        <span class="favorite-count my-1"><%= render 'public/relationships/favorite_count', end_user: @end_user %></span><br>
+        <span class="bookmark-count my-1"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></span>
         <% unless current_end_user.guest_user? %>
-          <div class="col-md-10 text-center">
-            <% if @end_user == current_end_user %>
-              <%= link_to 'プロフィール編集', edit_end_user_path(@end_user), class: "btn btn-success my-2", style:"width: 85%" %>
-              <%= link_to  notifications_path, class: "btn btn-outline-danger my-2", style:"width: 85%" do %>
+          <% if @end_user == current_end_user %>
+            <div class="col-md-10 text-center my-1">
+              <%= link_to  notifications_path, class: "btn btn-outline-danger", style:"width: 85%" do %>
                 <% if unchecked_notifications.any? %>
                   新着メッセージがあります！
                 <% else %>
                   メッセージを確認する
                 <% end %>
               <% end %>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
           <div class="col-md-10 text-center my-2" id="favorite-buttons-<%= @end_user.id %>">
             <%= render "public/relationships/favorite_btn", end_user: @end_user %>
           </div>
         <% end %>
-      </div>
+      <!--</div>-->
     </div>
     <div class="col-md-7">
       <div class="card">
@@ -51,7 +48,7 @@
         <div class="card-body">
           <div class="tab-content">
             <div id="contents1" class="tab-pane active">
-              <table class="table table-borderless">
+              <table class="table table-borderless table-sm">
                 <tr>
                   <th style="width: 40%">ニックネーム</th>
                   <td style="width: 60%"><h5><%= @end_user.nickname %></h5></td>
@@ -69,6 +66,9 @@
                   <td style="width: 60%"><h5><%= @end_user.activity_area_i18n %></h5></td>
                 </tr>
                 <tr>
+                  <th style="width: 40%">参加コミュニティ数</th>
+                  <td style="width: 60%"><h5><%= @end_user.communities.count %>&nbsp;つ</h5></td>
+                </tr>                <tr>
                   <th style="width: 40%">マイタグ</th>
                   <td style="width: 60%">
                     <% @end_user.personal_tags.each do |personal_tag| %>
@@ -77,9 +77,19 @@
                   </td>
                 </tr>
               </table>
+              <div class="row justify-content-end mr-3">
+                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-success", style:"" %>
+                <% end %>
+              </div>
             </div>
             <div id="contents2" class="tab-pane p-2">
               <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
+              <div class="row justify-content-end mr-3">
+                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-success", style:"" %>
+                <% end %>
+              </div>
             </div>
             <div id="contents3" class="tab-pane">
               <% @topics.each do |topic|  %>

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row justify-content-between m-4">
     <h2><i class="fas fa-memo"></i>&nbsp;トピック一覧</h2>
     <h4 class="mt-3">
@@ -32,7 +32,7 @@
           </td>
           <td class="align-bottom", style="width: 10%">
             <small id="bookmark-buttons-<%= topic.id %>">
-              <%= render 'public/bookmarks/bookmark', topic: topic %>
+              <%= render 'public/bookmarks/bookmark_btn', topic: topic %>
             </small>
           </td>
           <td class="align-bottom", style="width: 15%">
