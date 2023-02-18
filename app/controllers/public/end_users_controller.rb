@@ -1,6 +1,6 @@
 class Public::EndUsersController < ApplicationController
   before_action :authenticate_end_user!
-  before_action :find_end_user, only: [:show, :edit, :update, :follower, :following, :bookmark, :unsubscribe, :withdraw]
+  before_action :find_end_user, except: [:index, :search_personal_tag]
   before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit, :update]
 
@@ -40,6 +40,10 @@ class Public::EndUsersController < ApplicationController
 
   def bookmark
     @bookmarks = @end_user.bookmarks
+  end
+
+  def join_community
+    @join_communities = @end_user.communities
   end
 
   def search_personal_tag
