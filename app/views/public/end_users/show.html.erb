@@ -8,27 +8,25 @@
   </div>
   <div class="row justify-content-around">
     <div class="col-md-4 col-sm-12 text-center mb-3">
-      <!--<div class="row justify-content-center">-->
-        <div><%= image_tag @end_user.get_profile_image(220, 220), class:"img-thumbnail" %></div>
-        <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
-        <div class="bookmark-count my-2"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
-        <% unless current_end_user.guest_user? %>
-          <% if @end_user == current_end_user %>
-            <div class="text-center mx-auto my-1">
-              <%= link_to  notifications_path, class: "btn btn-warning text-light", style:"" do %>
-                <% if unchecked_notifications.any? %>
-                  新着メッセージがあります！
-                <% else %>
-                  メッセージを確認する
-                <% end %>
+      <div><%= image_tag @end_user.get_profile_image(220, 220), class:"img-thumbnail" %></div>
+      <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
+      <div class="bookmark-count my-2"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
+      <% unless current_end_user.guest_user? %>
+        <% if @end_user == current_end_user %>
+          <div class="text-center mx-auto my-1">
+            <%= link_to  notifications_path, class: "btn btn-warning text-light", style:"" do %>
+            <% if unchecked_notifications.any? %>
+                新着メッセージがあります！
+              <% else %>
+                メッセージを確認する
               <% end %>
-            </div>
-          <% end %>
-          <div class="text-center mx-auto my-1" id="favorite-buttons-<%= @end_user.id %>">
-            <%= render "public/relationships/favorite_btn", end_user: @end_user %>
+            <% end %>
           </div>
         <% end %>
-      <!--</div>-->
+        <div class="text-center mx-auto my-1" id="favorite-buttons-<%= @end_user.id %>">
+          <%= render "public/relationships/favorite_btn", end_user: @end_user %>
+        </div>
+      <% end %>
     </div>
     <div class="col-md-7 col-sm-12">
       <div class="card">
@@ -105,20 +103,25 @@
       </div>
     </div>
   </div>
-
   <div class="container">
-    <div class="row offset-md-1 mt-3">
+    <div class="row offset-md-1 my-3">
       <h5>最近のコミュニティ加入履歴</h5>
     </div>
-    <div class="row offset-md-1 mt-3">
-      <% @community_users.each do |community_user| %>
-        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 text-center">
-          <%= link_to community_path(community_user.community) do %>
-            <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
-            <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
-          <% end %>
-        </div>
-      <% end %>
+    <div class="swiper mx-2">
+      <div class="swiper-wrapper">
+        <% @community_users.each do |community_user| %>
+          <div class="swiper-slide text-center">
+            <%= link_to community_path(community_user.community) do %>
+              <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+              <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class="swiper-button-prev swiper-button-white"></div>
+      <div class="swiper-button-next swiper-button-white"></div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
+  <%= javascript_pack_tag "swiper.js" %>
 </div>
