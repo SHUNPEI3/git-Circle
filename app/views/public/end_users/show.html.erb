@@ -67,7 +67,7 @@
                 </tr>
                 <tr>
                   <th style="width: 40%">参加コミュニティ数</th>
-                  <td style="width: 60%"><h5><%= @end_user.communities.count %>&nbsp;つ</h5></td>
+                  <td style="width: 60%"><h5><%= link_to "#{@end_user.communities.count} つ", join_community_end_user_path(@end_user) %></h5></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">マイタグ</th>
