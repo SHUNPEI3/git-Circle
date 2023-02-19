@@ -25,6 +25,8 @@ class Public::CommunitiesController < ApplicationController
         flash[:notice] = "作成完了しました！"
         redirect_to communities_path
       else
+        @community = Community.new
+        @community.community_details.build
         flash[:alert] = "作成に失敗しました"
         render "new"
       end
