@@ -1,0 +1,46 @@
+<% personal_tags.each do |tag| %>
+  <% tag.end_users.each do |user| %>
+    <% unless user.guest_user? || !user.active_for_authentication? %>
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+      <div class="card shadow">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a href="#contents1-<%= user.id %>" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contents2-<%= user.id %>" class="nav-link text-dark" data-toggle="tab">紹介文</a>
+            </li>
+          </ul>
+        </div>
+        <%= image_tag user.get_profile_image(180, 180), class:"card-img-top p-1" %>
+        <div class="card-body">
+          <h4 class="card-title text-info"><%= user.nickname %></h4>
+        </div>
+        <div class="tab-content">
+          <div id="contents1-<%= user.id %>" class="tab-pane active">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">年齢：<%= (user.age).to_s + "歳" %></li>
+              <li class="list-group-item">性別：<%= user.sex_i18n %></li>
+              <li class="list-group-item">活動エリア：<%= user.activity_area_i18n %></li>
+              <li class="list-group-item"><i class="fas fa-tag"></i>
+                <% user.personal_tags.each do |personal_tag| %>
+                  <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+          <div id="contents2-<%= user.id %>" class="tab-pane">
+            <div class="card-body">
+              <p class="card-text"><%= user.introduction.truncate(40) %></p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <%= link_to '詳細をチェック', end_user_path(user), class:"btn btn-info" %></h4>
+        </div>
+       </div>
+    </div>
+  <% end %>
+  <% end %>
+<% end %>

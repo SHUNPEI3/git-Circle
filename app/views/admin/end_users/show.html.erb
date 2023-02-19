@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="row m-4">
+    <h2><%= @end_user.last_name %><%= @end_user.first_name %>さんの詳細ページ</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 text-center">
+      <%= image_tag @end_user.get_profile_image(200, 200) %>
+      <%= link_to 'ユーザー情報を編集する', edit_admin_end_user_path(@end_user), class:"btn btn-success mt-5" %>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+      <table class="table table-borderless table-sm">
+        <tr>
+          <th class="col-md-3">ユーザーID</th>
+          <td><%= @end_user.id %></td>
+        </tr>
+        <tr>
+          <th>メースアドレス</th>
+          <td><%= @end_user.email %></td>
+        </tr>
+        <tr>
+          <th>名前</th>
+          <td><%= @end_user.last_name %><%= @end_user.first_name %></td>
+        </tr>
+        <tr>
+          <th>フリガナ</th>
+          <td><%= @end_user.last_name_kana %><%= @end_user.first_name_kana %></td>
+        </tr>
+        <tr>
+          <th>ニックネーム</th>
+          <td><%= @end_user.nickname %></td>
+       </tr>
+        <tr>
+          <th>年齢</th>
+          <td><%= (@end_user.age).to_s + "歳" %></td>
+        </tr>
+        <tr>
+          <th>性別</th>
+          <td><%= @end_user.sex_i18n %></td>
+        </tr>
+        <tr>
+          <th>主な活動エリア</th>
+          <td><%= @end_user.activity_area_i18n %></td>
+        </tr>
+        <tr>
+          <th>趣味</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th>自己紹介</th>
+          <td><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></td>
+        </tr>
+        <tr>
+          <th>ユーザーステータス</th>
+          <td>
+            <% if @end_user.is_deleted? %>
+              <span class="text-danger">退会済み</span>
+            <% else %>
+              <span class="text-success">有効</span>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <h4>参加しているコミュニティ</h4>
+  </div>
+  
+<div class="row">
+    <table class="table">
+      <thead class="thead-light">
+        <th>ComuID</th>
+        <th>コミュニティ名</th>
+        <th>作成者</th>
+        <th>メンバー</th>
+        <th>参加条件設定</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <% @communities.each do |community| %>
+          <tr>
+            <td><%= community.id %></td>
+            <td><%= community.name %></td>
+            <td>
+              <%= link_to admin_end_user_path(community.owner) do %>
+                <%= community.owner.last_name %>&nbsp;<%= community.owner.first_name %>
+              <% end %>
+              </td>
+            <td>
+              <% community.end_users.each do |member| %>
+                <% unless community.owner == member %>
+                  <li style="list-style: none;">
+                    <%= link_to "#{member.last_name + member.first_name }", admin_end_user_path(member) %>
+                    <% if member.is_deleted? %>
+                      <span class="text-danger">&nbsp; ※退会済み</span>
+                    <% end %>
+                  </li>
+                <% end %>
+              <% end %>
+            </td>
+            <td>
+              <% community.community_details.each do |detail| %>
+                <% if detail.max_join_number? %>
+                 <li>上限数：<%= detail.max_join_number %>人まで</li>
+                <% end %>
+                <% if detail.sex_limit? %>
+                  <li>性別：<%= detail.sex_limit_i18n %></li>
+                <% end %>
+                <% if detail.activity_area_limit? %>
+                  <li>活動地：<%= detail.activity_area_limit_i18n %></li>
+                <% end %>
+                <% if detail.age_min_limit || detail.age_max_limit %>
+                  <li>年齢：<%= detail.age_min_limit %>〜<%= detail.age_max_limit %>歳まで</li>
+                <% end %>
+              <% end %>
+              </td>
+            <td><%= link_to "詳細", admin_community_path(community), class: "btn btn-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   </div>
+
+</div>

@@ -2,15 +2,25 @@
 <html>
   <head>
     <title>Circle</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <header class="sticky-top">
+      <%= render "layouts/header" %>
+    </header>
+    <main class="site-thema">
+      <%= render 'layouts/flash_message' %>
+      <%= yield %>
+    </main>
+    <footer>
+      <%= render "layouts/footer" %>
+    </footer>
   </body>
 </html>

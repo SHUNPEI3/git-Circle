@@ -1,0 +1,26 @@
+<div class="container pb-5">
+  <div class="row justify-content-center">
+    <h2 class="m-5">Circleにログイン&nbsp;<i class="fas fa-lock-open"></i></h2>
+  </div>
+  <%= form_with model:@end_user, url: session_path(resource_name) do |f| %>
+    <div class="row justify-content-center">
+      <div class="col-lg-5">
+        <div class="form-group">
+          <small><%= f.label :email, "メールアドレス" %></small>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"sample@example.com", class:"form-control" %>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :password, "パスワード" %></small>
+          <%= f.password_field :password, autocomplete: "current-password", class:"form-control" %>
+        </div>
+        <%= f.submit "ログイン", class:"btn btn-primary mt-3 py-2", style:"width: 100%"%>
+        <p class="text-center mt-3">─── または ───</p>
+        <%= link_to "ゲストでログイン", end_user_guest_sign_in_path, method: :post, class:"btn btn-outline-secondary mt-1 py-2", style:"width: 100%" %>
+        <div class="border mt-4"></div>
+        <div class="rounded-pill bg-warning text-center mt-4 py-3">
+          <%= link_to "新規登録はこちら！", new_end_user_registration_path, class:'text-light font-weight-bold' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

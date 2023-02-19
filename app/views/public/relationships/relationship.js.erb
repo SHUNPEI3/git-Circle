@@ -1,0 +1,2 @@
+$(".favorite-count").html("<%= j(render "public/relationships/favorite_count", end_user: @follower_user) %>");
+$("#favorite-buttons-<%= @follower_user.id %>").html("<%= j(render "public/relationships/favorite_btn", end_user: @follower_user) %>");

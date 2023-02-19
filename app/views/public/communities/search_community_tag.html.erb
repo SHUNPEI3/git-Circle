@@ -1,0 +1,18 @@
+<div class="container pb-5">
+  <div class="row m-4">
+    <h2>＃タグが&nbsp;"<%=@tag.name%>"&nbsp;のコミュニティリスト</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-2">
+      <% @tag_list.each do |list|%>
+        <% unless list.communitys.count == 0 %>
+          <%=link_to "#{ "#" + list.name}", search_community_tag_community_path(list) %>
+          <span class="mr-2"><%="(#{list.communitys.count})" %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <%= render 'public/communities/community_list', communities: @communities %>
+  </div>
+</div>

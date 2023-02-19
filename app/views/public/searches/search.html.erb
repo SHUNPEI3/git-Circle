@@ -1,0 +1,35 @@
+<div class="container pb-5">
+  <% if @model == "end_user" || @model == "personal_tag" %>
+    <div class="row justify-content-end m-4">
+      <div class="col-md-6">
+        <%= render 'public/searches/user_search_form' %>
+      </div>
+    </div>
+  <% else %>
+    <div class="row justify-content-end m-4">
+      <div class="col-md-6">
+        <%= render 'public/searches/community_search_form' %>
+      </div>
+    </div>
+  <% end %>
+  <div class="row m-4">
+    <h2>"<%= @content %>"を含む検索結果</h2>
+  </div>
+  <% if @model == "end_user" %>
+    <div class="row">
+      <%= render 'public/end_users/user_list', end_users: @records %>
+    </div>
+  <% elsif @model == "personal_tag" %>
+    <div class="row">
+      <%= render 'public/end_users/user_list2', personal_tags: @records %>
+    </div>
+  <% elsif @model == "community" %>
+    <div class="row">
+      <%= render 'public/communities/community_list', communities: @records %>
+    </div>
+  <% elsif @model == "community_tag" %>
+    <div class="row">
+      <%= render 'public/communities/community_list2', community_tags: @records %>
+    </div>
+  <% end %>
+</div>

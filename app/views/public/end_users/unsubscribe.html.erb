@@ -1,0 +1,12 @@
+<div class="container pb-5">
+  <div class="row justify-content-center m-5">
+    <h2>本当に退会しますか？</h2>
+  </div>
+  <div class="row justify-content-center m-5">
+    <h5 class="text-center">退会手続きをされますと、全てのサービスがご利用いただけなくなります。<br>再度ご利用をいただく場合には、新規登録のお手続きが必要になります。<br>退会する場合は、「退会する」をクリックしてください。</h5>
+  </div>
+  <div class="row justify-content-center m-5">
+    <%= link_to "マイページへ戻る", end_user_path(current_end_user), class: "btn btn-warning text-light mx-5" %>
+    <%= link_to "退会する", withdraw_end_user_path(@end_user), method: :patch, data: { confilm: "本当に退会しますか？" }, class: "btn btn-danger mx-5" %>
+  </div>
+</div>
