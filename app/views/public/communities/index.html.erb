@@ -9,7 +9,7 @@
     <h3><i class="fas fa-people-arrows"></i>&nbsp;新着コミュニティ</h3>
     <h4 class="mt-2">
       <% unless current_end_user.guest_user? %>
-        <%= link_to new_community_path, class:"btn btn-primary btn-lg" do %>
+        <%= link_to new_community_path, class:"btn btn-primary" do %>
           <span class="h5"><i class="fas fa-plus"></i>&nbsp;コミュニティ新規作成</span>
         <% end %>
       <% end %>
