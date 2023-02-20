@@ -2,19 +2,19 @@
   <div class="row m-4">
     <h2>あなたへのコミュニティ参加オファー</h2>
   </div>
-  <div class="row m-4">
+  <div class="row my-4">
     <% if @notifications.exists? %>
     <table class="table">
       <% @notifications.each do |notification| %>
         <tr>
-          <td class="align-middle"><%= notification.created_at.strftime("%Y/%m/%d %R") %></td>
-          <td class="align-middle"><%= notification.visitor.nickname %>さん&ensp;から&ensp;"<strong><%= notification.community.name %></strong>"&ensp;コミュニティへの招待が届きました!!</td>
-          <td class="align-middle"><%= link_to '詳細を確認する', community_path(notification.community), class:"btn btn-primary" %></td>
-          <td class="align-middle">
+          <td class="col-2 align-middle"><%= notification.created_at.strftime("%Y/%m/%d %R") %></td>
+          <td class="col-7 align-middle"><%= notification.visitor.nickname %>さん&ensp;から&ensp;"<strong><%= notification.community.name %></strong>"&ensp;コミュニティへの招待が届きました!!</td>
+          <td class="col-3 align-middle text-center">
+            <%= link_to '詳細へ', community_path(notification.community), class:"btn btn-info m-2" %>
             <% if notification.community.already_joined?(current_end_user) %>
               <%= 'すでに参加済みです' %>
             <% else %>
-              <%= link_to '参加する', community_community_users_path(notification.community.id), method: :post, class: "btn btn-success" %>
+              <%= link_to '参加する', community_community_users_path(notification.community.id), method: :post, class: "btn btn-success m-2" %>
             <% end %>
           </td>
         </tr>

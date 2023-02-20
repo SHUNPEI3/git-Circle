@@ -17,7 +17,7 @@ class Public::SessionsController < Devise::SessionsController
     # binding.pry
     user = EndUser.guest
     sign_in user
-    redirect_to end_user_path(user), notice: 'guestuserでログインしました。'
+    redirect_to end_user_path(user), notice: '「ゲストユーザー」でログインしました。'
   end
 
   # DELETE /resource/sign_out
@@ -39,6 +39,7 @@ class Public::SessionsController < Devise::SessionsController
     end_user = EndUser.find_by(email: params[:end_user][:email])
     if end_user
       if end_user.valid_password?(params[:end_user][:password]) && end_user.is_deleted
+        flash[:alert] = "すでに退会したアカウントです。新しくユーザー登録をしてください。"
         redirect_to new_end_user_session_path
       end
     end

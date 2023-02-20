@@ -1,8 +1,7 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row m-4">
     <h2><%= @end_user.last_name %><%= @end_user.first_name %>さんの情報編集ページ</h2>
   </div>
-
   <%= form_with model:@end_user, url: admin_end_user_path(@end_user), methd: :patch do |f| %>
     <div class="row">
       <div class="col-md-3">
@@ -12,9 +11,8 @@
           <%= f.file_field :profile_image, accept:'image/*', style:"display:none;" %>
         <% end %>
       </div>
-
       <div class="col-md-9">
-        <table class="table">
+        <table class="table table-borderless">
           <tr>
             <th class="align-middle pl-3">ユーザーID</th>
             <td><%= @end_user.id %></td>

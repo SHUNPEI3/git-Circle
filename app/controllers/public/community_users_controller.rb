@@ -13,6 +13,7 @@ class Public::CommunityUsersController < ApplicationController
     community = Community.find(params[:community_id])
     community_user = CommunityUser.find_by(end_user_id: current_end_user.id, community_id: community.id)
     if community_user.destroy
+      flash[:notice] = 'コミュニティから退出しました'
       redirect_to request.referer
     end
   end
@@ -54,6 +55,7 @@ class Public::CommunityUsersController < ApplicationController
     # コミュニティの年齢制限が設定されていなければそのまま加入
     if (@community_detail.age_min_limit == nil) && (@community_detail.age_max_limit == nil)
       @community_user.save
+      flash[:notice] = 'コミュニティに参加しました！'
       redirect_to community_path(@community)
       community_invitation_notification_delete
     # コミュニティの年齢制限が設定されているが、自分の年齢が範囲内にふくまれていれば加入
@@ -65,6 +67,7 @@ class Public::CommunityUsersController < ApplicationController
       end
       if (@community_detail.age_min_limit..@community_detail.age_max_limit).to_a.include?(current_end_user.age)
         @community_user.save
+      flash[:notice] = 'コミュニティに参加しました！'
       redirect_to community_path(@community)
       community_invitation_notification_delete
       else
