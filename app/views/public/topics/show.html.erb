@@ -31,10 +31,11 @@
   </div>
   <div class="row my-4 px-2">
     <div class="topic-comments-index col-sm-12">
-      <%= render 'public/topic_comments/comment_index', topic: @topic %>
+      <%= render 'public/topic_comments/comment_index', topic_comments: @topic_comments %>
     </div>
     <div class="col-sm-12 px-5 ">
       <%= render 'public/topic_comments/comment_form', community: @community, topic: @topic, topic_comment: @topic_comment %>
     </div>
   </div>
+  <%= paginate @topic_comments %>
 </div>

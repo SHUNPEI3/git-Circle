@@ -10,9 +10,9 @@ class Public::EndUsersController < ApplicationController
   end
 
   def show
-    @community_users = @end_user.community_users.order(id: "DESC")
+    @community_users = @end_user.community_users.order(id: "DESC").limit(10)
     @owner_communities = Community.where(owner_id: @end_user.id)
-    @topics = @end_user.topics.order(id: "DESC").page(params[:page]).per(6)
+    @topics = @end_user.topics.order(id: "DESC").limit(6)
   end
 
   def edit
@@ -49,9 +49,9 @@ class Public::EndUsersController < ApplicationController
   end
 
   def search_personal_tag
-    @tag_list = PersonalTag.all
+    @tag_list = PersonalTag.all.order(id: "DESC").limit(10)
     @tag = PersonalTag.find(params[:id])
-    @end_users = @tag.end_users
+    @end_users = @tag.end_users.page(params[:page]).per(8)
   end
 
   def unsubscribe

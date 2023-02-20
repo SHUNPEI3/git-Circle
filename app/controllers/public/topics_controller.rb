@@ -1,19 +1,18 @@
 class Public::TopicsController < ApplicationController
+  before_action :find_community, only: [:new, :create, :show, :edit]
   before_action :find_topic, only: [:show, :edit, :update]
   before_action :ensure_community_mennber, only: [:index, :show, :edit]
   before_action :is_matching_topic_author, only: [:edit, :update]
 
   def index
-    @topics = Topic.where(community_id: params[:community_id])
+    @topics = Topic.where(community_id: params[:community_id]).order(id: "DESC").page(params[:page]).per(10)
   end
 
   def new
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
     @topic = Topic.new
   end
 
   def create
-    @community = Community.find(params[:community_id])
     @topic = current_end_user.topics.new(topic_params)
     @topic.community_id = @community.id
     if @topic.save
@@ -26,12 +25,11 @@ class Public::TopicsController < ApplicationController
   end
 
   def show
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
     @topic_comment = TopicComment.new
+    @topic_comments = @topic.topic_comments.page(params[:page]).per(20)
   end
 
   def edit
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
   end
 
   def update
@@ -48,6 +46,10 @@ class Public::TopicsController < ApplicationController
 
   def topic_params
     params.require(:topic).permit(:title, :body) #コミュニティIDは必要ない？
+  end
+
+  def find_community
+    @community = Community.find(params[:community_id]) #form_withには親のインスタンス変数を渡す必要がある
   end
 
   def find_topic

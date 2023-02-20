@@ -34,7 +34,7 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def show
-    @topics = @community.topics.page(params[:page]).order(id: "DESC").per(5)
+    @topics = @community.topics.order(id: "DESC").limit(6)
     @other_users = current_end_user.followings
   end
 
@@ -71,9 +71,9 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def search_community_tag
-    @tag_list = Tag.all
+    @tag_list = Tag.all.order(id: "DESC").limit(10)
     @tag = Tag.find(params[:id])
-    @communities = @tag.communitys
+    @communities = @tag.communitys.page(params[:page]).per(8)
   end
 
   private

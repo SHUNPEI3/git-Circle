@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pb-5">
   <div class="row m-4">
     <h3>＃タグが&nbsp;"<%=@tag.name%>"&nbsp;のユーザーリスト</h3>
   </div>
@@ -15,4 +15,5 @@
   <div class="row mt-2">
     <%= render 'public/end_users/user_list', end_users: @end_users %>
   </div>
+  <%= paginate @end_users %>
 </div>
