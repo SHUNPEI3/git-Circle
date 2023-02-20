@@ -3,9 +3,9 @@
     <h2><i class="fas fa-user-group"></i>&nbsp;トピック詳細</h2>
   </div>
   <div class="row justify-content-around">
-    <div class="col-lg-2 col-md-3 col-sm-12 text-center mb-3">
+    <div class="col-md-3 text-center mb-3">
       <%= link_to end_user_path(@topic.end_user) do %>
-        <%= image_tag @topic.end_user.get_profile_image(220, 220), class:"img-thumbnail" %>
+        <%= image_tag @topic.end_user.get_profile_image(150, 150), class:"img-thumbnail" %>
         <h5 class="text-info"><%= @topic.end_user.nickname %></h5>
       <% end %>
       <div>
@@ -14,7 +14,7 @@
         <% end %>
       </div>
     </div>
-    <div class="col-lg-9 col-md-8">
+    <div class="col-md-9 col-md-8">
       <div class="col-sm-10">
         <p>投稿日：<%= @topic.created_at.strftime("%Y/%m/%d\ %R") %></p>
         <h3 class="font-weight-bold"><%= @topic.title %></h3>

@@ -1,6 +1,7 @@
 <div class="container pb-5">
+  <%= render "layouts/errors", obj: @topic %>
   <div class="row m-4">
-    <h2><i class="fas fa-user-group"></i>&nbsp;トピック作成</h2>
+    <h2>&nbsp;トピック作成</h2>
   </div>
   <%= form_with model:[@community, @topic] do |f| %>
     <div class="form-group row">
@@ -16,7 +17,8 @@
       </div>
     </div>
     <div class="form-group row justify-content-center">
-      <%= f.submit class: 'btn btn-info mt-5', style:"width: 30%" %>
+      <%= link_to '戻る', community_topics_path(@community), class: 'btn btn-secondary mt-5 mx-3', style:"width: 25%" %>
+      <%= f.submit '投稿する', class: 'btn btn-info mt-5 mx-3', style:"width: 25%" %>
     </div>
   <% end %>
 </div>

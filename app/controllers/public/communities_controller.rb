@@ -12,24 +12,24 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def create
-    community = Community.create(community_params)
-    community.owner_id = current_end_user.id
-    community.end_users << current_end_user
+    @community = Community.new(community_params)
+    @community.owner_id = current_end_user.id
+    @community.end_users << current_end_user
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
     # 年齢制限入力欄の確認
-    ## if community.community_details.age_min_limit < community.community_details.age_max_limit ではだめ。。
     if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
-      if community.save
-        community.save_tag(tag_list)
+      if @community.save
+        @community.save_tag(tag_list)
         flash[:notice] = "作成完了しました！"
         redirect_to communities_path
       else
-        @community = Community.new
-        @community.community_details.build
-        flash[:alert] = "作成に失敗しました"
+        flash.now[:alert] = "作成に失敗しました"
         render "new"
       end
+    else
+      flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
+      render 'new'
     end
   end
 
@@ -44,11 +44,16 @@ class Public::CommunitiesController < ApplicationController
 
   def update
     tag_list = params[:community][:community_tag_name].split(nil)
-    if @community.update(community_params)
-      @community.save_tag(tag_list)
-      redirect_to community_path, notice: "更新完了しました！"
+    if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
+      if @community.update(community_params)
+        @community.save_tag(tag_list)
+        redirect_to community_path, notice: "更新完了しました！"
+      else
+        flash.now[:alert] = "更新に失敗しました"
+        render 'edit'
+      end
     else
-      flash[:alert] = "更新に失敗しました"
+      flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
       render 'edit'
     end
   end

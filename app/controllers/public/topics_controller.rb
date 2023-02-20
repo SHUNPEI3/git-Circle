@@ -20,7 +20,7 @@ class Public::TopicsController < ApplicationController
       flash[:notice] = "投稿完了しました！"
       redirect_to community_topics_path
     else
-      flash[:alert] = "投稿に失敗しました"
+      flash.now[:alert] = "投稿に失敗しました"
       render 'new'
     end
   end
@@ -36,10 +36,10 @@ class Public::TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
-      flash[:notice] = "投稿完了しました！"
+      flash[:notice] = "更新が完了しました！"
       redirect_to community_topic_path(@topic.community_id, @topic)
     else
-      flash[:alert] = "投稿に失敗しました"
+      flash.now[:alert] = "更新に失敗しました"
       render 'edit'
     end
   end
