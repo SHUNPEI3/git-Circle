@@ -31,7 +31,9 @@
           </div>
           <div id="contents2-<%= user.id %>" class="tab-pane">
             <div class="card-body">
-              <p class="card-text"><%= user.introduction.truncate(40) %></p>
+              <% if user.introduction.present? %>
+                <p class="card-text"><%= user.introduction.truncate(40) %></p>
+              <% end %>
             </div>
           </div>
         </div>

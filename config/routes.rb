@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       get :following, on: :member
       get :follower, on: :member
       get :bookmark, on: :member
-      get :join_community, on: :member
+      get :my_community, on: :member
       get :search_personal_tag, on: :member
     end
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'

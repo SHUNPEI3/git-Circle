@@ -65,7 +65,10 @@
                 </tr>
                 <tr>
                   <th style="width: 40%">参加コミュニティ数</th>
-                  <td style="width: 60%"><h5><%= link_to "#{@end_user.communities.count} つ", join_community_end_user_path(@end_user) %></h5></td>
+                  <td style="width: 60%">
+                    <span class="h5"><%= link_to "#{@end_user.communities.count} つ", my_community_end_user_path(@end_user) %></span>
+                    <span>(作成数：<%= @owner_communities.count %>つ)</span>
+                  </td>
                 </tr>
                 <tr>
                   <th style="width: 40%">マイタグ</th>
@@ -83,7 +86,9 @@
               </div>
             </div>
             <div id="contents2" class="tab-pane p-2">
-              <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
+              <% if @end_user.introduction.present? %>
+                <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
+              <% end %>
               <div class="row justify-content-end mr-3">
                 <% if !current_end_user.guest_user? && @end_user == current_end_user %>
                   <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>

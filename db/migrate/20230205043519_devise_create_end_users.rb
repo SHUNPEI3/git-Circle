@@ -9,10 +9,10 @@ class DeviseCreateEndUsers < ActiveRecord::Migration[6.1]
       t.string  :last_name_kana,  null: false
       t.string  :first_name_kana, null: false
       t.string  :nickname,        null: false
-      t.integer :sex,             default: 0
+      t.integer :sex,             null: false,  default: 0
       t.integer :age,             null: false
-      t.integer :activity_area,   default: 0
-      t.text    :introduction,    null: false
+      t.integer :activity_area,   null: false,  default: 0
+      t.text    :introduction
       t.boolean :is_deleted,      null: false,  default: false
 
       ## Database authenticatable

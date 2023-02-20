@@ -11,6 +11,7 @@ class Public::EndUsersController < ApplicationController
 
   def show
     @community_users = @end_user.community_users.order(id: "DESC").page(params[:page]).per(6)
+    @owner_communities = Community.where(owner_id: @end_user.id)
     @topics = @end_user.topics.order(id: "DESC").page(params[:page]).per(6)
   end
 
@@ -25,7 +26,7 @@ class Public::EndUsersController < ApplicationController
       flash[:notice] = "更新に成功しました"
       redirect_to end_user_path(@end_user)
     else
-      flash[:alert] = "更新に失敗しました"
+      flash.now[:alert] = "更新に失敗しました"
       render 'edit'
     end
   end
@@ -42,8 +43,9 @@ class Public::EndUsersController < ApplicationController
     @bookmarks = @end_user.bookmarks
   end
 
-  def join_community
+  def my_community
     @join_communities = @end_user.communities
+    @owner_communities = Community.where(owner_id: @end_user.id)
   end
 
   def search_personal_tag

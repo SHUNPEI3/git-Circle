@@ -98,10 +98,10 @@ ActiveRecord::Schema.define(version: 2023_02_13_082645) do
     t.string "last_name_kana", null: false
     t.string "first_name_kana", null: false
     t.string "nickname", null: false
-    t.integer "sex", default: 0
+    t.integer "sex", default: 0, null: false
     t.integer "age", null: false
-    t.integer "activity_area", default: 0
-    t.text "introduction", null: false
+    t.integer "activity_area", default: 0, null: false
+    t.text "introduction"
     t.boolean "is_deleted", default: false, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
