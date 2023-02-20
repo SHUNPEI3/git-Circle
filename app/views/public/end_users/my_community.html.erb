@@ -49,6 +49,7 @@
             <% end %>
           </tbody>
         </table>
+        <%= paginate @join_communities, :param_name => 'join' %>
       </div>
       <div id="contents2" class="tab-pane">
         <table class="table table-hover">
@@ -87,6 +88,7 @@
             <% end %>
           </tbody>
         </table>
+        <%= paginate @owner_communities, :param_name => 'owner' %>
       </div>
     </div>
   </div>

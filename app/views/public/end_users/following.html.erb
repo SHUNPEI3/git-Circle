@@ -5,4 +5,5 @@
   <div class="row">
     <%= render 'public/end_users/user_list', end_users: @followings %>
   </div>
+  <%= paginate @followings %>
 </div>

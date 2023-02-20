@@ -1,27 +1,22 @@
-const swiper = new Swiper(".swiper", {
+const mySwiper = new Swiper(".swiper-container", {
+
   slidesPerView: 1,
-    breakpoints: {
-    576: {
-      slidesPerView: 2,
-    },
-    768: {
-      slidesPerView: 3,
-    },
-    992: {
-      slidesPerView: 4,
-    },
-  },
-
-   spaceBetween: 20,     // スライド間の間隔を１０pxに設定
-
-  pagination: {
-    el: ".swiper-pagination",
-    type: 'bullets', // ●○◯◯形式
-    clickable: true, // type: 'bullets'の時のみ有効 ◯クリックで直接そのスライドへ移動
+  spaceBetween: 50,
+  
+  breakpoints: {
+    767: {
+      spaceBetween: 10,
+      width: 250,
+      slidesPerView: 1
+    }
   },
 
   navigation: {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev"
-  }
+  },
+
+  pagination: {
+    el: '.swiper-pagination',
+  },
 });

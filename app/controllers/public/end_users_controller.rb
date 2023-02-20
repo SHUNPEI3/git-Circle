@@ -10,7 +10,7 @@ class Public::EndUsersController < ApplicationController
   end
 
   def show
-    @community_users = @end_user.community_users.order(id: "DESC").page(params[:page]).per(6)
+    @community_users = @end_user.community_users.order(id: "DESC")
     @owner_communities = Community.where(owner_id: @end_user.id)
     @topics = @end_user.topics.order(id: "DESC").page(params[:page]).per(6)
   end
@@ -32,20 +32,20 @@ class Public::EndUsersController < ApplicationController
   end
 
   def following
-    @followings = @end_user.followings
+    @followings = @end_user.followings.page(params[:page]).per(10)
   end
 
   def follower
-    @followers = @end_user.followers
+    @followers = @end_user.followers.page(params[:page]).per(10)
   end
 
   def bookmark
-    @bookmarks = @end_user.bookmarks
+    @bookmarks = @end_user.bookmarks.page(params[:page]).per(10)
   end
 
   def my_community
-    @join_communities = @end_user.communities
-    @owner_communities = Community.where(owner_id: @end_user.id)
+    @join_communities = @end_user.communities.page(params[:join]).per(10)
+    @owner_communities = Community.where(owner_id: @end_user.id).page(params[:owner]).per(10)
   end
 
   def search_personal_tag

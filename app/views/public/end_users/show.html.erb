@@ -123,19 +123,21 @@
     <div class="row offset-md-1 my-3">
       <h5>最近のコミュニティ加入履歴</h5>
     </div>
-    <div class="swiper mx-2">
-      <div class="swiper-wrapper">
-        <% @community_users.each do |community_user| %>
-          <div class="swiper-slide text-center">
-            <%= link_to community_path(community_user.community) do %>
-              <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
-              <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
-            <% end %>
-          </div>
-        <% end %>
+    <div class="swiper">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <% @community_users.each do |community_user| %>
+            <div class="swiper-slide text-center">
+              <%= link_to community_path(community_user.community) do %>
+                <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+                <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-      <div class="swiper-button-prev swiper-button-white"></div>
-      <div class="swiper-button-next swiper-button-white"></div>
+      <div class="swiper-button-prev fa-2x text-warning"><i class="fas fa-arrow-circle-left"></i></div>
+      <div class="swiper-button-next fa-2x text-warning"><i class="fas fa-arrow-circle-right"></i></div>
       <div class="swiper-pagination"></div>
     </div>
   </div>
