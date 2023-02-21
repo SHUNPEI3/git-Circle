@@ -1,7 +1,7 @@
 <div class="container pb-5">
   <%= render "layouts/errors", obj: @topic %>
   <div class="row m-4">
-    <h3>&nbsp;トピック作成</h3>
+    <h3><i class="fas fa-plus"></i>&nbsp;トピック作成</h3>
   </div>
   <%= form_with model:[@community, @topic] do |f| %>
     <div class="form-group row">
@@ -13,7 +13,7 @@
     <div class="form-group row">
       <%= f.label :body, '本文', class:"col-sm-2 col-form-label"%>
       <div class="col-sm-10">
-        <%= f.text_area :body, rows:"5", class: 'form-control' %>
+        <%= f.text_area :body, rows:"8", class: 'form-control' %>
       </div>
     </div>
     <div class="form-group row justify-content-center">

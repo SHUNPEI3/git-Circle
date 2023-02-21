@@ -1,6 +1,6 @@
 <div class="container pb-5">
   <div class="row m-4">
-    <h3><i class="fas fa-user-group"></i>&nbsp;トピック詳細</h3>
+    <h3><i class="fas fa-info"></i>&nbsp;トピック詳細</h3>
   </div>
   <div class="row justify-content-around">
     <div class="col-md-3 text-center mb-3">
@@ -10,7 +10,7 @@
       <% end %>
       <div>
         <% if current_end_user.id == @topic.end_user_id %>
-          <%= link_to '＋トピック編集', edit_community_topic_path(@topic.community, @topic), class: "btn btn-info", style:"" %>
+          <%= link_to '＋トピック編集', edit_community_topic_path(@topic.community, @topic), class: "btn btn-info" %>
         <% end %>
       </div>
     </div>
@@ -20,7 +20,19 @@
         <h3 class="font-weight-bold"><%= @topic.title %></h3>
       </div>
       <div class="col-sm-12 py-3">
-        <h5><%= safe_join(@topic.body .split("\n"), tag(:br)) %></h5>
+        <h6 class="topic-body">
+          <% if @topic.body.length > 100 %>
+            <div class="truncated">
+              <%= safe_join(@topic.body.truncate(100).split("\n"), tag(:br)) %>
+              <div class="text-center mt-3"><span class="see-more text-secondary">▽ 続きを読む</span></div>
+            </div>
+            <div class="untruncated" style="display: none">
+              <%= safe_join(@topic.body.split("\n"), tag(:br)) %>
+            </div>
+          <% else %>
+            <%= safe_join(@topic.body.split("\n"), tag(:br)) %>
+          <% end %>
+        </h6>
         <div class="row justify-content-end m-2">
           <small class="mx-2"><%= link_to 'トピック一覧へ', community_topics_path(@topic.community) %></small>
           <small class="mx-2" id="bookmark-buttons-<%= @topic.id %>"><%= render 'public/bookmarks/bookmark_btn', topic: @topic %></small>
@@ -29,11 +41,11 @@
       </div>
     </div>
   </div>
-  <div class="row my-4 px-2">
-    <div class="topic-comments-index col-sm-12">
+  <div class="row justify-content-center my-4">
+    <div class="topic-comments-index col-md-11 col-12">
       <%= render 'public/topic_comments/comment_index', topic_comments: @topic_comments %>
     </div>
-    <div class="col-sm-12 px-5 ">
+    <div class="col-sm-12 px-5">
       <%= render 'public/topic_comments/comment_form', community: @community, topic: @topic, topic_comment: @topic_comment %>
     </div>
   </div>

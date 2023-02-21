@@ -3,6 +3,10 @@ $('.see-more').click(function(){
   $(this).closest(".content-body").find(".untruncated").show();
 })
 
+$('.see-more').click(function(){
+  $(this).closest(".topic-body").find(".truncated").hide();
+  $(this).closest(".topic-body").find(".untruncated").show();
+})
 
 const mySwiper = new Swiper(".swiper-container", {
 
