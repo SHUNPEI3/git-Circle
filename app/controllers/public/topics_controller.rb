@@ -1,4 +1,5 @@
 class Public::TopicsController < ApplicationController
+  before_action :authenticate_end_user!
   before_action :find_community, only: [:new, :create, :show, :edit]
   before_action :find_topic, only: [:show, :edit, :update]
   before_action :ensure_community_mennber, only: [:index, :show, :edit]
@@ -61,7 +62,7 @@ class Public::TopicsController < ApplicationController
     community = Community.find(params[:community_id])
     unless community.community_users.exists?(end_user_id: current_end_user.id)
       flash[:alert] = '〔注意〕コミュニティの参加者のみ閲覧が可能です。'
-      redirect_to request.referer
+      redirect_to community_path(community)
     end
   end
 

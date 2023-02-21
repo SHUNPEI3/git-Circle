@@ -1,4 +1,5 @@
 class Public::CommunitiesController < ApplicationController
+  before_action :authenticate_end_user!
   before_action :find_community, only: [:show, :edit, :update]
   before_action :is_matching_community_owner, only: [:edit, :update]
 
@@ -18,7 +19,7 @@ class Public::CommunitiesController < ApplicationController
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
     # 年齢制限入力欄の確認
-    if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
+    if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
       if @community.save
         @community.save_tag(tag_list)
         flash[:notice] = "作成完了しました！"
@@ -44,7 +45,8 @@ class Public::CommunitiesController < ApplicationController
 
   def update
     tag_list = params[:community][:community_tag_name].split(nil)
-    if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
+    # binding.pry
+    if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
       if @community.update(community_params)
         @community.save_tag(tag_list)
         redirect_to community_path, notice: "更新完了しました！"
@@ -89,7 +91,8 @@ class Public::CommunitiesController < ApplicationController
   def is_matching_community_owner
     @community = Community.find(params[:id])
     unless @community.owner == current_end_user
-     redirect_to end_user_path(current_end_user), notice: '作成者以外はコミュニティ編集画面へ遷移できません。'
+     flash[:alert] = '作成者以外はコミュニティ編集画面へ遷移できません。'
+     redirect_to end_user_path(current_end_user)
     end
   end
 

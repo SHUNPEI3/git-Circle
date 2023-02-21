@@ -1,10 +1,12 @@
-<% if topic.bookmarked_by?(current_end_user) %>
-  <%= link_to community_topic_bookmarks_path(topic.community,topic), method: :delete, remote: true do %>
-    <i class="fas fa-heart"></i>
+<% unless current_end_user.guest_user? %>
+  <% if topic.bookmarked_by?(current_end_user) %>
+    <%= link_to community_topic_bookmarks_path(topic.community,topic), method: :delete, remote: true do %>
+      <i class="fas fa-heart"></i>
+    <% end %>
+  <% else %>
+    <%= link_to community_topic_bookmarks_path(topic.community,topic), method: :post, remote: true do %>
+      <i class="far fa-heart"></i>
+    <% end %>
   <% end %>
-<% else %>
-  <%= link_to community_topic_bookmarks_path(topic.community,topic), method: :post, remote: true do %>
-    <i class="far fa-heart"></i>
-  <% end %>
+  <span>&nbsp;<%= topic.bookmarks.count %></span>
 <% end %>
-<span>&nbsp;<%= topic.bookmarks.count %></span>
