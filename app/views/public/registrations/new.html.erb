@@ -40,15 +40,6 @@
           <small><%= f.label :activity_area, "主な活動エリア", class:"col-form-label" %></small>
           <%= f.select :activity_area, options_for_select(EndUser.activity_areas_i18n.invert), {include_blank: "選択してください"}, class:"form-control", style:"width:70%" %>
         </div>
-        <!--<div class="form-group">-->
-        <!--  <small><%#= f.label :personal_tag_name, "パーソナルタグ", class:"col-form-label" %></small>-->
-        <!--  <%#= f.text_field :personal_tag_name, placeholder:"例）スポーツ 音楽", class:"form-control" %>-->
-        <!--  <small> ※半角スペースを入力することで、複数のタグを付けることができます</small>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-        <!--  <small><%#= f.label :introduction, "自己紹介", class:"col-form-label" %></small>-->
-        <!--  <%#= f.text_area :introduction, rows:"4", class:"form-control" %>-->
-        <!--</div>-->
         <div class="form-group">
           <small><%= f.label :email, "メールアドレス", class:"col-form-label" %></small>
           <%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", class:"form-control" %>

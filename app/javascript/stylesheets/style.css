@@ -12,6 +12,10 @@
   border-color: rgba(0,0,0,0);
 }
 
+.o-rounded {
+  border-radius: 30px;
+}
+
 .swiper{
   padding:0 40px 30px;
 }

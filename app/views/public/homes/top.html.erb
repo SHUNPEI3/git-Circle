@@ -1,7 +1,7 @@
 <div class="container py-5">
   <div class="row justify-content-around py-5">
     <div class="col-lg-7">
-      <div class=""><%= image_tag 'logo.png', class:"img-fluid mx-auto" %></div>
+      <div class=><%= image_tag 'logo.png', class:"img-fluid mx-auto" %></div>
       <h1 class="font-weight-bold m-3">あなたとだれかを繋ぐ場所</h1>
       <h1 class="font-weight-bold m-3">さぁ、始めてみよう！</h1>
     </div>
@@ -23,5 +23,85 @@
         <%= link_to "ゲストでログイン", end_user_guest_sign_in_path, method: :post, class:"btn btn-outline-secondary my-1 py-2", style:"width: 100%" %>
       <% end %>
     </div>
+  </div>
+  <div class="row justify-content-center my-3">
+    <h2 class="col-11 text-center">注目のコミュニティ</h2>
+    <% @community_ranks.each.with_index(1) do |community, i| %>
+      <div class="col-lg-3 col-md-4 col-sm-6 col-10 my-3">
+        <div class="card shadow">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a href="#rank-contents1-<%= community.id %>" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
+              </li>
+              <li class="nav-item">
+                <a href="#rank-contents2-<%= community.id %>" class="nav-link text-dark" data-toggle="tab">紹介文</a>
+              </li>
+            </ul>
+          </div>
+          <%= image_tag community.get_community_image(150, 150), class:"class=card-img-top p-1" %>
+          <div class="card-body">
+            <h4 class="card-title text-info"><%= community.name %></h4>
+          </div>
+          <div class="tab-content">
+            <div id="rank-contents1-<%= community.id %>" class="tab-pane active">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fas fa-user"></i>&nbsp;&nbsp;<span class="h5"><%= (community.end_users.count).to_s %></span>人が参加中</li>
+                <li class="list-group-item"><i class="fas fa-tag"></i>
+                  <% community.tags.each do |community_tag| %>
+                    <%= "#" + community_tag.name %>
+                  <% end %>
+                </li>
+             </ul>
+            </div>
+            <div id="rank-contents2-<%= community.id %>" class="tab-pane">
+              <div class="card-body">
+                <p class="card-text"><%= community.introduction.truncate(40) %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="row justify-content-center my-3">
+    <h2 class="col-11 text-center">新着コミュニティ</h2>
+    <% @community_news.each do |community| %>
+      <div class="col-lg-3 col-md-4 col-sm-6 col-10 my-3">
+        <div class="card shadow">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a href="#new-contents1-<%= community.id %>" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
+              </li>
+              <li class="nav-item">
+                <a href="#new-contents2-<%= community.id %>" class="nav-link text-dark" data-toggle="tab">紹介文</a>
+              </li>
+            </ul>
+          </div>
+          <%= image_tag community.get_community_image(150, 150), class:"class=card-img-top p-1" %>
+          <div class="card-body">
+            <h4 class="card-title text-info"><%= community.name %></h4>
+          </div>
+          <div class="tab-content">
+            <div id="new-contents1-<%= community.id %>" class="tab-pane active">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fas fa-user"></i>&nbsp;&nbsp;<span class="h5"><%= (community.end_users.count).to_s %></span>人が参加中</li>
+                <li class="list-group-item"><i class="fas fa-tag"></i>
+                  <% community.tags.each do |community_tag| %>
+                    <%= "#" + community_tag.name %>
+                  <% end %>
+                </li>
+             </ul>
+            </div>
+            <div id="new-contents2-<%= community.id %>" class="tab-pane">
+              <div class="card-body">
+                <p class="card-text"><%= community.introduction.truncate(40) %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
