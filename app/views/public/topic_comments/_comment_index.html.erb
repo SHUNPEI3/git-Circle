@@ -9,11 +9,21 @@
           <% end %>
         <% end %>
       </td>
-      <td class="col-10 col-md-11">
+      <td class="col-10 col-md-11 content-body">
         <% if comment.is_active %>
           <span class="text-info"><%= comment.end_user.nickname %></span><br>
           <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small><br>
-          <%= comment.comment %>
+          <% if comment.comment.length > 50 %>
+            <div class="truncated">
+              <%= comment.comment.truncate(50) %><br>
+              <span class="see-more text-secondary">< 続きを読む ></span>
+            </div>
+            <div class="untruncated" style="display: none">
+              <%= comment.comment %>
+            </div>
+          <% else %>
+            <%= comment.comment %>
+          <% end %>
         <% else %>
           <span>このコメントは管理者によって不適切と判定されました。</span>
         <% end %>
@@ -27,3 +37,5 @@
     </tr>
   <% end %>
 </table>
+
+<%= javascript_pack_tag "script.js" %>
