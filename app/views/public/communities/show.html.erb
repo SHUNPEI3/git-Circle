@@ -109,7 +109,7 @@
         <% if topic.end_user.active_for_authentication? %>
           <div class="d-flex justify-content-between mt-3">
             <h5 class=""><i class="far fa-flag"></i>&nbsp;&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h5>
-            <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
+            <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
           </div>
         <% end %>
       <% end %>

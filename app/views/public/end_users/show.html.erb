@@ -110,7 +110,7 @@
               <% @topics.each do |topic| %>
                 <div class="d-flex justify-content-between mt-2">
                   <h5><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h5>
-                  <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
+                  <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
                 </div>
               <% end %>
             </div>
