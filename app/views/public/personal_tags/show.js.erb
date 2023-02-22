@@ -1,0 +1,2 @@
+$('#personal_tags').append("<%= escape_javascript(render 'public/personal_tags/personal_tag_list', tag_list: @tag_list) %>")
+$("#more_link").replaceWith("<%= escape_javascript(link_to_next_page(@tag_list, 'more', remote: true, id: 'more_link')) %>");

@@ -1,8 +1,7 @@
-<div class="col-12 mb-2">最近追加されたタグ</div>
 <% tag_list.each do |list|%>
   <% unless list.communitys.count == 0 %>
-    <span class="border rounded-pill bg-white mr-3 mb-2 py-2 px-3">
-      <%=link_to "#{ "#" + list.name}", tag_path(list) %><%="(#{list.communitys.count})" %>
-    </span>
+  <div class="d-inline-block border rounded-pill bg-white mb-2 py-1 px-3">
+    <span class="text-secondary"><%= link_to "#{ "#" + list.name}", tag_path(list), class:"text-secondary" %><%="(#{list.communitys.count})" %></span>
+  </div>
   <% end %>
 <% end %>

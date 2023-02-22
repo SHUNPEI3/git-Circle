@@ -5,4 +5,6 @@ class PersonalTag < ApplicationRecord
   def self.search_for(content)
     PersonalTag.where("name Like?", "%#{content}%")
   end
+
+  paginates_per 8
 end

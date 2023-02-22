@@ -6,7 +6,7 @@ class Public::EndUsersController < ApplicationController
 
   def index
     # whereメソッドで退会ではないユーザーを取得 + order(id: "DESC")で、新規登録順に並び替え
-    @tag_list = PersonalTag.all.order(id: "DESC").limit(10)
+    @tag_list = PersonalTag.all.order(id: "DESC").page params[:page]
     @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(8)
   end
 

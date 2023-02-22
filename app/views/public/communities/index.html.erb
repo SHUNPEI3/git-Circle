@@ -15,7 +15,9 @@
     </h4>
   </div>
   <div class="row m-2">
-    <%= render 'public/tags/tag_list', tag_list: @tag_list %>
+    <div class="col-12 mb-2">最近追加されたタグ</div>
+    <div id="tags"><%= render 'public/tags/tag_list', tag_list: @tag_list %></div>
+    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link' ,class:"text-secondary" %></div>
   </div>
   <div class="row mt-2">
     <%= render 'public/communities/community_list', communities: @communities %>

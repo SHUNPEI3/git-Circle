@@ -5,7 +5,7 @@ class Public::CommunitiesController < ApplicationController
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
-    @tag_list = Tag.all.order(id: "DESC").limit(10)
+    @tag_list = Tag.all.order(id: "DESC").page params[:page]
   end
 
   def new
