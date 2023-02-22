@@ -102,12 +102,12 @@
               <% end %>
               <div class="row justify-content-end mt-3 mr-3">
                 <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" %>
                 <% end %>
               </div>
             </div>
             <div id="contents3" class="tab-pane">
-              <% @topics.each do |topic|  %>
+              <% @topics.each do |topic| %>
                 <div class="d-flex justify-content-between mt-2">
                   <h5><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h5>
                   <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>

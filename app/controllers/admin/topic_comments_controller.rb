@@ -16,5 +16,4 @@ class Admin::TopicCommentsController < ApplicationController
     topic_comment.destroy
     redirect_to admin_community_topic_path(params[:community_id], params[:topic_id])
   end
-
 end

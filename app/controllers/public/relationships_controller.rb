@@ -19,5 +19,4 @@ class Public::RelationshipsController < ApplicationController
   def find_follower_user
     @follower_user = EndUser.find(params[:end_user_id])
   end
-
 end

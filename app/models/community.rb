@@ -1,26 +1,18 @@
 class Community < ApplicationRecord
-
   has_one_attached :community_image
-
   has_many :community_users, dependent: :destroy
   has_many :end_users, through: :community_users
   belongs_to :owner, class_name: 'EndUser'
-
   has_many :community_details, dependent: :destroy
   accepts_nested_attributes_for :community_details, allow_destroy: true
-
   has_many :community_tags, dependent: :destroy
   has_many :tags, through: :community_tags
-
   has_many :topics, dependent: :destroy
   has_many :topic_comments, dependent: :destroy
-
   has_many :notifications, dependent: :destroy
 
-
-  validates :name, presence: true
-  validates :introduction, presence: true
-
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :introduction, presence: true, length: { maximum: 600 }
 
   def get_community_image(width,height)
     unless community_image.attached?
@@ -35,11 +27,9 @@ class Community < ApplicationRecord
     current_tags = self.tags.pluck(:name) unless self.tags.nil?
     old_tags = current_tags - sent_tags
     new_tags = sent_tags - current_tags
-
     old_tags.each do |old_name|
       self.tags.delete Tag.find_by(name: old_name)
     end
-
     new_tags.each do |new_name|
       post_tag = Tag.find_or_create_by(name: new_name)
       self.tags << post_tag
@@ -63,5 +53,4 @@ class Community < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-
 end

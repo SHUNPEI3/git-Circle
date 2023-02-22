@@ -11,12 +11,12 @@ class Admin::TopicsController < ApplicationController
   end
 
   def show
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
+    @community = Community.find(params[:community_id])
     @topic_comment = TopicComment.new
   end
 
   def edit
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
+    @community = Community.find(params[:community_id])
   end
 
   def update
@@ -35,11 +35,10 @@ class Admin::TopicsController < ApplicationController
   private
 
   def topic_params
-    params.require(:topic).permit(:title, :body) #コミュニティIDは必要ない？
+    params.require(:topic).permit(:title, :body)
   end
 
   def find_topic
     @topic = Topic.find(params[:id])
   end
-
 end

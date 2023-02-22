@@ -13,81 +13,11 @@
     </ul>
     <div class="tab-content">
       <div id="contents1" class="tab-pane active">
-        <table class="table table-hover">
-          <thead class="thead-light">
-            <tr>
-              <th class="text-center" style="width: 15%">コミュニティ名</th>
-              <th style="width: 65%">紹介文</th>
-              <th class="text-center" style="width: 20%">メンバー</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @join_communities.each do |community| %>
-              <tr>
-                <td class="align-middle text-center">
-                  <%= link_to community_path(community.id) do %>
-                    <%= image_tag community.get_community_image(80, 80), class: "rounded-circle" %><br>
-                    <small><%= community.name %></small>
-                  <% end %>
-                </td>
-                <td class="align-middle">
-                  <h5 class="mb-4"><%= community.introduction.truncate(38) %></h5>
-                  <% community.tags.each do |tag| %>
-                    <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag) %></small>
-                  <% end %>
-                </td>
-                <td class="align-middle text-center">
-                  <% community.end_users.each do |member| %>
-                    <% if member.active_for_authentication? %>
-                      <li class="list-unstyled my-2">
-                        <%= link_to "#{member.nickname}", end_user_path(member.id) %>
-                      </li>
-                    <% end %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <%= render 'public/communities/community_list3', communities: @join_communities %>
         <%= paginate @join_communities, :param_name => 'join' %>
       </div>
       <div id="contents2" class="tab-pane">
-        <table class="table table-hover">
-          <thead class="thead-light">
-            <tr>
-              <th class="text-center" style="width: 15%">コミュニティ名</th>
-              <th style="width: 65%">紹介文</th>
-              <th class="text-center" style="width: 20%">メンバー</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @owner_communities.each do |community| %>
-              <tr>
-                <td class="align-middle text-center">
-                  <%= link_to community_path(community.id) do %>
-                    <%= image_tag community.get_community_image(80, 80), class: "rounded-circle" %><br>
-                    <small><%= community.name %></small>
-                  <% end %>
-                </td>
-                <td class="align-middle">
-                  <h5 class="mb-4"><%= community.introduction.truncate(38) %></h5>
-                  <% community.tags.each do |tag| %>
-                    <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag) %></small>
-                  <% end %>
-                </td>
-                <td class="align-middle text-center">
-                  <% community.end_users.each do |member| %>
-                    <% if member.active_for_authentication? %>
-                      <li class="list-unstyled my-2">
-                        <%= link_to "#{member.nickname}", end_user_path(member.id) %>
-                      </li>
-                    <% end %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+        <%= render 'public/communities/community_list3', communities: @owner_communities %>
         <%= paginate @owner_communities, :param_name => 'owner' %>
       </div>
     </div>

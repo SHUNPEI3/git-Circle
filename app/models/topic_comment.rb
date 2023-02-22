@@ -4,7 +4,7 @@ class TopicComment < ApplicationRecord
   belongs_to :topic
   has_many :goods, dependent: :destroy
 
-  validates :comment, presence: true
+  validates :comment, presence: true, length: { maximum: 1000 }
 
   #コメントにいいねされているかの判定メソッド
   def good_by?(user)

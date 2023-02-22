@@ -1,0 +1,30 @@
+<table class="table table-hover">
+  <% bookmarks.each do |bookmark| %>
+    <tr>
+      <td class="col-2 col-md-1 align-middle text-center">
+        <% if bookmark.topic.end_user.active_for_authentication? %>
+          <%= link_to end_user_path(bookmark.topic.end_user) do %>
+            <%= image_tag bookmark.topic.end_user.get_profile_image(50, 50), class: "img-thumbnail rounded-circle" %><br>
+            <small class="text-info"><%= bookmark.topic.end_user.nickname %></small>
+          <% end %>
+        <% else %>
+          <%= image_tag bookmark.topic.end_user.get_profile_image(50, 50), class: "img-thumbnail rounded-circle" %><br>
+          <small class="text-info"><%= bookmark.topic.end_user.nickname %></small>
+        <% end %>
+      </td>
+      <td class="col-10 col-md-11 align-middle">
+        <small><%= bookmark.topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
+        <% if bookmark.topic.end_user.active_for_authentication? %>
+          <h5 class="mt-2"><%= link_to bookmark.topic.title.truncate(35), community_topic_path(bookmark.topic.community, bookmark.topic) %></h5>
+        <% else %>
+          <h5><%= bookmark.topic.title.truncate(35) %></h5><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
+        <% end %>
+        <div class="row justify-content-end mx-2">
+          <small class="mr-3"><%= link_to bookmark.topic.community.name, community_path(bookmark.topic.community) %></small>
+          <small class="ml-2" id="bookmark-buttons-<%= bookmark.topic.id %>"><%= render 'public/bookmarks/bookmark_btn', topic: bookmark.topic %></small>
+          <small class="topic-comments-count ml-2"><%= render 'public/topic_comments/comment_count', topic: bookmark.topic %></small>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>
