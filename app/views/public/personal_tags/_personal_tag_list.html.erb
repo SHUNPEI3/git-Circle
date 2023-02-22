@@ -1,6 +1,8 @@
+<div class="col-12 mb-2">最近追加されたタグ</div>
 <% tag_list.each do |list|%>
   <% unless list.end_users.count == 0 %>
-    <%=link_to "#{ "#" + list.name}", personal_tag_path(list) %>
-    <span class="mr-2"><%="(#{list.end_users.count})" %></span>
+    <span class="border rounded-pill bg-white mr-3 mb-2 py-2 px-3">
+      <%=link_to "#{ "#" + list.name}", personal_tag_path(list) %><%="(#{list.end_users.count})"%>
+    </span>
   <% end %>
 <% end %>
