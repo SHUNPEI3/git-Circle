@@ -1,7 +1,7 @@
 <div class="container pb-5">
   <div class="row m-4">
     <% if @end_user == current_end_user %>
-      <h2><i class="fas fa-user"></i>&nbsp;マイページ</h2>
+      <h3><i class="fas fa-user"></i>&nbsp;マイページ</h3>
     <% else %>
       <h2><i class="fas fa-user"></i>&nbsp; <%= @end_user.nickname %> さんの詳細ページ</h2>
     <% end %>
@@ -65,13 +65,20 @@
                 </tr>
                 <tr>
                   <th style="width: 40%">参加コミュニティ数</th>
-                  <td style="width: 60%"><h5><%= link_to "#{@end_user.communities.count} つ", join_community_end_user_path(@end_user) %></h5></td>
+                  <td style="width: 60%">
+                    <span class="h5"><%= link_to "#{@end_user.communities.count} つ", my_community_end_user_path(@end_user) %></span>
+                    <span>(作成数：<%= @owner_communities.count %>つ)</span>
+                  </td>
                 </tr>
                 <tr>
                   <th style="width: 40%">マイタグ</th>
                   <td style="width: 60%">
-                    <% @end_user.personal_tags.each do |personal_tag| %>
-                      <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag), class:"mr-2" %>
+                    <% if @end_user.personal_tags.exists? %>
+                      <% @end_user.personal_tags.each do |personal_tag| %>
+                        <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag), class:"mr-2" %>
+                      <% end %>
+                    <% else %>
+                      <small>マイタグが未設定です</small>
                     <% end %>
                   </td>
                 </tr>
@@ -83,8 +90,17 @@
               </div>
             </div>
             <div id="contents2" class="tab-pane p-2">
-              <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
-              <div class="row justify-content-end mr-3">
+              <% if @end_user.introduction.present? %>
+                <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
+              <% else %>
+                <span>
+                  自己紹介が未設定です<br>
+                  <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+                    <small>プロフィール編集から追加しましょう！</small>
+                  <% end %>
+                </span>
+              <% end %>
+              <div class="row justify-content-end mt-3 mr-3">
                 <% if !current_end_user.guest_user? && @end_user == current_end_user %>
                   <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
                 <% end %>
@@ -107,21 +123,22 @@
     <div class="row offset-md-1 my-3">
       <h5>最近のコミュニティ加入履歴</h5>
     </div>
-    <div class="swiper mx-2">
-      <div class="swiper-wrapper">
-        <% @community_users.each do |community_user| %>
-          <div class="swiper-slide text-center">
-            <%= link_to community_path(community_user.community) do %>
-              <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
-              <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
-            <% end %>
-          </div>
-        <% end %>
+    <div class="swiper">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <% @community_users.each do |community_user| %>
+            <div class="swiper-slide text-center">
+              <%= link_to community_path(community_user.community) do %>
+                <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+                <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-      <div class="swiper-button-prev swiper-button-white"></div>
-      <div class="swiper-button-next swiper-button-white"></div>
+      <div class="swiper-button-prev fa-2x text-warning"><i class="fas fa-arrow-circle-left"></i></div>
+      <div class="swiper-button-next fa-2x text-warning"><i class="fas fa-arrow-circle-right"></i></div>
       <div class="swiper-pagination"></div>
     </div>
   </div>
-  <%= javascript_pack_tag "swiper.js" %>
 </div>

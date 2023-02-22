@@ -6,4 +6,5 @@ class Tag < ApplicationRecord
     Tag.where("name Like?", "%#{content}%")
   end
 
+  paginates_per 8
 end

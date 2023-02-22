@@ -7,10 +7,8 @@ class Public::TopicCommentsController < ApplicationController
     @topic_comment.community_id = @community.id
     @topic_comment.topic_id = @topic.id
     if @topic_comment.save
-      flash[:notice] = "投稿完了しました！"
       render 'topic_comment'
     else
-      flash[:alert] = "投稿に失敗しました"
       render 'topic_comment'
     end
   end

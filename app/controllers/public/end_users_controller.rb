@@ -6,12 +6,14 @@ class Public::EndUsersController < ApplicationController
 
   def index
     # whereメソッドで退会ではないユーザーを取得 + order(id: "DESC")で、新規登録順に並び替え
+    @tag_list = PersonalTag.all.order(id: "DESC").page params[:page]
     @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(8)
   end
 
   def show
-    @community_users = @end_user.community_users.order(id: "DESC").page(params[:page]).per(6)
-    @topics = @end_user.topics.order(id: "DESC").page(params[:page]).per(6)
+    @community_users = @end_user.community_users.order(id: "DESC").limit(10)
+    @owner_communities = Community.where(owner_id: @end_user.id)
+    @topics = @end_user.topics.order(id: "DESC").limit(6)
   end
 
   def edit
@@ -25,31 +27,26 @@ class Public::EndUsersController < ApplicationController
       flash[:notice] = "更新に成功しました"
       redirect_to end_user_path(@end_user)
     else
-      flash[:alert] = "更新に失敗しました"
+      flash.now[:alert] = "更新に失敗しました"
       render 'edit'
     end
   end
 
   def following
-    @followings = @end_user.followings
+    @followings = @end_user.followings.page(params[:page]).per(10)
   end
 
   def follower
-    @followers = @end_user.followers
+    @followers = @end_user.followers.page(params[:page]).per(10)
   end
 
   def bookmark
-    @bookmarks = @end_user.bookmarks
+    @bookmarks = @end_user.bookmarks.page(params[:page]).per(10)
   end
 
-  def join_community
-    @join_communities = @end_user.communities
-  end
-
-  def search_personal_tag
-    @tag_list = PersonalTag.all
-    @tag = PersonalTag.find(params[:id])
-    @end_users = @tag.end_users
+  def my_community
+    @join_communities = @end_user.communities.page(params[:join]).per(10)
+    @owner_communities = Community.where(owner_id: @end_user.id).page(params[:owner]).per(10)
   end
 
   def unsubscribe

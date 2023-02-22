@@ -24,14 +24,16 @@
               <li class="list-group-item">活動エリア：<%= user.activity_area_i18n %></li>
               <li class="list-group-item"><i class="fas fa-tag"></i>
                 <% user.personal_tags.each do |personal_tag| %>
-                  <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                  <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag) %>
                 <% end %>
               </li>
             </ul>
           </div>
           <div id="contents2-<%= user.id %>" class="tab-pane">
             <div class="card-body">
-              <p class="card-text"><%= user.introduction.truncate(40) %></p>
+              <% if user.introduction.present? %>
+                <p class="card-text"><%= user.introduction.truncate(40) %></p>
+              <% end %>
             </div>
           </div>
         </div>

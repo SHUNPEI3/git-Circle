@@ -3,11 +3,11 @@ class Admin::CommunitiesController < ApplicationController
   before_action :find_community, only: [:show, :edit, :update, :destroy]
 
   def index
-    @communities = Community.all.order(id: "DESC")
+    @communities = Community.all.order(id: "DESC").page(params[:page]).per(20)
   end
 
   def show
-    @topics = @community.topics.page(params[:page]).order(id: "DESC").per(5)
+    @topics = @community.topics.order(id: "DESC").limit(10)
   end
 
   def edit

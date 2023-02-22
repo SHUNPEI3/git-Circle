@@ -1,9 +1,11 @@
 class Public::CommunitiesController < ApplicationController
+  before_action :authenticate_end_user!
   before_action :find_community, only: [:show, :edit, :update]
   before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
+    @tag_list = Tag.all.order(id: "DESC").page params[:page]
   end
 
   def new
@@ -12,27 +14,29 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def create
-    community = Community.create(community_params)
-    community.owner_id = current_end_user.id
-    community.end_users << current_end_user
+    @community = Community.new(community_params)
+    @community.owner_id = current_end_user.id
+    @community.end_users << current_end_user
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
     # 年齢制限入力欄の確認
-    ## if community.community_details.age_min_limit < community.community_details.age_max_limit ではだめ。。
-    if params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit]
-      if community.save
-        community.save_tag(tag_list)
+    if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
+      if @community.save
+        @community.save_tag(tag_list)
         flash[:notice] = "作成完了しました！"
         redirect_to communities_path
       else
-        flash[:alert] = "作成に失敗しました"
+        flash.now[:alert] = "作成に失敗しました"
         render "new"
       end
+    else
+      flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
+      render 'new'
     end
   end
 
   def show
-    @topics = @community.topics.page(params[:page]).order(id: "DESC").per(5)
+    @topics = @community.topics.order(id: "DESC").limit(6)
     @other_users = current_end_user.followings
   end
 
@@ -42,11 +46,17 @@ class Public::CommunitiesController < ApplicationController
 
   def update
     tag_list = params[:community][:community_tag_name].split(nil)
-    if @community.update(community_params)
-      @community.save_tag(tag_list)
-      redirect_to community_path, notice: "更新完了しました！"
+    # binding.pry
+    if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
+      if @community.update(community_params)
+        @community.save_tag(tag_list)
+        redirect_to community_path, notice: "更新完了しました！"
+      else
+        flash.now[:alert] = "更新に失敗しました"
+        render 'edit'
+      end
     else
-      flash[:alert] = "更新に失敗しました"
+      flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
       render 'edit'
     end
   end
@@ -63,12 +73,6 @@ class Public::CommunitiesController < ApplicationController
     end
   end
 
-  def search_community_tag
-    @tag_list = Tag.all
-    @tag = Tag.find(params[:id])
-    @communities = @tag.communitys
-  end
-
   private
 
   def community_params
@@ -82,7 +86,8 @@ class Public::CommunitiesController < ApplicationController
   def is_matching_community_owner
     @community = Community.find(params[:id])
     unless @community.owner == current_end_user
-     redirect_to end_user_path(current_end_user), notice: '作成者以外はコミュニティ編集画面へ遷移できません。'
+     flash[:alert] = '作成者以外はコミュニティ編集画面へ遷移できません。'
+     redirect_to end_user_path(current_end_user)
     end
   end
 
