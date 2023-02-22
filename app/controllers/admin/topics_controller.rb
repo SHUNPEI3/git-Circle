@@ -3,11 +3,11 @@ class Admin::TopicsController < ApplicationController
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def topic_list
-    @topics = Topic.all
+    @topics = Topic.all.order(id: "DESC").page(params[:page]).per(20)
   end
 
   def index
-    @topics = Topic.where(community_id: params[:community_id])
+    @topics = Topic.where(community_id: params[:community_id]).order(id: "DESC").page(params[:page]).per(10)
   end
 
   def show

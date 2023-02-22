@@ -1,6 +1,6 @@
 <div class="container pb-5">
   <div class="row m-4">
-    <h2><i class="fas fa-object-group"></i>&nbsp;コミュニティ詳細</h2>
+    <h3><i class="fas fa-object-group"></i>&nbsp;コミュニティ詳細</h3>
   </div>
   <div class="row justify-content-around">
     <div class="col-md-4 col-sm-12 mb-3">
@@ -16,7 +16,7 @@
                   <%= f.submit "招待する", class:"btn btn-warning text-light mt-2 py-1", style:"width: 100%" %>
                 <% end %>
               <% elsif @community.already_joined?(current_end_user) %>
-                <%= link_to '退出する', community_community_users_path(@community), method: :delete, data: {confirm: "本当にを退出しますか？"}, class: "btn btn-danger", style:"width: 100%" %>
+                <%= link_to '退出する', community_community_users_path(@community), method: :delete, data: {confirm: "本当に退出しますか？"}, class: "btn btn-danger", style:"width: 100%" %>
               <% else %>
                 <%= link_to '参加する', community_community_users_path(@community), method: :post, class: "btn btn-info", style:"width: 100%" %>
               <% end %>
@@ -43,7 +43,6 @@
         </div>
       </div>
     </div>
-
     <div class="col-md-7">
       <h1 class="font-weight-bold"><%= @community.name %></h1>
       <div class="card mt-3 mb-4">
@@ -61,11 +60,11 @@
           <div class="tab-content">
             <div id="contents1" class="tab-pane active p-2">
               <h5 class="font-weight-bold"><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></h5>
-              <p class="mt-3">メンバー数：<%= @community.end_users.count %>人</p>
+              <p class="mt-3">メンバー数：<span class="h5 text-danger"><%= @community.end_users.count %></span>人が参加中</p>
               <p class="">設立日：<%= @community.created_at.strftime("%Y/%m/%d") %></p>
                <i class="fas fa-tag mr-2"></i>
                <% @community.tags.each do |community_tag| %>
-                 <%= link_to "#{"#" + community_tag.name}", search_community_tag_community_path(community_tag), class:"mr-1" %>
+                 <%= link_to "#{"#" + community_tag.name}", tag_path(community_tag), class:"mr-1" %>
                <% end %>
               <div class="row justify-content-end mr-3">
                 <% if @community.owner_id == current_end_user.id %>
@@ -84,8 +83,12 @@
                 <% if detail.activity_area_limit? %>
                   <li class="my-2">主な活動エリアが「<span class="font-weight-bold text-warning"><%= detail.activity_area_limit_i18n %></span>」の人</li>
                 <% end %>
-                <% if detail.age_min_limit || detail.age_max_limit %>
+                <% if detail.age_min_limit && detail.age_max_limit %>
                   <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳〜<%= detail.age_max_limit %>歳</span>」の人</li>
+                <% elsif !detail.age_min_limit && detail.age_max_limit %>
+                  <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_max_limit %>歳以下</span>」の人</li>
+                <% elsif detail.age_min_limit && !detail.age_max_limit %>
+                  <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳以上</span>」の人</li>
                 <% end %>
               <% end %>
               <div class="row justify-content-end mr-3">
@@ -112,17 +115,4 @@
       <% end %>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>

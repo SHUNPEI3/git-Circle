@@ -1,68 +1,70 @@
 <div class="container pb-5">
+  <%= render "layouts/errors", obj: @community %>
   <div class="row m-4">
-    <h2><i class="fas fa-pen"></i>&nbsp;コミュニティ編集</h2>
+    <h3><i class="fas fa-pen"></i>&nbsp;コミュニティ編集</h3>
   </div>
   <%= form_with model:@community, url: community_path(@community), method: :patch do |f| %>
     <div class="form-group row">
-      <%= f.label :name,'コミュニティ名', class:"col-sm-2 col-form-label" %>
-      <div class="col-sm-6">
+      <%= f.label :name,'コミュニティ名', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
+      <div class="col-sm-7">
         <%= f.text_field :name, class: 'form-control' %>
       </div>
     </div>
     <div class="form-group row">
-      <%= f.label :introduction, '紹介文', class:"col-sm-2 col-form-label"%>
-      <div class="col-sm-10">
+      <%= f.label :introduction, '紹介文', class:"col-lg-2 col-md-3 col-sm-4 col-form-label"%>
+      <div class="col-md-9 col-sm-11">
         <%= f.text_area :introduction, rows:"5", class: 'form-control' %>
       </div>
     </div>
     <div class="form-group row">
       <%= f.label :community_tag_name, 'タグ', class:"col-sm-2" %>
-      <div class="col-sm-6">
+      <div class="col-md-8 col-sm-9">
         <%= f.text_field :community_tag_name, value: @tag_list, class: "form-control" %>
         <small> ※半角スペースを入力することで、複数のタグを付けることができます</small>
       </div>
     </div>
     <div class="form-group row">
-      <%= f.label :community_image, 'コミュニティ画像', class:"col-sm-2" %>
-      <div class="col-sm-6">
+      <%= f.label :community_image, 'コミュニティ画像', class:"col-lg-2 col-md-3 col-sm-4" %>
+      <div class="col-sm-7">
         <%= f.file_field :community_image, class: "form-control-file", accept: 'image/*' %>
       </div>
     </div>
     <%= f.fields_for :community_details do |i| %>
       <div class="form-group row">
-        <%= i.label :max_join_number, '参加上限人数', class:"col-sm-2 col-form-label" %>
+        <%= i.label :max_join_number, '参加上限人数', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
         <div class="col-sm-4">
           <%= i.select :max_join_number, (2..100).to_a, {include_blank: "設定しない"}, class:"form-control" %>
         </div>
         &nbsp;<span class="col-form-label">人まで</span>
       </div>
       <div class="form-group row">
-        <%= i.label :sex_limit, '性別制限', class:"col-sm-2 col-form-label" %>
+        <%= i.label :sex_limit, '性別制限', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
         <div class="col-sm-4">
           <%= i.select :sex_limit, CommunityDetail.sex_limits_i18n.invert, {include_blank: "設定しない"}, class:"form-control" %>
         </div>
       </div>
       <div class="form-group row">
-        <%= i.label :activity_area_limit, '活動エリア制限', class:"col-sm-2 col-form-label" %>
+        <%= i.label :activity_area_limit, '活動エリア制限', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
           <div class="col-sm-4">
           <%= i.select :activity_area_limit, CommunityDetail.activity_area_limits_i18n.invert, {include_blank: "設定しない"}, class:"form-control" %>
         </div>
       </div>
       <div class="form-group row">
-        <%= i.label :age_min_limit, '年齢制限（最少）', class:"col-sm-2 col-form-label" %>
-        <div class="col-sm-3">
+        <%= i.label :age_min_limit, '年齢制限（最少）', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
+        <div class="col-lg-2 col-md-3 col-sm-4">
           <%= i.select :age_min_limit, (18..99).to_a, {include_blank: "設定しない"}, class:"d-inline form-control" %>
         </div>
         &nbsp;<span class="col-sm-1 col-form-label">〜</span>
-        <%= i.label :age_max_limit, '（最大）', class:"col-sm-1 col-form-label" %>
-        <div class="col-sm-3">
+        <%= i.label :age_max_limit, '（最大）', class:"col-xl-1 col-md-2 col-sm-4  col-form-label" %>
+        <div class="col-lg-2 col-md-3 col-sm-4 ">
           <%= i.select :age_max_limit, (18..99).to_a, {include_blank: "設定しない"}, class:"d-inline form-control" %>
         </div>
         &nbsp;<span class="col-form-label">歳まで</span>
       </div>
     <% end %>
     <div class="form-group row justify-content-center">
-      <%= f.submit class: 'btn btn-info mt-5', style:"width: 30%" %>
+      <%= link_to '戻る', community_path(@community), class: 'btn btn-secondary mt-5 mx-3', style:"width: 25%" %>
+      <%= f.submit class: 'btn btn-info mt-5 mx-3', style:"width: 25%" %>
     </div>
   <% end %>
 </div>

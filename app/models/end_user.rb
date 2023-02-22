@@ -28,10 +28,12 @@ class EndUser < ApplicationRecord
 
   validates :last_name, presence: true
   validates :first_name, presence: true
-  validates :first_name_kana, presence: true
   validates :last_name_kana, presence: true
+  validates :first_name_kana, presence: true
   validates :nickname, presence: true
   validates :age, presence: true
+  validates :sex, presence: true
+  validates :activity_area, presence: true
 
 
   enum sex: {
@@ -65,10 +67,10 @@ class EndUser < ApplicationRecord
       user.last_name_kana = "ゲスト"
       user.first_name_kana = "ユーザー"
       user.nickname = "ゲストユーザー"
-      user.sex = ""
+      user.sex = 0
       user.age = "nil"
-      user.activity_area = ""
-      user.introduction =""
+      user.activity_area = 0
+      # user.introduction =""
     end
   end
 

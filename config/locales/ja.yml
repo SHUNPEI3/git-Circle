@@ -109,4 +109,24 @@ ja:
         miyazaki_only: "宮崎県のみ"
         kagoshima_only: "鹿児島県のみ"
         okinawa_only: "沖縄県のみ"
-
+  activerecord:
+    attributes:
+      community:
+        name: コミュニティ名
+        introduction: 紹介文
+      topic:
+        title: トピック名
+        body: 本文
+      topic_comment:
+        comment: コメント
+    errors:
+      models:
+        community:
+          blank: が未入力です
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."

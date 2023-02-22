@@ -2,7 +2,7 @@ class Admin::TopicCommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def topic_comment_list
-    @topic_comments = TopicComment.all
+    @topic_comments = TopicComment.all.order(id: "DESC").page(params[:page]).per(20)
   end
 
   def update

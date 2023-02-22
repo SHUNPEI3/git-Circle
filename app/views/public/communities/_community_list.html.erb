@@ -18,10 +18,10 @@
       <div class="tab-content">
         <div id="contents1-<%= community.id %>" class="tab-pane active">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><i class="fas fa-user"></i>&nbsp;&nbsp;<%= (community.end_users.count).to_s + "人が参加中" %></li>
+            <li class="list-group-item"><i class="fas fa-user"></i>&nbsp;&nbsp;<span class="h5 text-danger"><%= (community.end_users.count).to_s %></span>人が参加中</li>
             <li class="list-group-item"><i class="fas fa-tag"></i>
               <% community.tags.each do |community_tag| %>
-                <%= link_to "#" + community_tag.name, search_community_tag_community_path(community_tag), class:"mr-1" %>
+                <%= link_to "#" + community_tag.name, tag_path(community_tag), class:"mr-1" %>
               <% end %>
             </li>
           </ul>

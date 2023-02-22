@@ -7,6 +7,6 @@
   </div>
   <div class="row justify-content-center m-5">
     <%= link_to "マイページへ戻る", end_user_path(current_end_user), class: "btn btn-warning text-light mx-5" %>
-    <%= link_to "退会する", withdraw_end_user_path(@end_user), method: :patch, data: { confilm: "本当に退会しますか？" }, class: "btn btn-danger mx-5" %>
+    <%= link_to "退会する", withdraw_end_user_path(@end_user), method: :patch, data: {confirm: "本当に退会しますか？"}, class: "btn btn-danger mx-5" %>
   </div>
 </div>

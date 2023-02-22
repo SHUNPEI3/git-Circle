@@ -1,45 +1,44 @@
 class Public::TopicsController < ApplicationController
+  before_action :authenticate_end_user!
+  before_action :find_community, only: [:new, :create, :show, :edit]
   before_action :find_topic, only: [:show, :edit, :update]
   before_action :ensure_community_mennber, only: [:index, :show, :edit]
   before_action :is_matching_topic_author, only: [:edit, :update]
 
   def index
-    @topics = Topic.where(community_id: params[:community_id])
+    @topics = Topic.where(community_id: params[:community_id]).order(id: "DESC").page(params[:page]).per(10)
   end
 
   def new
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
     @topic = Topic.new
   end
 
   def create
-    @community = Community.find(params[:community_id])
     @topic = current_end_user.topics.new(topic_params)
     @topic.community_id = @community.id
     if @topic.save
       flash[:notice] = "投稿完了しました！"
       redirect_to community_topics_path
     else
-      flash[:alert] = "投稿に失敗しました"
+      flash.now[:alert] = "投稿に失敗しました"
       render 'new'
     end
   end
 
   def show
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
     @topic_comment = TopicComment.new
+    @topic_comments = @topic.topic_comments.page(params[:page]).per(20)
   end
 
   def edit
-    @community = Community.find(params[:community_id])  #form_withには親のインスタンス変数を渡す必要がある
   end
 
   def update
     if @topic.update(topic_params)
-      flash[:notice] = "投稿完了しました！"
+      flash[:notice] = "更新が完了しました！"
       redirect_to community_topic_path(@topic.community_id, @topic)
     else
-      flash[:alert] = "投稿に失敗しました"
+      flash.now[:alert] = "更新に失敗しました"
       render 'edit'
     end
   end
@@ -48,6 +47,10 @@ class Public::TopicsController < ApplicationController
 
   def topic_params
     params.require(:topic).permit(:title, :body) #コミュニティIDは必要ない？
+  end
+
+  def find_community
+    @community = Community.find(params[:community_id]) #form_withには親のインスタンス変数を渡す必要がある
   end
 
   def find_topic
@@ -59,7 +62,7 @@ class Public::TopicsController < ApplicationController
     community = Community.find(params[:community_id])
     unless community.community_users.exists?(end_user_id: current_end_user.id)
       flash[:alert] = '〔注意〕コミュニティの参加者のみ閲覧が可能です。'
-      redirect_to request.referer
+      redirect_to community_path(community)
     end
   end
 
