@@ -75,7 +75,7 @@
                   <td style="width: 60%">
                     <% if @end_user.personal_tags.exists? %>
                       <% @end_user.personal_tags.each do |personal_tag| %>
-                        <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag), class:"mr-2" %>
+                        <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag), class:"mr-2" %>
                       <% end %>
                     <% else %>
                       <small>マイタグが未設定です</small>

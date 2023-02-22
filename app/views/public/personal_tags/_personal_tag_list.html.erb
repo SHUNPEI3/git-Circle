@@ -1,0 +1,6 @@
+<% tag_list.each do |list|%>
+  <% unless list.end_users.count == 0 %>
+    <%=link_to "#{ "#" + list.name}", personal_tag_path(list) %>
+    <span class="mr-2"><%="(#{list.end_users.count})" %></span>
+  <% end %>
+<% end %>

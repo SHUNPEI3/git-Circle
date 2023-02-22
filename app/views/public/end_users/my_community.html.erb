@@ -33,7 +33,7 @@
                 <td class="align-middle">
                   <h5 class="mb-4"><%= community.introduction.truncate(38) %></h5>
                   <% community.tags.each do |tag| %>
-                    <small class="mr-2"><%= link_to "#" + tag.name, search_community_tag_community_path(tag) %></small>
+                    <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag) %></small>
                   <% end %>
                 </td>
                 <td class="align-middle text-center">
@@ -72,7 +72,7 @@
                 <td class="align-middle">
                   <h5 class="mb-4"><%= community.introduction.truncate(38) %></h5>
                   <% community.tags.each do |tag| %>
-                    <small class="mr-2"><%= link_to "#" + tag.name, search_community_tag_community_path(tag) %></small>
+                    <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag) %></small>
                   <% end %>
                 </td>
                 <td class="align-middle text-center">

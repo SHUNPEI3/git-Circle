@@ -5,6 +5,7 @@ class Public::CommunitiesController < ApplicationController
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
+    @tag_list = Tag.all.order(id: "DESC").limit(10)
   end
 
   def new
@@ -70,12 +71,6 @@ class Public::CommunitiesController < ApplicationController
     else
       redirect_to request.referer, alert: "すでに招待しています。"
     end
-  end
-
-  def search_community_tag
-    @tag_list = Tag.all.order(id: "DESC").limit(10)
-    @tag = Tag.find(params[:id])
-    @communities = @tag.communitys.page(params[:page]).per(8)
   end
 
   private

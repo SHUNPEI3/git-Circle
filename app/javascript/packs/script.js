@@ -8,6 +8,15 @@ $('.see-more').click(function(){
   $(this).closest(".topic-body").find(".untruncated").show();
 })
 
+$(function() {
+  $('#back a').on('click',function(event){
+    $('body, html').animate({
+      scrollTop:0
+    }, 1000);
+    event.preventDefault();
+  });
+});
+
 const mySwiper = new Swiper(".swiper-container", {
 
   slidesPerView: 1,

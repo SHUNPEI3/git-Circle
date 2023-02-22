@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get 'about' => 'homes#about'
     get 'search' => 'searches#search'
+    resources :personal_tags, only: [:show]
+    resources :tags, only: [:show]
     resources :notifications, only: [:index]
 
     # ユーザー関連
@@ -23,14 +25,12 @@ Rails.application.routes.draw do
       get :follower, on: :member
       get :bookmark, on: :member
       get :my_community, on: :member
-      get :search_personal_tag, on: :member
     end
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
     patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
 
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
-      get :search_community_tag, on: :member
       post :invitation
       resource 'community_users', only: [:create, :destroy]
       # トピック関連

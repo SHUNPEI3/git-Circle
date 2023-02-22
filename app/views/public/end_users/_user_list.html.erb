@@ -24,7 +24,7 @@
               <li class="list-group-item">活動エリア：<%= user.activity_area_i18n %></li>
               <li class="list-group-item"><i class="fas fa-tag"></i>
                 <% user.personal_tags.each do |personal_tag| %>
-                  <%= link_to "#{"#" + personal_tag.name}", search_personal_tag_end_user_path(personal_tag) %>
+                  <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag) %>
                 <% end %>
               </li>
             </ul>

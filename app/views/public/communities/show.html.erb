@@ -64,7 +64,7 @@
               <p class="">設立日：<%= @community.created_at.strftime("%Y/%m/%d") %></p>
                <i class="fas fa-tag mr-2"></i>
                <% @community.tags.each do |community_tag| %>
-                 <%= link_to "#{"#" + community_tag.name}", search_community_tag_community_path(community_tag), class:"mr-1" %>
+                 <%= link_to "#{"#" + community_tag.name}", tag_path(community_tag), class:"mr-1" %>
                <% end %>
               <div class="row justify-content-end mr-3">
                 <% if @community.owner_id == current_end_user.id %>

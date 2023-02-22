@@ -6,6 +6,7 @@ class Public::EndUsersController < ApplicationController
 
   def index
     # whereメソッドで退会ではないユーザーを取得 + order(id: "DESC")で、新規登録順に並び替え
+    @tag_list = PersonalTag.all.order(id: "DESC").limit(10)
     @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(8)
   end
 
@@ -46,12 +47,6 @@ class Public::EndUsersController < ApplicationController
   def my_community
     @join_communities = @end_user.communities.page(params[:join]).per(10)
     @owner_communities = Community.where(owner_id: @end_user.id).page(params[:owner]).per(10)
-  end
-
-  def search_personal_tag
-    @tag_list = PersonalTag.all.order(id: "DESC").limit(10)
-    @tag = PersonalTag.find(params[:id])
-    @end_users = @tag.end_users.page(params[:page]).per(8)
   end
 
   def unsubscribe

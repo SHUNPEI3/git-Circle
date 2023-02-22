@@ -15,6 +15,11 @@
     </h4>
   </div>
   <div class="row">
+    <div class="col-md-12 mt-2">
+      <%= render 'public/tags/tag_list', tag_list: @tag_list %>
+    </div>
+  </div>
+  <div class="row mt-2">
     <%= render 'public/communities/community_list', communities: @communities %>
   </div>
   <%= paginate @communities %>
