@@ -19,7 +19,7 @@ class Community < ApplicationRecord
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       community_image.attach(io: File.open(file_path), filename: 'no-image.jpg', content_type: 'image/jpeg')
     end
-    community_image.variant(resize_to_limit:[width, height]).processed
+    community_image.variant(resize_to_fill:[width, height]).processed
   end
 
   # タグの保存メソッド
