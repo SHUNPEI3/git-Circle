@@ -2,7 +2,7 @@
   <div class="row m-4">
     <h3><i class="fas fa-bookmark"></i>&nbsp;<%=@end_user.nickname %>&nbsp;さんのブックマーク</h3>
   </div>
-  <div class="row bg-white rounded">
+  <div class="row">
     <%= render 'public/bookmarks/bookmark_list', bookmarks: @bookmarks %>
   </div>
   <%= paginate @bookmarks %>

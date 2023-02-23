@@ -1,0 +1,5 @@
+<%= form_with model: community, url: community_invitation_path(community.id), method: :post do |f| %>
+  <%= f.label :user_id, 'フォローユーザーを招待する' %>
+  <%= f.select :user_id, options_from_collection_for_select(other_users, :id, :nickname), {include_blank: "選択してください"}, class:"form-control" %>
+  <%= f.submit "招待する", class:"btn btn-warning text-light mt-2 py-1", style:"width: 100%" %>
+<% end %>

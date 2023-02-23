@@ -1,11 +1,10 @@
-<div class="my-1">
+<div class="my-2">
   <%= link_to follower_end_user_path(end_user), class:"text-secondary" do %>
-    <span class="h5"><i class="fas fa-user"></i>&nbsp;フォロワー&emsp;&emsp;<strong><%= end_user.followers.count %>人</strong></span>
+    <span class="h6"><i class="fas fa-user"></i>&nbsp;フォロワー&emsp;&emsp;<strong><%= end_user.followers.count %>人</strong></span>
   <% end %>
 </div>
-<div class="my-1">
+<div class="my-2">
   <%= link_to following_end_user_path(end_user), class:"text-secondary" do %>
-    <span class="h5"><i class="fas fa-user"></i>&nbsp;フォロー中&emsp;&emsp;<strong><%= end_user.followings.count %>人</strong></span>
+    <span class="h6"><i class="fas fa-user"></i>&nbsp;フォロー中&emsp;&emsp;<strong><%= end_user.followings.count %>人</strong></span>
   <% end %>
 </div>
-

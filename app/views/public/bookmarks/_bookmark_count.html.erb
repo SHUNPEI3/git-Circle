@@ -1,3 +1,5 @@
-<%= link_to bookmark_end_user_path(@end_user), class:"text-secondary" do %>
-   <span class="h5"><i class="fas fa-bookmark"></i>&nbsp;ブックマーク&emsp;<%= end_user.bookmarks.count %>件</span>
-<% end %>
+<div class="my-2">
+  <%= link_to bookmark_end_user_path(@end_user), class:"text-secondary" do %>
+    <span class="h6"><i class="fas fa-bookmark"></i>&nbsp;ブックマーク&emsp;<strong><%= end_user.bookmarks.count %>件</strong></span>
+  <% end %>
+</div>

@@ -26,7 +26,7 @@ class Public::TopicsController < ApplicationController
 
   def show
     @topic_comment = TopicComment.new
-    @topic_comments = @topic.topic_comments.page(params[:page]).per(20)
+    @topic_comments = @topic.topic_comments
   end
 
   def edit
