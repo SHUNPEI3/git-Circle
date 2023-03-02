@@ -10,6 +10,7 @@ class Community < ApplicationRecord
   has_many :topics, dependent: :destroy
   has_many :topic_comments, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  belongs_to :category, optional: true
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :introduction, presence: true, length: { maximum: 600 }
@@ -22,7 +23,13 @@ class Community < ApplicationRecord
     community_image.variant(resize_to_fill:[width, height]).processed
   end
 
-  # タグの保存メソッド
+  # カテゴリー情報の保存メソッド
+  def save_category(category_name)
+    category = Category.find_or_create_by(name: category_name)
+    self.update(category_id: category.id)
+  end
+
+  # タグ情報の保存メソッド
   def save_tag(sent_tags)
     current_tags = self.tags.pluck(:name) unless self.tags.nil?
     old_tags = current_tags - sent_tags
