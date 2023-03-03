@@ -3,12 +3,12 @@
     <% if @end_user == current_end_user %>
       <h3><i class="fas fa-user"></i>&nbsp;マイページ</h3>
     <% else %>
-      <h3><i class="fas fa-user"></i>&nbsp; <%= @end_user.nickname %> さんの詳細ページ</h3>
+      <h3><i class="fas fa-user"></i>&nbsp;<%= @end_user.nickname %> さんのプロフィール</h3>
     <% end %>
   </div>
   <div class="row justify-content-around">
     <div class="col-md-4 col-sm-12 text-center mb-3">
-      <div><%= image_tag @end_user.get_profile_image(220, 220), class:"img-thumbnail" %></div>
+      <div><%= image_tag @end_user.get_profile_image(250, 250), class:"img-thumbnail" %></div>
       <div class="my-2" id="favorite-buttons-<%= @end_user.id %>"><%= render "public/relationships/favorite_btn", end_user: @end_user %></div>
       <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
       <div class="bookmark-count"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
