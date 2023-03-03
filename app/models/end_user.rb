@@ -5,36 +5,29 @@ class EndUser < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one_attached :profile_image
-
   has_many :community_users, dependent: :destroy
   has_many :communities, through: :community_users
-
   has_many :user_personal_tags, dependent: :destroy
   has_many :personal_tags, through: :user_personal_tags
-
   has_many :topics, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :topic_comments, dependent: :destroy
   has_many :goods, dependent: :destroy
-
   has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id, dependent: :destroy
   has_many :followings, through: :active_relationships, source: :follower
   has_many :passive_relationships, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :following
-
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
 
-
   validates :last_name, presence: true
   validates :first_name, presence: true
-  validates :last_name_kana, presence: true
-  validates :first_name_kana, presence: true
+  validates :last_name_kana, presence: true, format: { with: /\A[ァ-ヴー]+\z/u }
+  validates :first_name_kana, presence: true, format: { with: /\A[ァ-ヴー]+\z/u }
   validates :nickname, presence: true
   validates :age, presence: true
   validates :sex, presence: true
   validates :activity_area, presence: true
-
 
   enum sex: {
     sex_secret: 0, male: 1, female: 2, others: 3
@@ -50,13 +43,12 @@ class EndUser < ApplicationRecord
     fukuoka: 40, saga: 41, nagasaki: 42, kumamoto: 43, oita: 44, miyazaki: 45, kagoshima: 46, okinawa: 47
   }
 
-
   def get_profile_image(width,height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       profile_image.attach(io: File.open(file_path), filename: 'no-image.jpg', content_type: 'image/jpeg')
     end
-    profile_image.variant(resize_to_limit:[width, height]).processed
+    profile_image.variant(resize_to_fill:[width, height]).processed
   end
 
   def self.guest
@@ -68,9 +60,8 @@ class EndUser < ApplicationRecord
       user.first_name_kana = "ユーザー"
       user.nickname = "ゲストユーザー"
       user.sex = 0
-      user.age = "nil"
+      user.age = 0
       user.activity_area = 0
-      # user.introduction =""
     end
   end
 
@@ -94,14 +85,11 @@ class EndUser < ApplicationRecord
     current_tags = self.personal_tags.pluck(:name) unless self.personal_tags.nil?
     old_tags = current_tags - sent_tags
     new_tags = sent_tags - current_tags
-    # 古いタグを消す
     old_tags.each do |old_name|
       self.personal_tags.delete PersonalTag.find_by(name: old_name)
     end
-    # 新しいいタグを保存
     new_tags.each do |new_name|
       post_tag = PersonalTag.find_or_create_by(name: new_name)
-      # self.user_personal_tags.new(end_user_id: @end_user.id, personal_tag_id: post_tag.id).save
       self.personal_tags << post_tag
     end
   end
@@ -109,5 +97,4 @@ class EndUser < ApplicationRecord
   def self.search_for(content)
     EndUser.where("nickname Like?", "%#{content}%")
   end
-
 end

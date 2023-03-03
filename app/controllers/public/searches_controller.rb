@@ -1,9 +1,7 @@
 class Public::SearchesController < ApplicationController
-
   def search
     @content = params[:content]
     @model = params[:model]
-
     if @model == "end_user"
       @records = EndUser.search_for(@content)
     elsif @model == "personal_tag"
@@ -14,5 +12,4 @@ class Public::SearchesController < ApplicationController
       @records = Tag.search_for(@content)
     end
   end
-
 end

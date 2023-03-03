@@ -1,8 +1,8 @@
 class Public::EndUsersController < ApplicationController
   before_action :authenticate_end_user!
   before_action :find_end_user, except: [:index, :search_personal_tag]
-  before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit, :update]
+  before_action :is_matching_login_user, only: [:edit, :update]
 
   def index
     # whereメソッドで退会ではないユーザーを取得 + order(id: "DESC")で、新規登録順に並び替え
@@ -24,8 +24,7 @@ class Public::EndUsersController < ApplicationController
     tag_list = params[:end_user][:personal_tag_name].split(nil)
     if @end_user.update(end_user_params)
       @end_user.save_tag(tag_list)
-      flash[:notice] = "更新に成功しました"
-      redirect_to end_user_path(@end_user)
+      redirect_to end_user_path(@end_user), notice: "更新に成功しました"
     else
       flash.now[:alert] = "更新に失敗しました"
       render 'edit'
@@ -60,23 +59,23 @@ class Public::EndUsersController < ApplicationController
 
   private
 
+  def end_user_params
+    params.require(:end_user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :nickname, :age, :sex, :activity_area, :introduction, :profile_image, :email)
+  end
+
   def find_end_user
     @end_user = EndUser.find(params[:id])
   end
 
   def ensure_guest_user
-    if @end_user.last_name == "guest" && @end_user.first_name == "user" && @end_user.nickname == "ゲストユーザー"
-      redirect_to end_user_path(current_end_user) , notice: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+    if @end_user.guest_user?
+      redirect_to end_user_path(current_end_user), alert: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
     end
   end
 
   def is_matching_login_user
     unless current_end_user.id == params[:id].to_i
-     redirect_to end_user_path(current_end_user), notice: '他のユーザーはプロフィール編集画面へ遷移できません。'
+     redirect_to end_user_path(current_end_user), alert: '他のユーザーはプロフィール編集画面へ遷移できません。'
     end
-  end
-
-  def end_user_params
-    params.require(:end_user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :nickname, :age, :sex, :activity_area, :introduction, :profile_image, :email)
   end
 end

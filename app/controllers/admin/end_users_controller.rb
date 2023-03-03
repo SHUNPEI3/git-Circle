@@ -4,6 +4,7 @@ class Admin::EndUsersController < ApplicationController
 
   def show
     @communities = @end_user.communities
+    @topics = @end_user.topics.order(id: "DESC").limit(6)
   end
 
   def edit

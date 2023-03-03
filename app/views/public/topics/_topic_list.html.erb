@@ -1,0 +1,42 @@
+<table class="table table-hover bg-white border rounded">
+  <% topics.each do |topic| %>
+    <tr>
+      <td>
+        <% if topic.end_user.active_for_authentication? %>
+          <div class="row align-items-center mx-2">
+            <div class="mr-2">
+               <%= link_to end_user_path(topic.end_user) do %>
+                 <%= image_tag topic.end_user.get_profile_image(50, 50), class: "img-thumbnail rounded-circle" %>
+              <% end %>
+            </div>
+            <div class="">
+              <small class="text-info"><%= topic.end_user.nickname %></small><br>
+              <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
+            </div>
+          </div>
+          <div class="row ml-5 mr-3">
+            <h4 class="mt-2"><%= link_to topic.title.truncate(35), community_topic_path(topic.community, topic) %></h4>
+          </div>
+        <% else %>
+          <div class="row align-items-center mx-2">
+            <div class="mr-2">
+              <%= image_tag topic.end_user.get_profile_image(50, 50), class: "img-thumbnail rounded-circle" %>
+            </div>
+            <div class="">
+              <small class="text-info"><%= topic.end_user.nickname %></small><br>
+              <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
+            </div>
+          </div>
+          <div class="row ml-5 mr-3">
+            <h4 class="mt-2"><%= topic.title.truncate(35) %></h4><small>※このトピックは投稿したユーザーが利用停止中のため、閲覧できません</small>
+          </div>
+        <% end %>
+        <div class="row justify-content-end mx-2">
+          <small class="mr-3"><%= link_to topic.community.name, community_path(topic.community) %></small>
+          <small class="mx-3" id="bookmark-buttons-<%= topic.id %>"><%= render 'public/bookmarks/bookmark_btn', topic: topic %></small>
+          <small class="topic-comments-count mx-3"><%= render 'public/topic_comments/comment_count', topic: topic %></small>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>

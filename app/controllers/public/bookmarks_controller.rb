@@ -19,5 +19,4 @@ class Public::BookmarksController < ApplicationController
   def find_topic
     @topic = Topic.find(params[:topic_id])
   end
-
 end

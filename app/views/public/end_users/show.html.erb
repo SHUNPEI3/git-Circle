@@ -1,35 +1,29 @@
-<div class="container pb-5">
+<div class="container py-5">
   <div class="row m-4">
     <% if @end_user == current_end_user %>
       <h3><i class="fas fa-user"></i>&nbsp;マイページ</h3>
     <% else %>
-      <h2><i class="fas fa-user"></i>&nbsp; <%= @end_user.nickname %> さんの詳細ページ</h2>
+      <h3><i class="fas fa-user"></i>&nbsp;<%= @end_user.nickname %> さんのプロフィール</h3>
     <% end %>
   </div>
   <div class="row justify-content-around">
     <div class="col-md-4 col-sm-12 text-center mb-3">
-      <div><%= image_tag @end_user.get_profile_image(220, 220), class:"img-thumbnail" %></div>
+      <div><%= image_tag @end_user.get_profile_image(250, 250), class:"img-thumbnail" %></div>
+      <div class="my-2" id="favorite-buttons-<%= @end_user.id %>"><%= render "public/relationships/favorite_btn", end_user: @end_user %></div>
       <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
-      <div class="bookmark-count my-2"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
-      <% unless current_end_user.guest_user? %>
-        <% if @end_user == current_end_user %>
-          <div class="text-center mx-auto my-1">
-            <%= link_to  notifications_path, class: "btn btn-warning text-light", style:"" do %>
-            <% if unchecked_notifications.any? %>
-                新着メッセージがあります！
-              <% else %>
-                メッセージを確認する
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
-        <div class="text-center mx-auto my-1" id="favorite-buttons-<%= @end_user.id %>">
-          <%= render "public/relationships/favorite_btn", end_user: @end_user %>
+      <div class="bookmark-count"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
+      <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+        <div class="my-1">
+          <% if unchecked_notifications.any? %>
+            <%= link_to '新着メッセージがあります！', notifications_path, class: "btn btn-warning text-light" %>
+          <% else %>
+            <%= link_to 'メッセージを確認する', notifications_path, class: "btn btn-warning text-light" %>
+          <% end %>
         </div>
       <% end %>
     </div>
-    <div class="col-md-7 col-sm-12">
-      <div class="card">
+    <div class="col-md-7 col-12">
+      <div class="card shadow">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -46,22 +40,22 @@
         <div class="card-body">
           <div class="tab-content">
             <div id="contents1" class="tab-pane active">
-              <table class="table table-borderless table-sm">
+              <table class="table table-borderless">
                 <tr>
                   <th style="width: 40%">ニックネーム</th>
-                  <td style="width: 60%"><h5 class="font-weight-bold"><%= @end_user.nickname %></h5></td>
+                  <td style="width: 60%"><span class="h5"><%= @end_user.nickname %></span></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">年齢</th>
-                  <td style="width: 60%"><h5><%= (@end_user.age).to_s + "歳" %></h5></td>
+                  <td style="width: 60%"><span class="h5"><%= "#{@end_user.age}" + "歳" %></span></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">性別</th>
-                  <td style="width: 60%"><h5><%= @end_user.sex_i18n %></h5></td>
+                  <td style="width: 60%"><span class="h5"><%= @end_user.sex_i18n %></span></td>
                   </tr>
                 <tr>
                   <th style="width: 40%">主な活動エリア</th>
-                  <td style="width: 60%"><h5><%= @end_user.activity_area_i18n %></h5></td>
+                  <td style="width: 60%"><span class="h5"><%= @end_user.activity_area_i18n %></span></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">参加コミュニティ数</th>
@@ -93,25 +87,27 @@
               <% if @end_user.introduction.present? %>
                 <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
               <% else %>
-                <span>
-                  自己紹介が未設定です<br>
-                  <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                    <small>プロフィール編集から追加しましょう！</small>
-                  <% end %>
-                </span>
+                <p>自己紹介が未設定です</p>
+                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+                  <small>プロフィール編集から追加しましょう！</small>
+                <% end %>
               <% end %>
               <div class="row justify-content-end mt-3 mr-3">
                 <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
+                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" %>
                 <% end %>
               </div>
             </div>
-            <div id="contents3" class="tab-pane">
-              <% @topics.each do |topic|  %>
-                <div class="d-flex justify-content-between mt-2">
-                  <h5><i class="far fa-flag"></i>&nbsp;&nbsp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h5>
-                  <p><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %>&nbsp;投稿</small></p>
-                </div>
+            <div id="contents3" class="tab-pane p-2">
+              <% if @topics.exists? %>
+                <% @topics.each do |topic| %>
+                  <div class="d-flex justify-content-between mt-2">
+                    <h6><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h6>
+                    <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d") %></small></p>
+                  </div>
+                <% end %>
+              <% else %>
+                <p>投稿はありません</p>
               <% end %>
             </div>
           </div>

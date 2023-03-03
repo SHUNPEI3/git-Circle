@@ -1,5 +1,4 @@
 class Public::TopicCommentsController < ApplicationController
-
   def create
     @community = Community.find(params[:community_id])
     @topic = Topic.find(params[:topic_id])
