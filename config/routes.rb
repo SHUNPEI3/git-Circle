@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get 'about' => 'homes#about'
     get 'search' => 'searches#search'
+    resources :categories, only: [:show]
     resources :personal_tags, only: [:show]
     resources :tags, only: [:show]
     resources :notifications, only: [:index]

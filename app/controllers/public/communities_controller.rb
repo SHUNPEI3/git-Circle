@@ -5,6 +5,7 @@ class Public::CommunitiesController < ApplicationController
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
+    @category = Category.all
     @tag_list = Tag.all.order(id: "DESC").page params[:page]
   end
 
