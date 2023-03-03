@@ -13,7 +13,7 @@
         </div>
         <div class="row no-gutters">
           <div class="col-lg-4 col-12 align-self-center">
-            <%= image_tag @community.get_community_image(400, 400), class:"img-fluid mx-auto d-block p-2" %>
+            <%= image_tag @community.get_community_image(600, 600), class:"img-fluid mx-auto d-block p-2" %>
           </div>
           <div class="col-lg-8">
             <div class="card-body">
@@ -68,46 +68,60 @@
     </div>
   </div>
 
-      <div style="height:200px">
-        <p class="mt-3">メンバー：<span class="h5 text-danger"><%= @community.end_users.count %></span>人が参加中</p>
-        <div class="row flex-nowrap overflow-auto" style="width: 100%">
-          <div class="text-center" style="width: 180px">
-            <h6 style="width: 180px">リーダー</h6>
-            <%= link_to end_user_path(@community.owner) do %>
-              <%= image_tag @community.owner.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
-              <h6 class="text-info"><small><%= @community.owner.nickname %></small></h6>
-            <% end %>
-          </div>
-          <div>
-            <h6>その他メンバー</h6>
-            <div class="row flex-nowrap text-center">
-              <% @community.end_users.each do |member| %>
-                <% unless !member.active_for_authentication? || @community.owner == member %>
-                  <div style="width: 100px">
-                    <%= link_to end_user_path(member) do %>
-                      <%= image_tag member.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
-                      <h6 class="text-info"><small><%= member.nickname %></small></h6>
-                    <% end %>
-                  </div>
+  <div class="mt-3" style="">
+    <p>メンバー：<span class="h5 text-danger"><%= @community.end_users.count %></span>人が参加中</p>
+    <div class="row flex-nowrap overflow-auto" style="width: 100%">
+      <div class="text-center" style="width: 180px">
+        <h6 style="width: 180px">リーダー</h6>
+        <%= link_to end_user_path(@community.owner) do %>
+          <%= image_tag @community.owner.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
+          <h6 class="text-info"><small><%= @community.owner.nickname %></small></h6>
+        <% end %>
+      </div>
+      <div>
+        <h6>その他メンバー</h6>
+        <div class="row flex-nowrap text-center">
+          <% @community.end_users.each do |member| %>
+            <% unless !member.active_for_authentication? || @community.owner == member %>
+              <div style="width: 100px">
+                <%= link_to end_user_path(member) do %>
+                  <%= image_tag member.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
+                  <h6 class="text-info"><small><%= member.nickname %></small></h6>
                 <% end %>
-              <% end %>
-            </div>
-          </div>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       </div>
+    </div>
+    <% if @community.owner_id == current_end_user.id %>
+      <div class="mt-3" style="height:120px">
+        <%= render 'public/notifications/invitation_form', community: @community, other_users: @other_users %>
+      </div>
+    <% end %>
+  </div>
 
-
-  <div class="d-flex justify-content-between">
-    <h4 class="">新着トピックス</h4>
+  <div class="d-flex justify-content-between mt-3">
+    <h4>新着トピックス</h4>
     <%= link_to 'もっと見る >>', community_topics_path(@community), class:"mt-3" %>
   </div>
   <div class="border"></div>
   <% @topics.each do |topic| %>
     <% if topic.end_user.active_for_authentication? %>
       <div class="d-flex justify-content-between mt-3">
-        <h6><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h6>
+        <h6 class="text-truncate"><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(30), community_topic_path(topic.community,topic) %></h6>
         <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small></p>
       </div>
     <% end %>
+  <% end %>
+
+  <% unless (current_end_user.guest_user?) || (@community.owner_id == current_end_user.id) %>
+    <div class="text-center mx-auto mt-5", style="">
+      <% if @community.already_joined?(current_end_user) %>
+        <%= link_to 'コミュニティから退出する', community_community_users_path(@community), method: :delete, data: {confirm: "本当に退出しますか？"}, class: "btn btn-danger py-2", style:"width: 75%" %>
+      <% else %>
+        <%= link_to 'コミュニティに参加する', community_community_users_path(@community), method: :post, class: "btn btn-info py-2", style:"width: 75%" %>
+      <% end %>
+    </div>
   <% end %>
 </div>
