@@ -20,7 +20,7 @@ class Public::CommunitiesController < ApplicationController
     @community.end_users << current_end_user
 
     # Language APIで取得した情報を、変数category_nameへ格納
-    category_name =  Language.get_data(community_params[:name])
+    category_name = Language.get_category(community_params[:name])
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
 
@@ -50,7 +50,7 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def update
-    category_name =  Language.get_data(community_params[:name])
+    category_name =  Language.get_category(community_params[:name])
     tag_list = params[:community][:community_tag_name].split(nil)
     if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
       if @community.update(community_params)

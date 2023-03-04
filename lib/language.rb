@@ -4,7 +4,7 @@ require 'net/https'
 
 module Language
   class << self
-    def get_data(text)
+    def get_category(text)
       # APIのURL作成
       api_url = "https://language.googleapis.com/v1/documents:classifyText?key=#{ENV['GOOGLE_API_KEY']}"
       # APIリクエスト用のJSONパラメータ

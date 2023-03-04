@@ -1,28 +1,28 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white p-2">
-  <div class="container">
+  <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img src="<%= asset_path("logo.png")%>" width="100" height="45" class="d-inline-block align-top" alt="Logo">
     </a>
-<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse"  id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <% if admin_signed_in? %>
           <li class="nav-item mx-2 my-1 px-2">
-            <%= link_to "ユーザー一覧", admin_home_path, class:'nav-link ext-secondary' %>
+            <%= link_to "ユーザー一覧", admin_home_path, class:'nav-link text-secondary' %>
           </li>
           <li class="nav-item mx-2 my-1 px-2">
-            <%= link_to "コミュニティ一覧", admin_communities_path, class:'nav-link ext-secondary' %>
+            <%= link_to "コミュニティ一覧", admin_communities_path, class:'nav-link text-secondary' %>
           </li>
           <li class="nav-item mx-2 my-1 px-2">
-            <%= link_to "トピックス一覧", admin_topics_path, class:'nav-link ext-secondary' %>
+            <%= link_to "トピックス一覧", admin_topics_path, class:'nav-link text-secondary' %>
           </li>
           <li class="nav-item mx-2 my-1 px-2">
-            <%= link_to "コメント一覧", admin_topic_comments_path, class:'nav-link ext-secondary' %>
+            <%= link_to "コメント一覧", admin_topic_comments_path, class:'nav-link text-secondary' %>
           </li>
           <li class="nav-item mx-2 my-1 px-2">
-            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:'nav-link ext-secondary' %>
+            <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:'nav-link text-secondary' %>
           </li>
         <% elsif end_user_signed_in? %>
           <li class="nav-item mx-2 my-1 px-2">
