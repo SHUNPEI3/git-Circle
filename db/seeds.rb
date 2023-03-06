@@ -144,6 +144,23 @@ CommunityDetail.create!(
   ]
 )
 
+Category.create!(
+  [
+    {name: 'Sports'},
+    {name: 'Hobbies & Leisure'},
+    {name: 'Arts & Entertainment'},
+    {name: 'Books & Literature'},
+    {name: 'Games'},
+    {name: 'Jobs & Education'},
+    {name: 'Food & Drink'},
+    {name: 'Computers & Electronics'},
+    {name: 'Beauty & Fitness'},
+    {name: 'People & Society'},
+    {name: 'Pets & Animals'},
+    {name: 'Online Communities'},
+  ]
+)
+
 tags = Tag.create!(
   [
     {name: '映画'},

@@ -32,65 +32,8 @@
 <div class="container-field bg-white ">
   <div class="container py-4">
     <h4>コミュニティカテゴリー</h4>
-    <div class="row justify-content-around">
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(1), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-futbol"></i></span>
-          <p class="mt-2">スポーツ</p>
-        <% end %>
-      </div>
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(3), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-gamepad"></i></span>
-          <p>ゲーム</p>
-        <% end %>
-      </div>
-
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(4), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-suitcase-rolling"></i></span>
-          <p>レジャー</p>
-        <% end %>
-      </div>
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(5), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-building"></i></span>
-          <p>仕事&勉強</p>
-        <% end %>
-      </div>
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(6), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-music"></i></span>
-          <p>エンタメ</p>
-        <% end %>
-      </div>
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(7), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-utensils"></i></span>
-          <p>食べ物</p>
-        <% end %>
-      </div>
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(8), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-laptop"></i></span>
-          <p>テクノロジー</p>
-        <% end %>
-      </div>
-
-      <div class="text-center m-3" style="width:90px">
-        <%= link_to category_path(9), class:"text-info" do %>
-          <span class="h1"><i class="fas fa-paw"></i></span>
-          <p>動物</p>
-        <% end %>
-      </div>
-
+    <div class="row justify-content-xl-start justify-content-around">
+      <%= render 'public/categories/category_list' %>
     </div>
   </div>
 </div>
