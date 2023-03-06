@@ -1,7 +1,9 @@
 <div class="container py-5">
-
-  <div class="row mt-2">
-    <%= render 'public/communities/community_list', communities: @communities %>
+  <div class="row m-4">
+    <h3><i class="fas fa-th-large"></i>&nbsp;カテゴリーが&nbsp;"<%=@category.name%>"&nbsp;のコミュニティリスト</h3>
+  </div>
+  <div class="row justify-content-sm-start justify-content-around mt-2">
+    <%= render 'public/communities/community_list_normal', communities: @communities %>
   </div>
 
 </div>

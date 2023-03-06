@@ -1,7 +1,7 @@
 <% flash.each do |message_type, message| %>
   <% if message_type == "alert" %>
-    <p class="alert alert-danger text-center"><%= message %></p>
+    <div class="alert alert-danger text-center"><%= message %></div>
   <% elsif message_type == "notice" %>
-    <p class="alert alert-success text-center"><%= message %></p>
+    <div class="alert alert-success text-center"><%= message %></div>
   <% end %>
 <% end %>

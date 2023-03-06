@@ -16,19 +16,19 @@
     <h3>"<%= @content %>"を含む検索結果</h3>
   </div>
   <% if @model == "end_user" %>
-    <div class="row">
-      <%= render 'public/end_users/user_list', end_users: @records %>
+    <div class="row justify-content-sm-start justify-content-around mt-2">
+      <%= render 'public/end_users/user_list_normal', end_users: @records %>
     </div>
   <% elsif @model == "personal_tag" %>
-    <div class="row">
-      <%= render 'public/end_users/user_list2', personal_tags: @records %>
+    <div class="row justify-content-sm-start justify-content-around mt-2">
+      <%= render 'public/end_users/user_list_tag', personal_tags: @records %>
     </div>
   <% elsif @model == "community" %>
-    <div class="row">
+    <div class="row justify-content-sm-start justify-content-around mt-2">
       <%= render 'public/communities/community_list_normal', communities: @records %>
     </div>
   <% elsif @model == "community_tag" %>
-    <div class="row">
+    <div class="row justify-content-sm-start justify-content-around mt-2">
       <%= render 'public/communities/community_list_tag', community_tags: @records %>
     </div>
   <% end %>
