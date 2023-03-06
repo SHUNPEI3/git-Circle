@@ -8,6 +8,15 @@
   background-color: #fffaf0;
 }
 
+.jumbotron {
+  background-image: url('../images/top_image2.jpg');
+  background-size: cover;
+  background-position: center 60%;
+  background-color:rgba(255,255,255,0.5);
+  background-blend-mode:lighten;
+  padding-top: 50px;
+}
+
 .navbar-light .navbar-toggler {
   border-color: rgba(0,0,0,0);
 }
