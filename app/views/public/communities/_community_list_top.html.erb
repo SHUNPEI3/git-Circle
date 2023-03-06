@@ -1,0 +1,38 @@
+<% communities.each do |community| %>
+  <div class="col-lg-3 col-md-4 col-sm-6 col-8 p-2">
+    <div class="card shadow">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a href="#new-contents1-<%= community.id %>" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
+          </li>
+          <li class="nav-item">
+            <a href="#new-contents2-<%= community.id %>" class="nav-link text-dark" data-toggle="tab">紹介文</a>
+          </li>
+        </ul>
+      </div>
+      <%= image_tag community.get_community_image(150, 150), class:"card-img-top p-1" %>
+      <div class="card-body">
+        <h4 class="card-title text-info"><%= community.name %></h4>
+      </div>
+      <div class="tab-content">
+        <div id="new-contents1-<%= community.id %>" class="tab-pane active">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fas fa-user"></i>&ensp;<span class="h5 text-danger"><%= community.end_users.count %></span>人が参加中</li>
+            <li class="list-group-item"><i class="fas fa-th-large"></i>&ensp;<%= community.category.name if community.category_id %></li>
+            <li class="list-group-item"><i class="fas fa-tag"></i>
+              <% community.tags.each do |community_tag| %>
+                <%= "#" + community_tag.name %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+        <div id="new-contents2-<%= community.id %>" class="tab-pane">
+          <div class="card-body">
+            <p class="card-text"><%= community.introduction.truncate(40) %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

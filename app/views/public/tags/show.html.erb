@@ -10,10 +10,10 @@
   <div class="row m-2">
     <div class="col-12 mb-2">最近追加されたタグ</div>
     <div id="tags"><%= render 'public/tags/tag_list', tag_list: @tag_list %></div>
-    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link' ,class:"text-secondary" %></div>
+    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link', class:"text-secondary" %></div>
   </div>
   <div class="row mt-2">
-    <%= render 'public/communities/community_list', communities: @communities %>
+    <%= render 'public/communities/community_list_normal', communities: @communities %>
   </div>
   <%= paginate @communities %>
 </div>

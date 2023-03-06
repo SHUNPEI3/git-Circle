@@ -9,9 +9,9 @@
           <% end %>
         </td>
         <td class="align-middle" style="width: 65%">
-          <h5 class="mb-4"><%= community.introduction.truncate(38) %></h5>
+          <h6 class="mb-4"><%= community.introduction.truncate(100) %></h6>
           <% community.tags.each do |tag| %>
-            <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag) %></small>
+            <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag), class:"text-secondary" %></small>
           <% end %>
         </td>
         <td class="align-middle text-center" style="width: 20%">

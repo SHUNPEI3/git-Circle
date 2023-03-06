@@ -18,7 +18,7 @@
       <div class="tab-content">
         <div id="contents1-<%= community.id %>" class="tab-pane active">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item"><i class="fas fa-user"></i>&ensp;<span class="h5 text-danger"><%= (community.end_users.count).to_s %></span>人が参加中</li>
+            <li class="list-group-item"><i class="fas fa-user"></i>&ensp;<span class="h5 text-danger"><%= community.end_users.count %></span>人が参加中</li>
             <li class="list-group-item"><i class="fas fa-th-large"></i>&ensp;<%= community.category.name if community.category_id %></li>
             <li class="list-group-item"><i class="fas fa-tag"></i>
               <% community.tags.each do |community_tag| %>

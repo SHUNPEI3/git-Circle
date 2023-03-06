@@ -13,11 +13,11 @@
     </ul>
     <div class="tab-content">
       <div id="contents1" class="tab-pane active">
-        <%= render 'public/communities/community_list3', communities: @join_communities %>
+        <%= render 'public/communities/community_list_mine', communities: @join_communities %>
         <%= paginate @join_communities, :param_name => 'join' %>
       </div>
       <div id="contents2" class="tab-pane">
-        <%= render 'public/communities/community_list3', communities: @owner_communities %>
+        <%= render 'public/communities/community_list_mine', communities: @owner_communities %>
         <%= paginate @owner_communities, :param_name => 'owner' %>
       </div>
     </div>

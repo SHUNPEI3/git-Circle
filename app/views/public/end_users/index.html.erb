@@ -10,7 +10,7 @@
   <div class="row m-2">
     <div class="col-12 mb-2">最近追加されたタグ</div>
     <div id="personal_tags"><%= render 'public/personal_tags/personal_tag_list', tag_list: @tag_list %></div>
-    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link' ,class:"text-secondary" %></div>
+    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link', class:"text-secondary" %></div>
   </div>
   <div class="row mt-2">
     <%= render 'public/end_users/user_list', end_users: @end_users %>

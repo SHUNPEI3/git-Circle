@@ -25,11 +25,11 @@
     </div>
   <% elsif @model == "community" %>
     <div class="row">
-      <%= render 'public/communities/community_list', communities: @records %>
+      <%= render 'public/communities/community_list_normal', communities: @records %>
     </div>
   <% elsif @model == "community_tag" %>
     <div class="row">
-      <%= render 'public/communities/community_list2', community_tags: @records %>
+      <%= render 'public/communities/community_list_tag', community_tags: @records %>
     </div>
   <% end %>
 </div>

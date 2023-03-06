@@ -68,9 +68,9 @@
     </div>
   </div>
 
-  <div class="mt-3" style="">
+  <div class="mt-3">
     <p>メンバー：<span class="h5 text-danger"><%= @community.end_users.count %></span>人が参加中</p>
-    <div class="row flex-nowrap overflow-auto" style="width: 100%">
+    <div class="row flex-nowrap overflow-auto">
       <div class="text-center" style="width: 180px">
         <h6 style="width: 180px">リーダー</h6>
         <%= link_to end_user_path(@community.owner) do %>
