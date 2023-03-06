@@ -24,7 +24,6 @@ Rails.application.routes.draw do
       resource 'relationships', only: [:create, :destroy]
       get :following, on: :member
       get :follower, on: :member
-      get :bookmark, on: :member
       get :my_community, on: :member
     end
     get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
