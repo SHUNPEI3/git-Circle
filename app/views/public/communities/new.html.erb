@@ -4,62 +4,74 @@
     <h3><i class="fas fa-plus"></i>&nbsp;コミュニティ作成</h3>
   </div>
   <%= form_with model:@community, url: communities_path, method: :post do |f| %>
-    <div class="form-group row">
-      <%= f.label :name,'コミュニティ名※', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
-      <div class="col-sm-7">
-        <%= f.text_field :name, class: 'form-control' %>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="text-center">
+          <div><%= image_tag asset_path('no_image'), size: "400x400", class:"img-thumbnail", id:'preview' %></div>
+          <label>
+            <span class="text-primary">
+              <i class="fas fa-camera"></i>&nbsp;画像を選択する
+              <%= f.file_field :community_image, accept:'image/*', style:"display:none", id:"input-file" %>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row was-validated">
+      <div class="col-lg-2 col-md-3 col-sm-4">
+        <%= f.label :name,'コミュ名', class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+      </div>
+      <div class="col-md-9">
+        <%= f.text_field :name, required:true, class: 'form-control' %>
+        <div class="invalid-feedback">入力されていません</div>
+      </div>
+    </div>
+    <div class="form-group row was-validated">
+      <div class="col-lg-2 col-md-3 col-sm-4">
+        <%= f.label :introduction, '紹介文', class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+      </div>
+      <div class="col-md-9">
+        <%= f.text_area :introduction, rows:"5", required:true, class: 'form-control' %>
+        <div class="invalid-feedback">入力されていません</div>
       </div>
     </div>
     <div class="form-group row">
-      <%= f.label :introduction, '紹介文※', class:"col-lg-2 col-md-3 col-sm-4 col-form-label"%>
-      <div class="col-md-9 col-sm-11">
-        <%= f.text_area :introduction, rows:"5", class: 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group row">
-      <%= f.label :community_tag_name, 'タグ', class:"col-sm-2" %>
-      <div class="col-md-8 col-sm-9">
+      <%= f.label :community_tag_name, 'タグ', class:"col-lg-2 col-md-3 col-sm-4" %>
+      <div class="col-md-8">
         <%= f.text_field :community_tag_name, placeholder:"例）スポーツ 音楽",class: "form-control" %>
         <small> ※半角スペースを入力することで、複数のタグを付けることができます</small>
-      </div>
-    </div>
-    <div class="form-group row">
-      <%= f.label :community_image, 'コミュニティ画像', class:"col-lg-2 col-md-3 col-sm-4" %>
-      <div class="col-sm-7">
-        <%= f.file_field :community_image, class: "form-control-file", accept: 'image/*' %>
       </div>
     </div>
     <%= f.fields_for :community_details do |i| %>
       <div class="form-group row">
         <%= i.label :max_join_number, '参加上限人数', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
-        <div class="col-sm-4">
+        <div class="col-md-4 col-sm-5">
           <%= i.select :max_join_number, options_for_select((2..100).to_a), {include_blank: "設定しない"}, class:"form-control" %>
         </div>
-        &nbsp;<span class="col-form-label">人まで</span>
+        &nbsp;<span class="col-form-label pl-3">人まで</span>
       </div>
       <div class="form-group row">
         <%= i.label :sex_limit, '性別制限', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
-        <div class="col-sm-4">
+        <div class="col-md-4 col-sm-5">
           <%= i.select :sex_limit, options_for_select(CommunityDetail.sex_limits_i18n.invert), {include_blank: "設定しない"}, class:"form-control" %>
         </div>
       </div>
       <div class="form-group row">
         <%= i.label :activity_area_limit, '活動エリア制限', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
-          <div class="col-sm-4">
+        <div class="col-md-4 col-sm-5">
           <%= i.select :activity_area_limit, options_for_select(CommunityDetail.activity_area_limits_i18n.invert), {include_blank: "設定しない"}, class:"form-control" %>
         </div>
       </div>
       <div class="form-group row">
         <%= i.label :age_min_limit, '年齢制限（最少）', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
-        <div class="col-lg-2 col-md-3 col-sm-4">
+        <div class="col-lg-2 col-md-3 col-sm-5">
           <%= i.select :age_min_limit, options_for_select((18..99).to_a), {include_blank: "設定しない"}, class:"d-inline form-control" %>
         </div>
-        &nbsp;<span class="col-form-label">〜</span>
-        <%= i.label :age_max_limit, '（最大）', class:"col-xl-1 col-md-2 col-sm-4  col-form-label" %>
-        <div class="col-lg-2 col-md-3 col-sm-4 ">
+        &nbsp;<span class="col-form-label pl-3">〜</span>
+        <%= i.label :age_max_limit, '（最大）', class:"col-xl-1 col-md-2 col-sm-4 col-form-label" %>
+        <div class="col-lg-2 col-md-3 col-sm-5">
           <%= i.select :age_max_limit, options_for_select((18..99).to_a), {include_blank: "設定しない"}, class:"d-inline form-control" %>
         </div>
-        &nbsp;<span class="col-form-label">まで</span>
       </div>
     <% end %>
     <div class="form-group row justify-content-center">
