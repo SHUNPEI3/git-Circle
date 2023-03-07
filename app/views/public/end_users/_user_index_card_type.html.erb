@@ -1,6 +1,6 @@
 <% end_users.each do |user| %>
   <% unless user.guest_user? || !user.active_for_authentication? %>
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-10 mb-3">
       <div class="card shadow">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
@@ -24,7 +24,7 @@
               <li class="list-group-item">活動エリア：<%= user.activity_area_i18n %></li>
               <li class="list-group-item"><i class="fas fa-tag"></i>
                 <% user.personal_tags.each do |personal_tag| %>
-                  <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag) %>
+                  <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag), class:"text-secondary mr-1" %>
                 <% end %>
               </li>
             </ul>

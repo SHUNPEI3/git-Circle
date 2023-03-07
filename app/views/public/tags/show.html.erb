@@ -5,15 +5,15 @@
     </div>
   </div>
   <div class="row m-4">
-    <h3><i class="fas fa-tag"></i>タグが&nbsp;"<%=@tag.name%>"&nbsp;のコミュニティリスト</h3>
+    <h3><i class="fas fa-tag"></i>&nbsp;タグが&nbsp;"<%=@tag.name%>"&nbsp;のコミュニティリスト</h3>
   </div>
   <div class="row m-2">
     <div class="col-12 mb-2">最近追加されたタグ</div>
     <div id="tags"><%= render 'public/tags/tag_list', tag_list: @tag_list %></div>
-    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link' ,class:"text-secondary" %></div>
+    <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link', class:"text-secondary" %></div>
   </div>
-  <div class="row mt-2">
-    <%= render 'public/communities/community_list', communities: @communities %>
+  <div class="row justify-content-sm-start justify-content-around mt-2">
+    <%= render 'public/communities/community_index_card_type', communities: @communities %>
   </div>
   <%= paginate @communities %>
 </div>

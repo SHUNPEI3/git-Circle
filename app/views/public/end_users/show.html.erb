@@ -5,128 +5,73 @@
     <% else %>
       <h3><i class="fas fa-user"></i>&nbsp;<%= @end_user.nickname %> さんのプロフィール</h3>
     <% end %>
+
   </div>
   <div class="row justify-content-around">
-    <div class="col-md-4 col-sm-12 text-center mb-3">
-      <div><%= image_tag @end_user.get_profile_image(250, 250), class:"img-thumbnail" %></div>
-      <div class="my-2" id="favorite-buttons-<%= @end_user.id %>"><%= render "public/relationships/favorite_btn", end_user: @end_user %></div>
+    <div class="col-lg-4 col-md-9 col-12 mb-3">
+      <div><%= image_tag @end_user.get_profile_image(500, 500), class:"img-thumbnail" %></div>
+      <div id="favorite-buttons-<%= @end_user.id %>"><%= render "public/relationships/favorite_btn", end_user: @end_user %></div>
       <div class="favorite-count"><%= render 'public/relationships/favorite_count', end_user: @end_user %></div>
-      <div class="bookmark-count"><%= render 'public/bookmarks/bookmark_count', end_user: @end_user %></div>
       <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-        <div class="my-1">
-          <% if unchecked_notifications.any? %>
-            <%= link_to '新着メッセージがあります！', notifications_path, class: "btn btn-warning text-light" %>
-          <% else %>
-            <%= link_to 'メッセージを確認する', notifications_path, class: "btn btn-warning text-light" %>
-          <% end %>
-        </div>
+        <% if unchecked_notifications.any? %>
+          <%= link_to '新着メッセージがあります！', notifications_path, class: "btn btn-warning text-light my-2", style:"width: 100%" %>
+        <% else %>
+          <%= link_to 'メッセージを確認する', notifications_path, class: "btn btn-warning text-light my-2", style:"width: 100%" %>
+        <% end %>
       <% end %>
     </div>
-    <div class="col-md-7 col-12">
+    <div class="col-lg-8 col-md-9 col-12 mb-3">
       <div class="card shadow">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
-            </li>
-            <li class="nav-item">
-              <a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a>
-            </li>
-            <li class="nav-item">
-              <a href="#contents3" class="nav-link text-dark" data-toggle="tab">最近の投稿</a>
-            </li>
+            <li class="nav-item"><a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a></li>
+            <li class="nav-item"><a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a></li>
+            <li class="nav-item"><a href="#contents3" class="nav-link text-dark" data-toggle="tab">コミュニティ</a></li>
+            <% if !current_end_user.guest_user? && @end_user == current_end_user %>
+              <li class="nav-item"><a href="#contents4" class="nav-link text-dark" data-toggle="tab">お気に入り</a></li>
+            <% end %>
           </ul>
         </div>
-        <div class="card-body">
-          <div class="tab-content">
-            <div id="contents1" class="tab-pane active">
-              <table class="table table-borderless">
-                <tr>
-                  <th style="width: 40%">ニックネーム</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.nickname %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">年齢</th>
-                  <td style="width: 60%"><span class="h5"><%= "#{@end_user.age}" + "歳" %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">性別</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.sex_i18n %></span></td>
-                  </tr>
-                <tr>
-                  <th style="width: 40%">主な活動エリア</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.activity_area_i18n %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">参加コミュニティ数</th>
-                  <td style="width: 60%">
-                    <span class="h5"><%= link_to "#{@end_user.communities.count} つ", my_community_end_user_path(@end_user) %></span>
-                    <span>(作成数：<%= @owner_communities.count %>つ)</span>
-                  </td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">マイタグ</th>
-                  <td style="width: 60%">
-                    <% if @end_user.personal_tags.exists? %>
-                      <% @end_user.personal_tags.each do |personal_tag| %>
-                        <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag), class:"mr-2" %>
-                      <% end %>
-                    <% else %>
-                      <small>マイタグが未設定です</small>
-                    <% end %>
-                  </td>
-                </tr>
-              </table>
-              <div class="row justify-content-end mr-3">
-                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info", style:"" %>
-                <% end %>
-              </div>
+        <div class="tab-content">
+          <div id="contents1" class="tab-pane border active">
+            <%= render 'public/end_users/profile', end_user: @end_user, owner_communities: @owner_communities %>
+            <div class="row justify-content-end m-4">
+              <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" if !current_end_user.guest_user? && @end_user == current_end_user %>
             </div>
-            <div id="contents2" class="tab-pane p-2">
-              <% if @end_user.introduction.present? %>
-                <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
-              <% else %>
-                <p>自己紹介が未設定です</p>
-                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <small>プロフィール編集から追加しましょう！</small>
-                <% end %>
-              <% end %>
-              <div class="row justify-content-end mt-3 mr-3">
-                <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-                  <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" %>
-                <% end %>
-              </div>
+          </div>
+          <div id="contents2" class="tab-pane border">
+            <% if @end_user.introduction.present? %>
+              <h6 class="p-4"><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h6>
+            <% else %>
+              <h6 class="p-4">自己紹介が未設定です</h6>
+            <% end %>
+            <div class="row justify-content-end m-4">
+              <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" if !current_end_user.guest_user? && @end_user == current_end_user %>
             </div>
-            <div id="contents3" class="tab-pane p-2">
-              <% if @topics.exists? %>
-                <% @topics.each do |topic| %>
-                  <div class="d-flex justify-content-between mt-2">
-                    <h6><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(20), community_topic_path(topic.community,topic) %></h6>
-                    <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d") %></small></p>
-                  </div>
-                <% end %>
-              <% else %>
-                <p>投稿はありません</p>
-              <% end %>
-            </div>
+          </div>
+          <div id="contents3" class="tab-pane border">
+            <%= render 'public/communities/community_index_list_type', communities: @join_communities %>
+          </div>
+          <div id="contents4" class="tab-pane border">
+            <%= render 'public/bookmarks/bookmark_list', bookmarks: @bookmarks %>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="container">
-    <div class="row offset-md-1 my-3">
-      <h5>最近のコミュニティ加入履歴</h5>
+    <div class="row mt-3">
+      <h4 class="col">コミュニティ加入履歴</h4>
     </div>
-    <div class="swiper">
+    <div class="swiper mt-3">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <% @community_users.each do |community_user| %>
+          <% @history_communities.each do |join_community| %>
             <div class="swiper-slide text-center">
-              <%= link_to community_path(community_user.community) do %>
-                <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
-                <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
+              <%= link_to community_path(join_community.community) do %>
+                <%= image_tag join_community.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+                <h6 class="text-info font-weight-bold mt-2"><%= join_community.community.name %></h6>
               <% end %>
             </div>
           <% end %>
@@ -136,5 +81,21 @@
       <div class="swiper-button-next fa-2x text-warning"><i class="fas fa-arrow-circle-right"></i></div>
       <div class="swiper-pagination"></div>
     </div>
+  </div>
+
+  <div class="container">
+    <div class="row mt-3">
+      <h4 class="col">最近の投稿</h4>
+    </div>
+    <div class="border"></div>
+    <% @topics.each do |topic| %>
+      <div class="d-flex justify-content-between mt-3">
+        <h6 class="text-truncate"><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(30), community_topic_path(topic.community,topic) %></h6>
+        <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small></p>
+      </div>
+    <% end %>
+    <% unless @topics.exists? %>
+      <p>投稿はありません</p>
+    <% end %>
   </div>
 </div>
