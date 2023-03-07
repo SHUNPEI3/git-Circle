@@ -25,36 +25,36 @@
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item"><a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a></li>
             <li class="nav-item"><a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a></li>
+            <li class="nav-item"><a href="#contents3" class="nav-link text-dark" data-toggle="tab">コミュニティ</a></li>
             <% if !current_end_user.guest_user? && @end_user == current_end_user %>
-              <li class="nav-item"><a href="#contents3" class="nav-link text-dark" data-toggle="tab">お気に入り</a></li>
+              <li class="nav-item"><a href="#contents4" class="nav-link text-dark" data-toggle="tab">お気に入り</a></li>
             <% end %>
-            <li class="nav-item"><a href="#contents4" class="nav-link text-dark" data-toggle="tab">お気に入り</a></li>
           </ul>
         </div>
-        <div class="card-body">
+        <!--<div class=""> <!--card-body-->
           <div class="tab-content">
             <div id="contents1" class="tab-pane active">
-              <table class="table table-borderless">
+              <table class="table table-borderless table-sm">
                 <tr>
                   <th style="width: 40%">ニックネーム</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.nickname %></span></td>
+                  <td style="width: 60%"><span class=""><%= @end_user.nickname %></span></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">年齢</th>
-                  <td style="width: 60%"><span class="h5"><%= "#{@end_user.age}" + "歳" %></span></td>
+                  <td style="width: 60%"><span class=""><%= "#{@end_user.age}" + "歳" %></span></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">性別</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.sex_i18n %></span></td>
+                  <td style="width: 60%"><span class=""><%= @end_user.sex_i18n %></span></td>
                   </tr>
                 <tr>
                   <th style="width: 40%">主な活動エリア</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.activity_area_i18n %></span></td>
+                  <td style="width: 60%"><span class=""><%= @end_user.activity_area_i18n %></span></td>
                 </tr>
                 <tr>
                   <th style="width: 40%">コミュニティ</th>
                   <td style="width: 60%">
-                    <span class="h5"><%= link_to "#{@end_user.communities.count} つ", my_community_end_user_path(@end_user) %></span>
+                    <span class=""><%= "#{@end_user.communities.count} つ" %></span>
                     <span>(作成数：<%= @owner_communities.count %>つ)</span>
                   </td>
                 </tr>
@@ -75,7 +75,7 @@
                 <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" if !current_end_user.guest_user? && @end_user == current_end_user %>
               </div>
             </div>
-            <div id="contents2" class="tab-pane p-2">
+            <div id="contents2" class="tab-pane p-3">
               <% if @end_user.introduction.present? %>
                 <h6><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h6>
               <% else %>
@@ -84,15 +84,18 @@
                   <small>プロフィール編集から追加しましょう！</small>
                 <% end %>
               <% end %>
-              <div class="row justify-content-end mt-3 mr-3">
+              <div class="row justify-content-end mr-3">
                 <%= link_to '＋プロフィールを編集する', edit_end_user_path(@end_user), class: "btn btn-info" if !current_end_user.guest_user? && @end_user == current_end_user %>
               </div>
             </div>
-            <div id="contents3" class="tab-pane p-2">
+            <div id="contents3" class="tab-pane">
+              <%= render 'public/communities/community_list_mine', communities: @join_communities %>
+            </div>
+            <div id="contents4" class="tab-pane">
               <%= render 'public/bookmarks/bookmark_list', bookmarks: @bookmarks %>
             </div>
           </div>
-        </div>
+        <!--</div>-->
       </div>
     </div>
   </div>
@@ -104,11 +107,11 @@
     <div class="swiper mt-3">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <% @community_users.each do |community_user| %>
+          <% @history_communities.each do |join_community| %>
             <div class="swiper-slide text-center">
-              <%= link_to community_path(community_user.community) do %>
-                <%= image_tag community_user.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
-                <h6 class="text-info font-weight-bold mt-2"><%= community_user.community.name %></h6>
+              <%= link_to community_path(join_community.community) do %>
+                <%= image_tag join_community.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
+                <h6 class="text-info font-weight-bold mt-2"><%= join_community.community.name %></h6>
               <% end %>
             </div>
           <% end %>

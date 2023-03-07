@@ -1,27 +1,21 @@
-<table class="table table-hover bg-white border rounded">
-  <tbody>
-    <% communities.each do |community| %>
-      <tr>
-        <td class="align-middle text-center" style="width: 15%">
-          <%= link_to community_path(community.id) do %>
-            <%= image_tag community.get_community_image(80, 80), class: "rounded-circle" %><br>
-            <small><%= community.name %></small>
-          <% end %>
-        </td>
-        <td class="align-middle" style="width: 65%">
-          <h6 class="mb-4"><%= community.introduction.truncate(100) %></h6>
-          <% community.tags.each do |tag| %>
-            <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag), class:"text-secondary" %></small>
-          <% end %>
-        </td>
-        <td class="align-middle text-center" style="width: 20%">
-          <% community.end_users.each do |member| %>
-            <% if member.active_for_authentication? %>
-              <li class="list-unstyled my-1"><small><%= link_to "#{member.nickname}", end_user_path(member.id) %></small></li>
-            <% end %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<ul class="list-unstyled">
+  <% communities.each do |community| %>
+    <li class="media border p-3">
+      <div class='text-center mr-3'>
+        <%= link_to community_path(community.id) do %>
+          <%= image_tag community.get_community_image(80, 80), class: "img-thumbnail" %>
+        <% end %>
+        <% if community.owner == current_end_user %>
+          <span class="d-block badge badge-info mt-1">リーダー</span>
+        <% end %>
+      </div>
+      <div class="media-body">
+        <h5><%= community.name %></h5>
+        <p><%= community.introduction.truncate(100) %></p>
+        <% community.tags.each do |tag| %>
+          <small class="mr-2"><%= link_to "#" + tag.name, tag_path(tag), class:"text-secondary" %></small>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>
