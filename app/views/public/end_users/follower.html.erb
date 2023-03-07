@@ -3,7 +3,7 @@
     <h3><i class="fas fa-user"></i>&nbsp;<%=@end_user.nickname %>&nbsp;さんのフォロワー</h3>
   </div>
   <div class="row justify-content-sm-start justify-content-around mt-2">
-    <%= render 'public/end_users/user_list_normal', end_users: @followers %>
+    <%= render 'public/end_users/user_index_card_type', end_users: @followers %>
   </div>
   <%= paginate @followers %>
 </div>

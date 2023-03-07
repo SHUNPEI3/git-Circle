@@ -13,7 +13,7 @@
     <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link', class:"text-secondary" %></div>
   </div>
   <div class="row justify-content-sm-start justify-content-around mt-2">
-    <%= render 'public/communities/community_list_normal', communities: @communities %>
+    <%= render 'public/communities/community_index_card_type', communities: @communities %>
   </div>
   <%= paginate @communities %>
 </div>

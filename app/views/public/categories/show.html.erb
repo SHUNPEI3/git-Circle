@@ -3,7 +3,6 @@
     <h3><i class="fas fa-th-large"></i>&nbsp;カテゴリーが&nbsp;"<%=@category.name%>"&nbsp;のコミュニティリスト</h3>
   </div>
   <div class="row justify-content-sm-start justify-content-around mt-2">
-    <%= render 'public/communities/community_list_normal', communities: @communities %>
+    <%= render 'public/communities/community_index_card_type', communities: @communities %>
   </div>
-
 </div>

@@ -1,6 +1,6 @@
 <ul class="list-unstyled">
   <% communities.each do |community| %>
-    <li class="media border p-3">
+    <li class="media border-top p-3">
       <div class='text-center mr-3'>
         <%= link_to community_path(community.id) do %>
           <%= image_tag community.get_community_image(80, 80), class: "img-thumbnail" %>

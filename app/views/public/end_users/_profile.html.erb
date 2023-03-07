@@ -1,0 +1,42 @@
+<table class="table">
+  <tr>
+    <th class="col-5 pl-4 pt-3">ニックネーム</th>
+    <td class="col-7 pr-3 pt-3"><span class="h6"><%= end_user.nickname %></span></td>
+  </tr>
+  <tr>
+    <th class="col-5 pl-4">年齢</th>
+    <td class="col-7 pr-3"><span class="h6"><%= "#{end_user.age}" + "歳" %></span></td>
+  </tr>
+  <tr>
+    <th class="col-5 pl-4">性別</th>
+    <td class="col-7 pr-3"><span class="h6"><%= end_user.sex_i18n %></span></td>
+  </tr>
+  <tr>
+    <th class="col-5 pl-4">主な活動エリア</th>
+    <td class="col-7 pr-3"><span class="h6"><%= end_user.activity_area_i18n %></span></td>
+  </tr>
+  <tr>
+    <th class="col-5 pl-4">コミュニティ</th>
+    <td class="col-7 pr-3">
+      <span class="h6"><%= "#{end_user.communities.count} つ" %>&nbsp;(作成数：<%= owner_communities.count %>つ)</span>
+    </td>
+  </tr>
+  <tr>
+    <th class="col-5 pl-4">投稿トピック</th>
+    <td class="col-7 pr-3">
+      <span class="h6"><%= "#{end_user.topics.count} つ" %></span>
+    </td>
+  </tr>
+  <tr>
+    <th class="col-5 pl-4">マイタグ</th>
+    <td class="col-7 pr-3">
+      <% if end_user.personal_tags.exists? %>
+        <% end_user.personal_tags.each do |personal_tag| %>
+          <%= link_to "#{"#" + personal_tag.name}", personal_tag_path(personal_tag), class:"mr-2" %>
+        <% end %>
+      <% else %>
+        <small>マイタグが未設定です</small>
+      <% end %>
+    </td>
+  </tr>
+</table>
