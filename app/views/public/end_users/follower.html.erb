@@ -2,8 +2,8 @@
   <div class="row m-4">
     <h3><i class="fas fa-user"></i>&nbsp;<%=@end_user.nickname %>&nbsp;さんのフォロワー</h3>
   </div>
-  <div class="row">
-    <%= render 'public/end_users/user_list', end_users: @followers %>
+  <div class="row justify-content-sm-start justify-content-around mt-2">
+    <%= render 'public/end_users/user_index_card_type', end_users: @followers %>
   </div>
   <%= paginate @followers %>
 </div>

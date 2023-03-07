@@ -9,11 +9,12 @@
 }
 
 .jumbotron {
-  background-image: url('../images/top_image2.jpg');
+  background-image: url('../images/top_image.jpg');
   background-size: cover;
-  background-position: center 60%;
+  background-position: center;
   background-color:rgba(255,255,255,0.5);
   background-blend-mode:lighten;
+  min-height: 300px;
   padding-top: 50px;
 }
 

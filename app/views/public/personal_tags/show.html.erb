@@ -12,8 +12,8 @@
     <div id="personal_tags"><%= render 'public/personal_tags/personal_tag_list', tag_list: @tag_list %></div>
     <div class="col-12 text-center my-1"><%= link_to_next_page @tag_list, '▽ もっと見る', remote: true, id: 'more_link' ,class:"text-secondary" %></div>
   </div>
-  <div class="row mt-2">
-    <%= render 'public/end_users/user_list', end_users: @end_users %>
+  <div class="row justify-content-sm-start justify-content-around mt-2">
+    <%= render 'public/end_users/user_index_card_type', end_users: @end_users %>
   </div>
   <%= paginate @end_users %>
 </div>

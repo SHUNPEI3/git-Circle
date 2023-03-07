@@ -11,9 +11,11 @@ class Public::EndUsersController < ApplicationController
   end
 
   def show
-    @community_users = @end_user.community_users.order(id: "DESC").limit(10)
+    @join_communities = @end_user.communities
     @owner_communities = Community.where(owner_id: @end_user.id)
-    @topics = @end_user.topics.order(id: "DESC").limit(6)
+    @history_communities = @end_user.community_users.order(id: "DESC").limit(8)
+    @topics = @end_user.topics.order(id: "DESC").limit(8)
+    @bookmarks = @end_user.bookmarks
   end
 
   def edit
@@ -37,15 +39,6 @@ class Public::EndUsersController < ApplicationController
 
   def follower
     @followers = @end_user.followers.page(params[:page]).per(10)
-  end
-
-  def bookmark
-    @bookmarks = @end_user.bookmarks.page(params[:page]).per(10)
-  end
-
-  def my_community
-    @join_communities = @end_user.communities.page(params[:join]).per(10)
-    @owner_communities = Community.where(owner_id: @end_user.id).page(params[:owner]).per(10)
   end
 
   def unsubscribe
