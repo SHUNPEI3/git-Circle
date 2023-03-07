@@ -17,6 +17,22 @@ $(function() {
   });
 });
 
+$(function() {
+  $('#previewImage').on('change', function() {
+
+    var selectedFile = this.files[0];
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL(selectedFile);
+
+    fileReader.onload = function(event) {
+      var loadedImageUri = event.target.result;
+      $('#preview').attr('src', loadedImageUri);
+    };
+
+    fileReader.readAsDataURL(selectedFile);
+  });
+});
+
 const mySwiper = new Swiper(".swiper-container", {
 
   slidesPerView: 1,

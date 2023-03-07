@@ -15,7 +15,7 @@
           <% end %>
           <%= f.label :profile_image do %>
             <p class="text-primary"><i class="fas fa-camera"></i>&nbsp;画像を選択する</p>
-            <%= f.file_field :profile_image, accept:'image/*', style:"display:none;", onchange: "previewImage(this)" %>
+            <%= f.file_field :profile_image, accept:'image/*', id:"previewImage" %>
           <% end %>
         </div>
 
@@ -81,15 +81,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
- function previewImage(obj)
-  {
-    var fileReader = new FileReader();
-    fileReader.onload = function() {
-    var element = document.getElementById('preview');
-    element.src = fileReader.result;
-    }
-    fileReader.readAsDataURL(obj.files[0]);
-  };
-</script>
