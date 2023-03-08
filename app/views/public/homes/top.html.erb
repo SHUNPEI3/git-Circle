@@ -28,7 +28,15 @@
     </div>
   </div>
 </div>
-<div class="container-field bg-white ">
+<div class="container-fluid bg-white">
+  <div class="container py-4 px-4">
+    <h4>トピックが投稿されたコミュニティ</h4>
+    <div class="row flex-nowrap overflow-auto">
+      <%= render 'public/communities/community_index_card_type', communities: @new_topic_community %>
+    </div>
+  </div>
+</div>
+<div class="container">
   <div class="container py-4">
     <h4>コミュニティカテゴリー</h4>
     <div class="row justify-content-xl-start justify-content-around">

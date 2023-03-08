@@ -4,7 +4,7 @@
       <%= render 'public/searches/community_search_form' %>
     </div>
     <div class="col-auto">
-      <button type="button" class="btn btn-warning text-white" data-toggle="modal" data-target="#myModal"><i class="fas fa-th-large"></i>&ensp;カテゴリー</button>
+      <button type="button" class="btn btn-warning text-white" data-toggle="modal" data-target="#myModal"><i class="fas fa-th-large"></i> カテゴリー</button>
     </div>
   </div>
   <div class="row m-4">
@@ -23,7 +23,7 @@
 
 <div>
   <% unless current_end_user.guest_user? %>
-    <%= link_to new_community_path, class:"btn btn-primary fixed-bottom" do %>
+    <%= link_to new_community_path, class:"btn btn-primary fixed-bottom mb-1" do %>
       <span><i class="fas fa-plus"></i>&nbsp;コミュニティ新規作成</span>
     <% end %>
   <% end %>

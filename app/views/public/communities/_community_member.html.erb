@@ -1,0 +1,25 @@
+  <p>メンバー：<span class="h5 text-danger"><%= community.end_users.count %></span>人が参加中</p>
+  <div class="row flex-nowrap overflow-auto">
+    <div class="text-center" style="width: 180px">
+      <h6><span class="badge badge-info">リーダー</span></h6>
+      <%= link_to end_user_path(community.owner) do %>
+        <%= image_tag community.owner.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
+        <p class="text-info"><small><%= community.owner.nickname %></small></p>
+      <% end %>
+    </div>
+    <div>
+      <h6><span class="badge badge-secondary">その他メンバー</span></h6>
+      <div class="row flex-nowrap text-center">
+        <% community.end_users.each do |member| %>
+          <% unless !member.active_for_authentication? || community.owner == member %>
+            <div style="width: 100px">
+              <%= link_to end_user_path(member) do %>
+                <%= image_tag member.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
+                <p class="text-info"><small><%= member.nickname %></small></p>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>

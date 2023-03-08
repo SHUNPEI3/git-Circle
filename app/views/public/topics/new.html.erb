@@ -4,21 +4,29 @@
     <h3><i class="fas fa-plus"></i>&nbsp;トピック作成</h3>
   </div>
   <%= form_with model:[@community, @topic] do |f| %>
-    <div class="form-group row">
-      <%= f.label :title,'トピック名', class:"col-sm-2 col-form-label" %>
-      <div class="col-sm-6">
-        <%= f.text_field :title, class: 'form-control' %>
+    <div class="form-group row was-validated">
+      <div class="col-lg-2">
+        <%= f.label :title,'トピック名', class:"col-form-label" %>
+        <small><span class="badge badge-danger ml-2">必須</span></small>
+      </div>
+      <div class="col-lg-10">
+        <%= f.text_field :title, required:true, class: 'form-control' %>
+        <div class="invalid-feedback">入力されていません</div>
       </div>
     </div>
-    <div class="form-group row">
-      <%= f.label :body, '本文', class:"col-sm-2 col-form-label"%>
-      <div class="col-sm-10">
-        <%= f.text_area :body, rows:"8", class: 'form-control' %>
+    <div class="form-group row was-validated">
+      <div class="col-lg-2">
+        <%= f.label :body, '本文', class:"col-form-label" %>
+        <small><span class="badge badge-danger ml-2">必須</span></small>
+      </div>
+      <div class="col-lg-10">
+        <%= f.text_area :body, required:true, rows:"8", class: "form-control" %>
+        <div class="invalid-feedback">入力されていません</div>
       </div>
     </div>
     <div class="form-group row justify-content-center">
       <%= link_to '戻る', community_topics_path(@community), class: 'btn btn-secondary mt-5 mx-3', style:"width: 25%" %>
-      <%= f.submit '投稿する', class: 'btn btn-info mt-5 mx-3', style:"width: 25%" %>
+      <%= f.submit class: 'btn btn-info mt-5 mx-3', style:"width: 25%" %>
     </div>
   <% end %>
 </div>
