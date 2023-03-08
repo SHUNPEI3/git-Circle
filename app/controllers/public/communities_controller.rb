@@ -5,7 +5,7 @@ class Public::CommunitiesController < ApplicationController
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
-    @category = Category.all
+    @category_list = Category.all
     @tag_list = Tag.all.order(id: "DESC").page params[:page]
   end
 
@@ -18,12 +18,10 @@ class Public::CommunitiesController < ApplicationController
     @community = Community.new(community_params)
     @community.owner_id = current_end_user.id
     @community.end_users << current_end_user
-
     # Language APIで取得した情報を、変数category_nameへ格納
     category_name = Language.get_category(community_params[:name])
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
-
     # 年齢制限入力欄の確認
     if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
       if @community.save
