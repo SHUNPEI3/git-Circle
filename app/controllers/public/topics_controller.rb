@@ -1,6 +1,6 @@
 class Public::TopicsController < ApplicationController
   before_action :authenticate_end_user!
-  before_action :find_community, only: [:new, :create, :show, :edit]
+  before_action :find_community, except: [:update]
   before_action :find_topic, only: [:show, :edit, :update]
   before_action :ensure_community_mennber, only: [:index, :show, :edit]
   before_action :is_matching_topic_author, only: [:edit, :update]
@@ -17,6 +17,7 @@ class Public::TopicsController < ApplicationController
     @topic = current_end_user.topics.new(topic_params)
     @topic.community_id = @community.id
     if @topic.save
+      @community.topic_post_notification(current_end_user, @community.id, @topic.id)
       redirect_to community_topics_path, notice: "投稿完了しました！"
     else
       flash.now[:alert] = "投稿に失敗しました"

@@ -3,54 +3,69 @@
   <div class="row justify-content-center">
     <h2 class="m-5"><i class="fas fa-user-plus"></i>&nbsp;ユーザー登録</h2>
   </div>
-  <%= form_with model:@end_user, url: registration_path(resource_name) do |f| %>
+  <%= form_with model:@end_user, url: registration_path(resource_name), class:"was-validated" do |f| %>
     <div class="row justify-content-center">
       <div class="col-lg-8">
         <div class="form-row">
           <div class="form-group col-md-6">
-            <small><%= f.label :last_name, "姓" %><span class="badge badge-danger ml-2">必須</span></small><%= f.text_field :last_name, autofocus: true, placeholder:"田中", class:"form-control" %>
+            <small><%= f.label :last_name, "姓" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :last_name, autofocus: true, placeholder:"田中", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
           </div>
           <div class="form-group col-md-6">
-            <small><%= f.label :first_name, "名" %><span class="badge badge-danger ml-2">必須</span></small><%= f.text_field :first_name, placeholder:"太郎", class:"form-control" %>
+            <small><%= f.label :first_name, "名" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :first_name, placeholder:"太郎", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <small><%= f.label :last_name_kana, "セイ" %><span class="badge badge-danger ml-2">必須</span></small><%= f.text_field :last_name_kana, placeholder:"タナカ", class:"form-control" %>
+            <small><%= f.label :last_name_kana, "セイ" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :last_name_kana, placeholder:"タナカ", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
           </div>
           <div class="form-group col-md-6">
-            <small><%= f.label :first_name_kana, "メイ" %><span class="badge badge-danger ml-2">必須</span></small><%= f.text_field :first_name_kana, placeholder:"タロウ", class:"form-control" %>
+            <small><%= f.label :first_name_kana, "メイ" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :first_name_kana, placeholder:"タロウ", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
           </div>
         </div>
         <div class="form-group">
           <small><%= f.label :nickname, "ニックネーム", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-          <%= f.text_field :nickname, placeholder:"ニックネームを入力", class:"form-control" %>
+          <%= f.text_field :nickname, placeholder:"ニックネームを入力", required:true, class:"form-control" %>
+          <div class="invalid-feedback">入力されていません</div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <small><%= f.label :age, "年齢", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-            <%= f.select :age, options_for_select((18..100).to_a), {include_blank: "選択してください"}, class:"d-inline form-control" %>
+            <%= f.select :age, options_for_select((18..100).to_a), {include_blank: "選択してください"}, required:true, class:"d-inline form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
           </div>
           <div class="form-group col-md-6">
             <small><%= f.label :sex, "性別", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-            <%= f.select :sex, options_for_select(EndUser.sexes_i18n.invert), {include_blank: "選択してください"}, class:"form-control" %>
+            <%= f.select :sex, options_for_select(EndUser.sexes_i18n.invert), {include_blank: "選択してください"}, required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
           </div>
         </div>
         <div class="form-group">
           <small><%= f.label :activity_area, "主な活動エリア", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-          <%= f.select :activity_area, options_for_select(EndUser.activity_areas_i18n.invert), {include_blank: "選択してください"}, class:"form-control", style:"width:70%" %>
+          <%= f.select :activity_area, options_for_select(EndUser.activity_areas_i18n.invert), {include_blank: "選択してください"}, required:true, class:"form-control", style:"width:70%" %>
+          <div class="invalid-feedback">入力されていません</div>
         </div>
         <div class="form-group">
           <small><%= f.label :email, "メールアドレス", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-          <%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", class:"form-control" %>
+          <%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", required:true, class:"form-control" %>
+          <div class="invalid-feedback">入力されていません</div>
         </div>
         <div class="form-group">
           <small><%= f.label :password, "パスワード(半角#{@minimum_password_length}文字以上)", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-          <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
+          <%= f.password_field :password, autocomplete: "new-password", required:true, class:"form-control" %>
+          <div class="invalid-feedback">入力されていません</div>
         </div>
         <div class="form-group">
           <small><%= f.label :password_confirmation, "パスワード確認", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
-          <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control" %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", required:true, class:"form-control" %>
+          <div class="invalid-feedback">入力されていません</div>
         </div>
         <%= f.submit "新規登録", class:"btn btn-primary mt-3 py-2", style:"width: 100%" %>
       </div>
