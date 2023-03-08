@@ -54,9 +54,21 @@ class Community < ApplicationRecord
 
   # コミュニティへの招待メソッド（通知を作成）
   def community_invitation_notification(current_end_user, visited_id, community_id)
-    temp = Notification.where(visitor_id: current_end_user.id, visited_id: visited_id, community_id: community_id)
-    if temp.blank?
+    temp = Notification.where(visited_id: visited_id, community_id: community_id, action: "invitation")
+    unless temp.exists?
       notification = current_end_user.active_notifications.new(visited_id: visited_id, community_id: community_id, action: "invitation")
+      notification.save if notification.valid?
+    end
+  end
+
+  # コミュニティへの参加通知メソッド ※メンバー全員（通知を作成）
+  def community_join_notification(current_end_user, community_id)
+    temp_ids = CommunityUser.where(community_id: community_id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
+    temp_ids.each do |temp_id|
+      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: community_id, action: 'join')
+      # if notification.visitor_id == notification.visited_id
+      #   notification.checked = true
+      # end
       notification.save if notification.valid?
     end
   end

@@ -1,13 +1,15 @@
 <% communities.each do |community| %>
+  <% a = rand(5000) %>
+  <% b = rand(5000) %>
   <div class="col-lg-3 col-md-4 col-sm-6 col-10 mb-3">
     <div class="card shadow">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
-            <a href="#contents1-<%= community.id %>" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
+            <a href="#contents1-<%= a %>" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
           </li>
           <li class="nav-item">
-            <a href="#contents2-<%= community.id %>" class="nav-link text-dark" data-toggle="tab">紹介文</a>
+            <a href="#contents2-<%= b %>" class="nav-link text-dark" data-toggle="tab">紹介文</a>
           </li>
         </ul>
       </div>
@@ -16,7 +18,7 @@
         <h4 class="card-title text-info"><%= community.name %></h4>
       </div>
       <div class="tab-content">
-        <div id="contents1-<%= community.id %>" class="tab-pane active">
+        <div id="contents1-<%= a %>" class="tab-pane active">
           <ul class="list-group list-group-flush">
             <li class="list-group-item"><i class="fas fa-user"></i>&ensp;<span class="h5 text-danger"><%= community.end_users.count %></span>人が参加中</li>
             <li class="list-group-item"><i class="fas fa-th-large"></i>&ensp;<%= community.category.name if community.category_id %></li>
@@ -27,7 +29,7 @@
             </li>
           </ul>
         </div>
-        <div id="contents2-<%= community.id %>" class="tab-pane">
+        <div id="contents2-<%= b %>" class="tab-pane">
           <div class="card-body">
             <p class="card-text"><%= community.introduction.truncate(100) %></p>
           </div>
