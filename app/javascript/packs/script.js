@@ -1,15 +1,17 @@
-$('.see-more').click(function(){
+/* global $*/
+$('.see-more').click(function() {
   $(this).closest(".content-body").find(".truncated").hide();
   $(this).closest(".content-body").find(".untruncated").show();
-})
+});
 
-$('.see-more').click(function(){
+$('.see-more').click(function() {
   $(this).closest(".topic-body").find(".truncated").hide();
   $(this).closest(".topic-body").find(".untruncated").show();
-})
+});
+
 
 $(function() {
-  $('#back a').on('click',function(event){
+  $('#back a').on('click', function(event) {
     $('body, html').animate({
       scrollTop:0
     }, 1000);
@@ -17,21 +19,17 @@ $(function() {
   });
 });
 
+
 $(function() {
-  $('#previewImage').on('change', function() {
-
-    var selectedFile = this.files[0];
-    var fileReader = new FileReader();
-    fileReader.readAsDataURL(selectedFile);
-
-    fileReader.onload = function(event) {
-      var loadedImageUri = event.target.result;
-      $('#preview').attr('src', loadedImageUri);
-    };
-
-    fileReader.readAsDataURL(selectedFile);
-  });
+  $('#input-file').on('change', function(e) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $("#preview").attr('src', e.target.result);
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }); 
 });
+
 
 const mySwiper = new Swiper(".swiper-container", {
 

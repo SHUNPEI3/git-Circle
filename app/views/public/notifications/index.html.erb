@@ -1,30 +1,61 @@
 <div class="container py-5">
   <div class="row m-4">
-    <h3>あなたへのコミュニティ参加オファー</h3>
+    <h3>あなたへのメッセージ</h3>
   </div>
-  <% if @notifications.exists? %>
-    <div class="row my-4">
-      <table class="table">
+  <div class="row my-4">
+    <% if @notifications.exists? %>
+      <table class="table border">
         <% @notifications.each do |notification| %>
           <tr>
-            <td class="col-1 align-middle"><%= notification.created_at.strftime("%Y/%m/%d %R") %></td>
-            <td class="col-9 align-middle"><%= notification.visitor.nickname %>さん&ensp;から&ensp;"<strong><%= notification.community.name %></strong>"&ensp;コミュニティへの招待が届きました!!</td>
-            <td class="col-2 align-middle text-center">
-              <div><%= link_to '詳細へ', community_path(notification.community), class:"btn btn-info m-2" %></div>
-              <% if notification.community.already_joined?(current_end_user) %>
-                <p><%= 'すでに参加済みです' %></p>
-              <% else %>
-                <div><%= link_to '参加する', community_community_users_path(notification.community.id), method: :post, class: "btn btn-success m-2" %></div>
-              <% end %>
-            </td>
+            <% if notification.action == 'invitation' %>
+              <td>
+                <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
+                <div class="mx-2">
+                  <%= link_to end_user_path(notification.visitor),class:"text-start"  do %>
+                    <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
+                    <span class="text-info"><%= notification.visitor.nickname %></span>
+                  <% end %>
+                  さん が
+                  <%= link_to community_path(notification.community) do %>
+                    <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+                    <span class="text-info"><%= notification.community.name %></span>
+                  <% end %>
+                  へ招待をしています!!
+                </div>
+              </td>
+              <td class="align-middle text-center">
+                <% if notification.community.already_joined?(current_end_user) %>
+                  <p><small>すでに参加済みです</small></p>
+                <% else %>
+                  <div><%= link_to '参加する', community_community_users_path(notification.community.id), method: :post, class: "btn btn-info" %></div>
+                <% end %>
+              </td>
+            <% elsif notification.action == 'join' %>
+              <td>
+                <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
+                <div class="mx-2">
+                  <%= link_to end_user_path(notification.visitor), class:"text-start"  do %>
+                    <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
+                    <span class="text-info"><%= notification.visitor.nickname %></span>
+                  <% end %>
+                  さん が
+                  <%= link_to community_path(notification.community) do %>
+                    <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+                    <span class="text-info"><%= notification.community.name %></span>
+                  <% end %>
+                  に参加しました！！
+                </div>
+                <div class="text-right">
+                  <span class="small text-muted"><%= time_ago_in_words(notification.created_at) %>前</span>
+                </div>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </table>
-    </div>
-  <% else %>
-    <div class="row m-4">
+    <% else %>
       <h5> メッセージは届いていません。</h5>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
   <%= paginate @notifications %>
 </div>
