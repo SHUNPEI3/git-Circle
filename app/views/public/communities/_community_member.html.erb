@@ -1,6 +1,6 @@
   <p>メンバー：<span class="h5 text-danger"><%= community.end_users.count %></span>人が参加中</p>
   <div class="row flex-nowrap overflow-auto">
-    <div class="text-center" style="width: 180px">
+    <div class="text-center" style="min-width: 150px">
       <h6><span class="badge badge-info">リーダー</span></h6>
       <%= link_to end_user_path(community.owner) do %>
         <%= image_tag community.owner.get_profile_image(60, 60), class:"img-thumbnail rounded-circle" %>
