@@ -11,7 +11,7 @@ class Public::CommunitiesController < ApplicationController
 
   def new
     @community = Community.new
-    @community.community_details.build
+    @community.build_community_detail
   end
 
   def create
@@ -23,7 +23,7 @@ class Public::CommunitiesController < ApplicationController
     # タグ情報をparamsで取得し、変数tag_listへ格納
     tag_list = params[:community][:community_tag_name].split(nil)
     # 年齢制限入力欄の確認
-    if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
+    if (params[:community][:community_detail_attributes][:age_max_limit] == "") || (params[:community][:community_detail_attributes][:age_min_limit] <= params[:community][:community_detail_attributes][:age_max_limit])
       if @community.save
         @community.save_category(category_name)
         @community.save_tag(tag_list)
@@ -39,8 +39,9 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def show
+    @detail = @community.community_detail
+    @follow_users = current_end_user.followings
     @topics = @community.topics.order(id: "DESC").limit(6)
-    @other_users = current_end_user.followings
   end
 
   def edit
@@ -50,7 +51,7 @@ class Public::CommunitiesController < ApplicationController
   def update
     category_name =  Language.get_category(community_params[:name])
     tag_list = params[:community][:community_tag_name].split(nil)
-    if (params[:community][:community_details_attributes]["0"][:age_max_limit] == "") || (params[:community][:community_details_attributes]["0"][:age_min_limit] <= params[:community][:community_details_attributes]["0"][:age_max_limit])
+    if (params[:community][:community_detail_attributes][:age_max_limit] == "") || (params[:community][:community_detail_attributes][:age_min_limit] <= params[:community][:community_detail_attributes][:age_max_limit])
       if @community.update(community_params)
         @community.save_category(category_name)
         @community.save_tag(tag_list)
@@ -82,7 +83,7 @@ class Public::CommunitiesController < ApplicationController
   private
 
   def community_params
-    params.require(:community).permit(:name, :introduction, :community_image, community_details_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :_destroy, :id])
+    params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :_destroy, :id])
   end
 
   def find_community
