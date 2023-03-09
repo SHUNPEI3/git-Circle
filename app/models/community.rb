@@ -22,11 +22,20 @@ class Community < ApplicationRecord
     end
     community_image.variant(resize_to_fill:[width, height]).processed
   end
+  
+  # 非公開ではないコミュニティを取得
+  def self.open_community_get
+    Community.where(id: CommunityDetail.where.not(recruiting_status: "secret").pluck(:community_id))
+  end
+
+
 
   # カテゴリー情報の保存メソッド
   def save_category(category_name)
-    category = Category.find_or_create_by(name: category_name)
-    self.update(category_id: category.id)
+    unless category_name == []
+     category = Category.find_or_create_by(name: category_name)
+     self.update(category_id: category.id)
+    end
   end
 
   # タグ情報の保存メソッド
@@ -81,4 +90,6 @@ class Community < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+  
+  paginates_per 8
 end

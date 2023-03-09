@@ -4,9 +4,9 @@ class Public::CommunitiesController < ApplicationController
   before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
-    @communities = Community.all.order(id: "DESC").page(params[:page]).per(8)
+    @new_communities = Community.open_community_get.order(id: "DESC").page(params[:page])
     @category_list = Category.all
-    @tag_list = Tag.all.order(id: "DESC").page params[:page]
+    @tag_list = Tag.all.order(id: "DESC").page(params[:page])
   end
 
   def new
@@ -68,7 +68,7 @@ class Public::CommunitiesController < ApplicationController
 
   def invitation
     @community = Community.find(params[:community_id])
-    @user = EndUser.find_by(id: params[:community][:user_id])
+    @user = EndUser.find(params[:community][:user_id])
     unless @user.blank?
       if @community.community_invitation_notification(current_end_user, @user.id)
         redirect_to request.referer, notice: "招待を送りました！！"
@@ -83,7 +83,7 @@ class Public::CommunitiesController < ApplicationController
   private
 
   def community_params
-    params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :_destroy, :id])
+    params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :recruiting_status, :_destroy, :id])
   end
 
   def find_community
