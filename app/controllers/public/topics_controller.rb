@@ -17,7 +17,7 @@ class Public::TopicsController < ApplicationController
     @topic = current_end_user.topics.new(topic_params)
     @topic.community_id = @community.id
     if @topic.save
-      @community.topic_post_notification(current_end_user, @community.id, @topic.id)
+      @community.topic_post_notification(current_end_user, @topic.id)
       redirect_to community_topics_path, notice: "投稿完了しました！"
     else
       flash.now[:alert] = "投稿に失敗しました"

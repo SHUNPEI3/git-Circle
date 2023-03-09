@@ -69,7 +69,7 @@ class Public::CommunitiesController < ApplicationController
     @community = Community.find(params[:community_id])
     @user = EndUser.find_by(id: params[:community][:user_id])
     unless @user.blank?
-      if @community.community_invitation_notification(current_end_user, @user.id, @community.id)
+      if @community.community_invitation_notification(current_end_user, @user.id)
         redirect_to request.referer, notice: "招待を送りました！！"
       else
         redirect_to request.referer, alert: "すでに招待しています。"

@@ -5,6 +5,7 @@ class Public::RelationshipsController < ApplicationController
     relationship = current_end_user.active_relationships.new
     relationship.follower_id = @follower_user.id
     relationship.save
+    @follower_user.user_follow_notification(current_end_user)
     render 'relationship'
   end
 

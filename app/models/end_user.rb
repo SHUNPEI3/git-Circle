@@ -79,7 +79,16 @@ class EndUser < ApplicationRecord
   def followed_by?(user)
     passive_relationships.find_by(following_id: user.id).present?
   end
-
+  
+  # フォロー時の通知メソッド（通知を作成）
+  def user_follow_notification(current_end_user)
+    temp = Notification.where(visitor_id: current_end_user.id, visited_id: id, action: "follow")
+    if temp.blank?
+      notification = current_end_user.active_notifications.new(visited_id: id, action: "follow")
+      notification.save if notification.valid?
+    end
+  end
+  
   # タグの保存メソッド
   def save_tag(sent_tags)
     current_tags = self.personal_tags.pluck(:name) unless self.personal_tags.nil?
