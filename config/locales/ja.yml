@@ -112,7 +112,6 @@ ja:
       recruiting_status:
         recruiting: "募集中"
         closed: "募集停止"
-        secret: "非公開"
   activerecord:
     attributes:
       community:

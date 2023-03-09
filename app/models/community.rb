@@ -23,12 +23,10 @@ class Community < ApplicationRecord
     community_image.variant(resize_to_fill:[width, height]).processed
   end
   
-  # 非公開ではないコミュニティを取得
-  def self.open_community_get
-    Community.where(id: CommunityDetail.where.not(recruiting_status: "secret").pluck(:community_id))
+  # トピックが投稿された順でのコミュニティ情報を取得
+  def self.lasted_post_community_get
+    Community.find(Topic.order(created_at: :desc).pluck(:community_id))
   end
-
-
 
   # カテゴリー情報の保存メソッド
   def save_category(category_name)
@@ -75,9 +73,6 @@ class Community < ApplicationRecord
     temp_ids = CommunityUser.where(community_id: id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
     temp_ids.each do |temp_id|
       notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, action: 'join')
-      # if notification.visitor_id == notification.visited_id
-      #   notification.checked = true
-      # end
       notification.save if notification.valid?
     end
   end

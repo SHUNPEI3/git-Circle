@@ -5,16 +5,14 @@ class Public::EndUsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
 
   def index
-    # whereメソッドで退会ではないユーザーを取得 + order(id: "DESC")で、新規登録順に並び替え
     @tag_list = PersonalTag.all.order(id: "DESC").page params[:page]
-    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page]).per(8)
+    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page])
   end
 
   def show
     @join_communities = @end_user.communities
-    @owner_communities = Community.where(owner_id: @end_user.id)
     @history_communities = @end_user.community_users.order(id: "DESC").limit(8)
-    @topics = @end_user.topics.order(id: "DESC").limit(8)
+    @topics = @end_user.topics.order(id: "DESC")
     @bookmarks = @end_user.bookmarks
   end
 
@@ -34,11 +32,11 @@ class Public::EndUsersController < ApplicationController
   end
 
   def following
-    @followings = @end_user.followings.page(params[:page]).per(10)
+    @followings = @end_user.followings.page(params[:page])
   end
 
   def follower
-    @followers = @end_user.followers.page(params[:page]).per(10)
+    @followers = @end_user.followers.page(params[:page])
   end
 
   def unsubscribe

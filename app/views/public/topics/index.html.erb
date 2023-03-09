@@ -6,7 +6,9 @@
     <%= render 'public/communities/community_member', community: @community %>
   </div>
   <div class="row mx-1">
-    <%= render 'public/topics/topic_list', topics: @topics %>
+    <div class="col-12">
+      <%= render 'public/topics/topic_list', topics: @topics %>
+    </div>
   </div>
   <%= paginate @topics %>
 </div>

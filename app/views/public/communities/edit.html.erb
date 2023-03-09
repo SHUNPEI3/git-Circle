@@ -79,13 +79,10 @@
         <%= i.label :recruiting_status, '募集ステータス', class:"col-lg-2 col-md-3 col-sm-4 col-form-label" %>
         <div class="col-md-9 col-sm-8">
           <%= i.radio_button :recruiting_status, CommunityDetail.recruiting_statuses.key(0)%>
-          <%= i.label :recruiting_status_recruting, CommunityDetail.recruiting_statuses_i18n[:recruiting], class:"col-form-label mr-3" %>
+          <%= i.label :recruiting_status_recruting, CommunityDetail.recruiting_statuses_i18n[:recruiting], class:"col-form-label mr-5" %>
 
           <%= i.radio_button :recruiting_status, CommunityDetail.recruiting_statuses.key(1) %>
-          <%= i.label :recruiting_status_recruting, CommunityDetail.recruiting_statuses_i18n[:closed], class:"col-form-label mr-3" %>
-
-          <%= i.radio_button :recruiting_status, CommunityDetail.recruiting_statuses.key(2) %>
-          <%= i.label :recruiting_status_recruting, CommunityDetail.recruiting_statuses_i18n[:secret], class:"col-form-label" %>
+          <%= i.label :recruiting_status_recruting, CommunityDetail.recruiting_statuses_i18n[:closed], class:"col-form-label" %>
         </div>
       </div>
     <% end %>
