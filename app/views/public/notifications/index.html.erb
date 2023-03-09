@@ -2,97 +2,53 @@
   <div class="row m-4">
     <h3>あなたへのメッセージ</h3>
   </div>
-  <div class="row my-4">
-    <% if @notifications.exists? %>
-      <table class="table border">
-        <% @notifications.each do |notification| %>
-          <tr>
-            <% if notification.action == 'invitation' %>
-              <td>
-                <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
-                <div class="mx-2">
-                  <%= link_to end_user_path(notification.visitor),class:"text-start"  do %>
-                    <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.visitor.nickname %></span>
-                  <% end %>
-                  さん が あなたを
-                  <%= link_to community_path(notification.community) do %>
-                    <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.community.name %></span>
-                  <% end %>
-                  に招待しています!!
-                </div>
-              </td>
-              <td class="align-middle text-center">
-                <% if notification.community.already_joined?(current_end_user) %>
-                  <p><small>すでに参加済みです</small></p>
-                <% else %>
-                  <div><%= link_to '参加', community_community_users_path(notification.community.id), method: :post, class: "btn btn-info" %></div>
-                <% end %>
-              </td>
-            <% elsif notification.action == 'join' %>
-              <td>
-                <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
-                <div class="mx-2">
-                  <%= link_to end_user_path(notification.visitor), class:"text-start"  do %>
-                    <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.visitor.nickname %></span>
-                  <% end %>
-                  さん が
-                  <%= link_to community_path(notification.community) do %>
-                    <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.community.name %></span>
-                  <% end %>
-                  に参加しました！！
-                </div>
-                <div class="text-right">
-                  <span class="small text-muted"><%= time_ago_in_words(notification.created_at) %>前</span>
-                </div>
-              </td>
-            <% elsif notification.action == 'post' %>
-              <td>
-                <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
-                <div class="mx-2">
-                  <%= link_to end_user_path(notification.visitor), class:"text-start"  do %>
-                    <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.visitor.nickname %></span>
-                  <% end %>
-                  さん が
-                  <%= link_to community_path(notification.community) do %>
-                    <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.community.name %></span>
-                  <% end %>
-                  に、
-                  <%= link_to community_topic_path(notification.community, notification.topic) do %>
-                    <span class="text-info"><%= notification.topic.title %></span>
-                  <% end %>
-                  を投稿しました！
-                </div>
-                <div class="text-right">
-                  <span class="small text-muted"><%= time_ago_in_words(notification.created_at) %>前</span>
-                </div>
-              </td>
-            <% elsif notification.action == 'follow' %>
-              <td>
-                <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
-                <div class="mx-2">
-                  <%= link_to end_user_path(notification.visitor), class:"text-start"  do %>
-                    <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
-                    <span class="text-info"><%= notification.visitor.nickname %></span>
-                  <% end %>
-                  さん が あなたをフォローしました！
-                </div>
-                <div class="text-right">
-                  <span class="small text-muted"><%= time_ago_in_words(notification.created_at) %>前</span>
-                </div>
-              </td>
+  <% if @notifications.exists? %>
+    <ul class="list-group">
+      <% @notifications.each do |notification| %>
+        <li class="list-group-item p-3">
+          <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
+          <div class="mx-2">
+            <%= link_to end_user_path(notification.visitor),class:"text-start"  do %>
+              <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.visitor.nickname %></span>
             <% end %>
-          </tr>
-        <% end %>
-      </table>
-    <% else %>
-      <h5> メッセージは届いていません。</h5>
-    <% end %>
-  </div>
+          さん が
+          <% if notification.action == 'invitation' %>
+            あなたを
+            <%= link_to community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            に招待しています!!
+          </div>
+          <% elsif notification.action == 'join' %>
+            <%= link_to community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            に参加しました！！
+          </div>
+          <% elsif notification.action == 'post' %>
+            <%= link_to community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            に、
+            <%= link_to community_topic_path(notification.community, notification.topic) do %>
+              <span class="text-info"><%= notification.topic.title %></span>
+            <% end %>
+            を投稿しました！
+          </div>
+          <% elsif notification.action == 'follow' %>
+            さん が あなたをフォローしました！
+          </div>
+          <% end %>
+          <div class="text-right"><small class="text-muted"><%= time_ago_in_words(notification.created_at) %>前</small></div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <h5> メッセージは届いていません。</h5>
+  <% end %>
   <%= paginate @notifications %>
 </div>
