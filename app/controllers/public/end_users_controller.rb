@@ -11,9 +11,9 @@ class Public::EndUsersController < ApplicationController
 
   def show
     @join_communities = @end_user.communities
-    @history_communities = @end_user.community_users.order(id: "DESC").limit(8)
+    @history_communities = CommunityUser.where(end_user_id: @end_user.id).order(id: "DESC").limit(8)
     @topics = @end_user.topics.order(id: "DESC")
-    @bookmarks = @end_user.bookmarks
+    @bookmarks = @end_user.bookmarks.order(id: "DESC")
   end
 
   def edit

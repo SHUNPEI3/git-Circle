@@ -63,7 +63,7 @@
           <div id="contents3" class="tab-pane">
             <%= render 'public/topics/topic_list', topics: @topics %>
           </div>
-          <div id="contents4" class="tab-pane border">
+          <div id="contents4" class="tab-pane">
             <%= render 'public/bookmarks/bookmark_list', bookmarks: @bookmarks %>
           </div>
         </div>
@@ -78,11 +78,11 @@
     <div class="swiper mt-3">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <% @history_communities.each do |join_community| %>
+          <% @history_communities.each do |community| %>
             <div class="swiper-slide text-center">
-              <%= link_to community_path(join_community.community) do %>
-                <%= image_tag join_community.community.get_community_image(200, 200), class:"img-thumbnail rounded-circle" %>
-                <h6 class="text-info font-weight-bold mt-2"><%= join_community.community.name %></h6>
+              <%= link_to community_path(community.community) do %>
+                <%= image_tag community.community.get_community_image(250, 200), class:"img-thumbnail img-rounded" %>
+                <h6 class="text-info mt-2"><%= community.community.name %></h6>
               <% end %>
             </div>
           <% end %>

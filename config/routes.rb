@@ -28,11 +28,13 @@ Rails.application.routes.draw do
       patch :withdraw, on: :member
     end
 
-
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
+      get :member_list, on: :member
       post :invitation
-      resource 'community_users', only: [:create, :destroy]
+      resource 'community_users', only: [:create, :destroy] do
+        delete :evict
+      end
       # トピック関連
       resources 'topics', except: [:destroy] do
         resource 'bookmarks', only: [:create, :destroy]

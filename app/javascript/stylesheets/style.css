@@ -27,21 +27,14 @@
 }
 
 .sample-box {
-    position: relative;
+  position: relative;
 }
 
-.stop {
-    color: gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10rem;
-    border-radius: 50%;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+.recruiting-stop {
+  opacity: 0.8;
+  position: absolute;
+  top: 4px;
+  left: 4px;
 }
 
 #back {

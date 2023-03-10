@@ -1,9 +1,10 @@
-<ul class="list-unstyled">
+<ul class="list-group list-group-flush">
   <% communities.each do |community| %>
-    <li class="media border-top p-3">
-      <div class='text-center mr-3'>
+    <li class="media border-bottom p-3">
+      <div class='sample-box text-center mr-3'>
         <%= link_to community_path(community.id) do %>
           <%= image_tag community.get_community_image(80, 80), class: "img-thumbnail" %>
+          <%= image_tag asset_path("stop_label.png"),size: "70x70", class:"d-block recruiting-stop" if community.community_detail.recruiting_status == "closed" %>
         <% end %>
         <% if community.owner == current_end_user %>
           <span class="d-block badge badge-info mt-1">リーダー</span>
