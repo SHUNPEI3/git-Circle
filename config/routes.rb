@@ -24,9 +24,10 @@ Rails.application.routes.draw do
       resource 'relationships', only: [:create, :destroy]
       get :following, on: :member
       get :follower, on: :member
+      get :unsubscribe, on: :member
+      patch :withdraw, on: :member
     end
-    get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
-    patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
+
 
     # コミュニティ関連
     resources 'communities', except: [:destroy] do

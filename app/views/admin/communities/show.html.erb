@@ -52,7 +52,7 @@
                 <% end %>
             </div>
             <div id="contents2" class="tab-pane p-2">
-              <% @community.community_details.each do |detail| %>
+              <% detail = @community.community_detail %>
                 <% if !detail.max_join_number && !detail.sex_limit && !detail.activity_area_limit && !detail.age_min_limit && !detail.age_max_limit %>
                   <p>参加条件の設定はありません</p>
                 <% end %>
@@ -72,7 +72,6 @@
                 <% elsif detail.age_min_limit && !detail.age_max_limit %>
                   <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳以上</span>」の人</li>
                 <% end %>
-              <% end %>
             </div>
           </div>
         </div>
