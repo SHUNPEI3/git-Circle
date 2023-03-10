@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 2023_03_09_094424) do
     t.integer "visited_id", null: false
     t.integer "community_id"
     t.integer "topic_id"
+    t.integer "topic_comment_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
