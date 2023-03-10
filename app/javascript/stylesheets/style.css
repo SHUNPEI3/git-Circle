@@ -26,6 +26,24 @@
   border-radius: 30px;
 }
 
+.sample-box {
+    position: relative;
+}
+
+.stop {
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10rem;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
 #back {
   position: fixed;
   right: 20px;
