@@ -3,8 +3,8 @@ class Community < ApplicationRecord
   has_many :community_users, dependent: :destroy
   has_many :end_users, through: :community_users
   belongs_to :owner, class_name: 'EndUser'
-  has_many :community_details, dependent: :destroy
-  accepts_nested_attributes_for :community_details, allow_destroy: true
+  has_one :community_detail, dependent: :destroy
+  accepts_nested_attributes_for :community_detail
   has_many :community_tags, dependent: :destroy
   has_many :tags, through: :community_tags
   has_many :topics, dependent: :destroy
@@ -22,11 +22,18 @@ class Community < ApplicationRecord
     end
     community_image.variant(resize_to_fill:[width, height]).processed
   end
+  
+  # トピックが投稿された順でのコミュニティ情報を取得
+  def self.lasted_post_community_get
+    Community.find(Topic.order(created_at: :desc).pluck(:community_id))
+  end
 
   # カテゴリー情報の保存メソッド
   def save_category(category_name)
-    category = Category.find_or_create_by(name: category_name)
-    self.update(category_id: category.id)
+    unless category_name == []
+     category = Category.find_or_create_by(name: category_name)
+     self.update(category_id: category.id)
+    end
   end
 
   # タグ情報の保存メソッド
@@ -53,32 +60,31 @@ class Community < ApplicationRecord
   end
 
   # コミュニティへの招待通知メソッド（通知を作成）
-  def community_invitation_notification(current_end_user, visited_id, community_id)
-    temp = Notification.where(visited_id: visited_id, community_id: community_id, action: "invitation")
+  def community_invitation_notification(current_end_user, visited_id)
+    temp = Notification.where(visited_id: visited_id, community_id: id, action: "invitation")
     if temp.blank?
-      notification = current_end_user.active_notifications.new(visited_id: visited_id, community_id: community_id, action: "invitation")
+      notification = current_end_user.active_notifications.new(visited_id: visited_id, community_id: id, action: "invitation")
       notification.save if notification.valid?
     end
   end
 
   # コミュニティへの参加通知メソッド ※メンバー全員（通知を作成）
-  def community_join_notification(current_end_user, community_id)
-    temp_ids = CommunityUser.where(community_id: community_id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
+  def community_join_notification(current_end_user)
+    temp_ids = CommunityUser.where(community_id: id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
     temp_ids.each do |temp_id|
-      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: community_id, action: 'join')
-      # if notification.visitor_id == notification.visited_id
-      #   notification.checked = true
-      # end
+      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, action: 'join')
       notification.save if notification.valid?
     end
   end
 
   # トピック作成時の投稿通知メソッド ※メンバー全員（通知を作成）
-  def topic_post_notification(current_end_user, community_id, topic_id)
-    temp_ids = CommunityUser.where(community_id: community_id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
+  def topic_post_notification(current_end_user, topic_id)
+    temp_ids = CommunityUser.where(community_id: id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
     temp_ids.each do |temp_id|
-      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: community_id, topic_id: topic_id, action: 'post')
+      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, topic_id: topic_id, action: 'post')
       notification.save if notification.valid?
     end
   end
+  
+  paginates_per 8
 end

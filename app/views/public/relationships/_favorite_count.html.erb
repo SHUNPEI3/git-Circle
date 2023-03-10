@@ -1,11 +1,11 @@
 <div class="row justify-content-around text-center my-2">
   <div></div>
   <%= link_to follower_end_user_path(end_user), class:"text-secondary" do %>
-    <span class="h6"><i class="fas fa-user"></i>&nbsp;フォロワー<br><strong><%= end_user.followers.count %>&nbsp;人</strong></span>
+    <span class="h6"><i class="fas fa-user"></i>&nbsp;フォロワー<br><%= end_user.followers.count %></span>
   <% end %>
-  <div class="border" style="height: 48px"></div>
+  <div class="border"></div>
   <%= link_to following_end_user_path(end_user), class:"text-secondary" do %>
-    <span class="h6"><i class="fas fa-user"></i>&nbsp;フォロー中<br><strong><%= end_user.followings.count %>&nbsp;人</strong></span>
+    <span class="h6"><i class="fas fa-user"></i>&nbsp;フォロー中<br><%= end_user.followings.count %></span>
   <% end %>
   <div></div>
 </div>

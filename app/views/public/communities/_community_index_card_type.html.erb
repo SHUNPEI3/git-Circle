@@ -13,7 +13,12 @@
           </li>
         </ul>
       </div>
-      <%= image_tag community.get_community_image(150, 150), class:"card-img-top p-1" %>
+      <div class="sample-box">
+        <%= image_tag community.get_community_image(150, 150), class:"card-img-top p-1" %>
+        <% if community.community_detail.recruiting_status == "closed" %>
+          <div class="stop"><i class="far fa-stop-circle"></i></div>
+        <% end %>
+      </div>
       <div class="card-body">
         <h4 class="card-title text-info"><%= community.name %></h4>
       </div>

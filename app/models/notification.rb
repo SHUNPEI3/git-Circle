@@ -3,4 +3,6 @@ class Notification < ApplicationRecord
   belongs_to :visited, class_name: 'EndUser', foreign_key: 'visited_id'
   belongs_to :community, optional: true
   belongs_to :topic, optional: true
+  
+  paginates_per 10
 end

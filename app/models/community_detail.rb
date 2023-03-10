@@ -13,4 +13,7 @@ class CommunityDetail < ApplicationRecord
     tokushima_only: 35, kagawa_only: 36, ehime_only: 37, kochi_only: 38,
     fukuoka_only: 39, saga_only: 40, nagasaki_only: 41, kumamoto_only: 42, oita_only: 43, miyazaki_only: 44, kagoshima_only: 45, okinawa_only: 46
   }
+  enum recruiting_status: {
+    recruiting: 0, closed: 1
+  }
 end

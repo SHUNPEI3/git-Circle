@@ -6,7 +6,7 @@ class Public::CommunityUsersController < ApplicationController
     # 参加制限の照会
     if @community_user.ensure_participation_conditions(@community, @community_detail, current_end_user)
       community_invitation_notification_delete
-      @community.community_join_notification(current_end_user, @community.id)
+      @community.community_join_notification(current_end_user)
       redirect_to community_path(@community), notice: 'コミュニティに参加しました！'
     else
       redirect_to request.referer, alert: '参加条件に一致していないため、加入ができません。参加条件をご確認ください。'

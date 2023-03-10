@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_08_141051) do
+ActiveRecord::Schema.define(version: 2023_03_09_094424) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2023_03_08_141051) do
     t.integer "age_max_limit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "recruiting_status", default: 0, null: false
   end
 
   create_table "community_tags", force: :cascade do |t|
@@ -131,12 +132,12 @@ ActiveRecord::Schema.define(version: 2023_03_08_141051) do
   create_table "notifications", force: :cascade do |t|
     t.integer "visitor_id", null: false
     t.integer "visited_id", null: false
-    t.integer "community_id", null: false
+    t.integer "community_id"
+    t.integer "topic_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "topic_id"
   end
 
   create_table "personal_tags", force: :cascade do |t|
