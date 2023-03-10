@@ -106,4 +106,6 @@ class EndUser < ApplicationRecord
   def self.search_for(content)
     EndUser.where("nickname Like?", "%#{content}%")
   end
+  
+  paginates_per 8
 end

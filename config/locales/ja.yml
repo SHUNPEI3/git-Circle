@@ -109,6 +109,9 @@ ja:
         miyazaki_only: "宮崎県のみ"
         kagoshima_only: "鹿児島県のみ"
         okinawa_only: "沖縄県のみ"
+      recruiting_status:
+        recruiting: "募集中"
+        closed: "募集停止"
   activerecord:
     attributes:
       community:
