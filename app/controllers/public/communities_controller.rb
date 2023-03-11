@@ -1,6 +1,6 @@
 class Public::CommunitiesController < ApplicationController
   before_action :authenticate_end_user!
-  before_action :find_community, only: [:show, :edit, :update, :member_list]
+  before_action :find_community, only: [:show, :edit, :update, :member]
   before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
@@ -66,8 +66,7 @@ class Public::CommunitiesController < ApplicationController
     end
   end
 
-  def member_list
-    # @members = @community.end_users.order(id: "DESC")
+  def member
     @members = CommunityUser.where(community_id: @community.id)
   end
 

@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
-      get :member_list, on: :member
+      get :member, on: :member
       post :invitation
       resource 'community_users', only: [:create, :destroy] do
         delete :evict
