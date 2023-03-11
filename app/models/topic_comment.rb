@@ -3,6 +3,7 @@ class TopicComment < ApplicationRecord
   belongs_to :community
   belongs_to :topic
   has_many :goods, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   validates :comment, presence: true, length: { maximum: 1000 }
 

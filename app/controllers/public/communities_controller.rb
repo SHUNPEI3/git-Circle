@@ -1,6 +1,6 @@
 class Public::CommunitiesController < ApplicationController
   before_action :authenticate_end_user!
-  before_action :find_community, only: [:show, :edit, :update]
+  before_action :find_community, only: [:show, :edit, :update, :member]
   before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
@@ -64,6 +64,10 @@ class Public::CommunitiesController < ApplicationController
       flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
       render 'edit'
     end
+  end
+
+  def member
+    @members = CommunityUser.where(community_id: @community.id)
   end
 
   def invitation
