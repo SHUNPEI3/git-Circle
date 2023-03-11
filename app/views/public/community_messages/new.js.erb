@@ -1,0 +1,1 @@
+document.querySelector("#reply-form-<%= @message_reply.parent_id %>").innerHTML = ("<%= j(render 'public/community_messages/reply_form', message_reply: @message_reply) %>");

@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2023_03_11_044131) do
     t.integer "end_user_id", null: false
     t.integer "community_id", null: false
     t.text "message", null: false
+    t.integer "parent_id"
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

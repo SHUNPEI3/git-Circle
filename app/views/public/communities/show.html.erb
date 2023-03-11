@@ -104,4 +104,10 @@
       <% end %>
     </div>
   <% end %>
+
+  <% unless (current_end_user.guest_user?) %>
+    <div class="text-center mx-auto mt-5">
+      <%= link_to '質問・問い合わせページへ', question_community_path(@community), class: "btn btn-outline-warning py-2", style:"width: 75%" %>
+    </div>
+  <% end %>
 </div>

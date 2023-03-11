@@ -1,23 +1,33 @@
-      <ul class="list-group list-group-flush">
-        <% messages.each do |message| %>
-          <li class="list-group-item p-3">
-            <div class="row mx-2">
-              <%= link_to end_user_path(message.end_user) do %>
-                <%= image_tag message.end_user.get_profile_image(40, 40), class:"img-thumbnail rounded-circle mr-2" %>
-              <% end %>
-              <div>
-                <span class="text-info"><%= message.end_user.nickname %></span><br>
-                <small><%= message.created_at.strftime("%Y/%m/%d\ %R") %></small>
-              </div>
-            </div>
-            <div class="m-3">
-              <%= message.message.truncate(200) %>
-            </div>
-            <div class="row justify-content-end">
-              <% if current_end_user.id == message.end_user_id %>
-                <%= link_to '削除', community_community_message_path(message.community, message), method: :delete, remote: true, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger mr-3" %>
-              <% end %>
-            </div>
-          </li>
+<ul class="list-group">
+  <% community.community_messages.each do |message| %>
+    <% unless message.parent_id %>
+      <li class="list-group-item p-3">
+        <div class="row mx-2">
+          <%= link_to end_user_path(message.end_user) do %>
+            <%= image_tag message.end_user.get_profile_image(40, 40), class:"img-thumbnail rounded-circle mr-2" %>
+          <% end %>
+          <div>
+            <span class="text-info"><%= message.end_user.nickname %></span>
+            <% if message.community.owner == message.end_user %>
+              <span class="badge badge-info ml-3">リーダー</span>
+            <% end %><br>
+            <small><%= message.created_at.strftime("%Y/%m/%d\ %R") %></small>
+          </div>
+        </div>
+        <div class="ml-4 my-3"><%= message.message %></div>
+        <div class="row justify-content-end">
+          <%= link_to new_community_community_message_path(message.community, parent_id: message.id), remote: true do %>
+            <span class="align-middle text-secondary mr-3"><i class="fas fa-reply"></i> 返信する</span>
+          <% end %>
+          <% if current_end_user.id == message.end_user_id %>
+            <%= link_to '削除', community_community_message_path(message.community, message), method: :delete, remote: true, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger mr-3" %>
+          <% end %>
+        </div>
+        <% if message.replies.any? %>
+          <%= render 'public/community_messages/reply_index', message: message %>
         <% end %>
-      </ul>
+      </li>
+    <% end %>
+    <div id="reply-form-<%= message.id %>"></div>
+  <% end %>
+</ul>

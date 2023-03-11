@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       get :member, on: :member
       get :question, on: :member
       post :invitation
-      resources 'community_messages', only: [:create, :destroy]
+      resources 'community_messages', only: [:new, :create, :destroy]
       resource 'community_users', only: [:create, :destroy] do
         delete :evict
       end

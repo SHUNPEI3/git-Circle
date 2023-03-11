@@ -72,7 +72,6 @@ class Public::CommunitiesController < ApplicationController
   
   def question
     @message = CommunityMessage.new
-    @messages = @community.community_messages
   end
 
   def invitation

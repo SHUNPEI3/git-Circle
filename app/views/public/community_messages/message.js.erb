@@ -1,2 +1,2 @@
-$(".message-index").html("<%= j(render 'public/community_messages/message_index', messages: @community.community_messages) %>");
+$(".message-index").html("<%= j(render 'public/community_messages/message_index', community: @community) %>");
 $("textarea").val("");
