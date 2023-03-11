@@ -7,6 +7,7 @@ class EndUser < ApplicationRecord
   has_one_attached :profile_image
   has_many :community_users, dependent: :destroy
   has_many :communities, through: :community_users
+  has_many :community_messages, dependent: :destroy
   has_many :user_personal_tags, dependent: :destroy
   has_many :personal_tags, through: :user_personal_tags
   has_many :topics, dependent: :destroy

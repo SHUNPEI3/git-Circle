@@ -1,6 +1,6 @@
 class Public::CommunitiesController < ApplicationController
   before_action :authenticate_end_user!
-  before_action :find_community, only: [:show, :edit, :update, :member]
+  before_action :find_community, only: [:show, :edit, :update, :member, :question]
   before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
@@ -68,6 +68,11 @@ class Public::CommunitiesController < ApplicationController
 
   def member
     @members = CommunityUser.where(community_id: @community.id)
+  end
+  
+  def question
+    @message = CommunityMessage.new
+    @messages = @community.community_messages
   end
 
   def invitation

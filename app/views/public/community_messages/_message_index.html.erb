@@ -1,0 +1,23 @@
+      <ul class="list-group list-group-flush">
+        <% messages.each do |message| %>
+          <li class="list-group-item p-3">
+            <div class="row mx-2">
+              <%= link_to end_user_path(message.end_user) do %>
+                <%= image_tag message.end_user.get_profile_image(40, 40), class:"img-thumbnail rounded-circle mr-2" %>
+              <% end %>
+              <div>
+                <span class="text-info"><%= message.end_user.nickname %></span><br>
+                <small><%= message.created_at.strftime("%Y/%m/%d\ %R") %></small>
+              </div>
+            </div>
+            <div class="m-3">
+              <%= message.message.truncate(200) %>
+            </div>
+            <div class="row justify-content-end">
+              <% if current_end_user.id == message.end_user_id %>
+                <%= link_to '削除', community_community_message_path(message.community, message), method: :delete, remote: true, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger mr-3" %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>

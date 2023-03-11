@@ -14,6 +14,7 @@ class Public::TopicCommentsController < ApplicationController
   end
 
   def destroy
+    @topic = Topic.find(params[:topic_id])
     @topic_comment = TopicComment.find(params[:id])
     @topic_comment.destroy
     render 'topic_comment'
