@@ -45,7 +45,7 @@ class Public::TopicsController < ApplicationController
   private
 
   def topic_params
-    params.require(:topic).permit(:title, :body)
+    params.require(:topic).permit(:title, :body, :topic_image_1, :topic_image_2, :topic_image_3)
   end
 
   def find_community
