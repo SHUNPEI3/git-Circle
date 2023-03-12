@@ -1,0 +1,2 @@
+module Public::CommunityMessagesHelper
+end

@@ -56,6 +56,20 @@
             の投稿（<%= link_to notification.topic.title, community_topic_path(notification.topic.community, notification.topic), class:"text-info" %>）に、コメントしました！
           </div>
 
+          <% elsif notification.action == 'messages_post' %>
+            <%= link_to question_community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            にメッセージを投稿しました！
+
+          <% elsif notification.action == 'messages_reply' %>
+            <%= link_to question_community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            のメッセージに返信しました！
+
           <% end %>
           <div class="text-right"><small class="text-muted"><%= time_ago_in_words(notification.created_at) %>前</small></div>
         </li>

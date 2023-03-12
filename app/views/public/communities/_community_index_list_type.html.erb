@@ -6,7 +6,7 @@
           <%= image_tag community.get_community_image(80, 80), class: "img-thumbnail" %>
           <%= image_tag asset_path("stop_label.png"),size: "70x70", class:"d-block recruiting-stop" if community.community_detail.recruiting_status == "closed" %>
         <% end %>
-        <% if community.owner == current_end_user %>
+        <% if community.owner == end_user %>
           <span class="d-block badge badge-info mt-1">リーダー</span>
         <% end %>
       </div>

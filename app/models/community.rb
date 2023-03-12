@@ -3,6 +3,7 @@ class Community < ApplicationRecord
   has_many :community_users, dependent: :destroy
   has_many :end_users, through: :community_users
   belongs_to :owner, class_name: 'EndUser'
+  has_many :community_messages, dependent: :destroy
   has_one :community_detail, dependent: :destroy
   accepts_nested_attributes_for :community_detail
   has_many :community_tags, dependent: :destroy

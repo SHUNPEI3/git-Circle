@@ -1,0 +1,9 @@
+<div class="ml-5 mt-3">
+  <%= form_with model: [@community, @message_reply], local: false do |f| %>
+    <%= f.hidden_field :parent_id %>
+    <div class="form-group">
+      <%= f.text_area :message, class: 'form-control', placeholder: "返信する..." %>
+      <%= f.submit 'コメントに返信する', class: 'btn btn-primary btn-sm mt-2', style: "width: 100%" %>
+    </div>
+  <% end %>
+</div>
