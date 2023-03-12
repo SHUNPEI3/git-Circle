@@ -3,16 +3,15 @@ class Public::CommunityMessagesController < ApplicationController
 
   def new
     @message_reply = @community.community_messages.new(parent_id: params[:parent_id])
+      render 'reply'
   end
 
   def create
     @message = current_end_user.community_messages.new(community_message_params)
     @message.community_id = @community.id
-    # @message_reply = @community.community_messages.new(community_message_params) #コメントに対する返信用の変数
-    if @message.save
-      render 'message'
-      # @topic.comment_reply_notification(current_end_user, @topic_comment.id)
-    end
+    @message.save
+    @message.messages_post_or_reply_notification(current_end_user, @community.id, @community.owner_id)
+    render 'message'
   end
 
   def destroy
