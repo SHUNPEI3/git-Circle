@@ -1,15 +1,15 @@
 <div class="container py-5">
   <div class="row m-4">
-    <h2>ユーザー一覧</h2>
+    <h3>ユーザー一覧</h3>
   </div>
-  <div class="row">
-    <table class="table">
+  <div class="table-responsive-md">
+    <table class="table text-nowrap">
       <thead class="thead-light">
         <th>会員ID</th>
         <th>名前</th>
-        <th>フリガナ</th>
-        <th>メースアドレス</th>
-        <th>ユーザーステータス</th>
+        <th>ニックネーム</th>
+        <th>E-mail</th>
+        <th>会員ステータス</th>
         <th></th>
       </thead>
       <tbody>
@@ -17,7 +17,7 @@
           <tr>
             <td><%= end_user.id %></td>
             <td><%= end_user.last_name %><%= end_user.first_name %></td>
-            <td><%= end_user.last_name_kana %><%= end_user.first_name_kana %></td>
+            <td><%= end_user.nickname %></td>
             <td><%= end_user.email %></td>
             <td>
               <% if end_user.is_deleted? %>

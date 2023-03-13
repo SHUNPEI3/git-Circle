@@ -1,0 +1,12 @@
+<div class="col-auto my-4 mx-2">
+  <% if end_user.introduction.present? %>
+    <p><%= safe_join(end_user.introduction.split("\n"), tag(:br)) %></p>
+  <% end %>
+  <h6><i class="fas fa-tag mr-2"></i>
+    <% if end_user.personal_tags.exists? %>
+      <% end_user.personal_tags.each do |personal_tag| %>
+        <span class="mr-2"><%= "#{"#" + personal_tag.name}" %></span>
+      <% end %>
+    <% end %>
+  </h6>
+</div>

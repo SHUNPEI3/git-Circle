@@ -1,0 +1,49 @@
+<div class="col-auto my-3">
+  <table class="table table-borderless table-sm">
+    <tr>
+      <th style="width: 40%">ユーザーID</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.id %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">メールアドレス</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.email %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">名前</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.last_name %> <%= end_user.first_name %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">フリガナ</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.last_name_kana %> <%= end_user.first_name_kana %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">ニックネーム</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.nickname %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">年齢</th>
+      <td style="width: 60%"><span class="h6"><%= (end_user.age).to_s + "歳" %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">性別</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.sex_i18n %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">主な活動エリア</th>
+      <td style="width: 60%"><span class="h6"><%= end_user.activity_area_i18n %></span></td>
+    </tr>
+    <tr>
+      <th style="width: 40%">会員ステータス</th>
+      <td style="width: 60%">
+        <% if @end_user.is_deleted? %>
+          <span class="text-danger">退会済み</span>
+        <% else %>
+          <span class="text-success">有効</span>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <div class="d-flex justify-content-end">
+    <%= link_to 'ユーザー情報を編集する', edit_admin_end_user_path(@end_user), class:"btn btn-info mr-2" %>
+  </div>
+</div>
