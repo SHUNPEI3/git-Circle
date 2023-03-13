@@ -21,29 +21,12 @@
   <%= paginate @new_communities %>
 </div>
 
-<% unless current_end_user.guest_user? %>
+<%# unless current_end_user.guest_user? %>
   <div class="fixed-bottom  bg-primary rounded-pill text-center mx-5 mb-2 p-2">
     <%= link_to new_community_path do %>
       <span class="text-white"><i class="fas fa-plus"></i>&nbsp;コミュニティ新規作成</span>
     <% end %>
   </div>
-<% end %>
+<%# end %>
 
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">カテゴリーリスト</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <% @category_list.each do |category| %>
-          <li class="h5 py-2"><%= link_to category.name, category_path(category) %></li>
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <%= link_to '閉じる', communities_path %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'public/categories/category_list', category_list: @category_list %>
