@@ -1,0 +1,10 @@
+<div class="container py-5">
+  <div class="row justify-content-center my-4">
+    <div class="message-index col-md-11 col-12">
+      <%= render 'public/community_messages/message_index', community: @community %>
+    </div>
+    <div class="col-md-11 col-12 mt-3 px-3">
+      <%= render 'public/community_messages/message_form', community: @community, message: @message %>
+    </div>
+  </div>
+</div>

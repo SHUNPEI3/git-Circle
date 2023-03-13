@@ -1,0 +1,17 @@
+<% message.replies.each do |reply| %>
+  <div class="ml-5">
+    <div class="row mx-0">
+      <%= link_to end_user_path(reply.end_user) do %>
+        <%= image_tag reply.end_user.get_profile_image(40, 40), class:"img-thumbnail rounded-circle mr-2" %>
+      <% end %>
+      <div>
+      <span class="text-info"><%= reply.end_user.nickname %></span>
+      <% if message.community.owner == reply.end_user %>
+        <span class="badge badge-info ml-3">リーダー</span>
+      <% end %><br>
+      <small><%= reply.created_at.strftime("%Y/%m/%d\ %R") %></small>
+      </div>
+    </div>
+    <div class="ml-4 my-3"><%= reply.message %></div>
+  </div>
+<% end %>

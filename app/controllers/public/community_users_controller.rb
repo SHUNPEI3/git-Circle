@@ -20,6 +20,13 @@ class Public::CommunityUsersController < ApplicationController
     redirect_to request.referer, notice: 'コミュニティから退出しました'
   end
 
+  def evict
+    community = Community.find(params[:community_id])
+    community_user = CommunityUser.find_by(end_user_id: params[:user_id], community_id: community.id)
+    community_user.destroy
+    redirect_to request.referer, notice: 'コミュニティから退出させました'
+  end
+
   private
 
   def community_invitation_notification_delete

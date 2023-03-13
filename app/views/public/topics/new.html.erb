@@ -24,6 +24,45 @@
         <div class="invalid-feedback">入力されていません</div>
       </div>
     </div>
+
+    <div class="form-group row">
+      <div class="col-lg-2">
+        <%= f.label :topic_image,'投稿画像', class:"col-form-label" %><br>
+        <small>※３つまで投稿可</small>
+      </div>
+      <div class="col-lg-10">
+        <div class="row mx-0 justify-content-center">
+          <div class="col-md-4 col-12 text-center">
+            <label>
+              <span class="text-primary">
+                <i class="fas fa-camera"></i>&nbsp;画像を選択する
+                <%= f.file_field :topic_image_1, accept:'image/*', style:"display:none", id:"input-file_1" %>
+              </span>
+            </label>
+            <div><%= image_tag asset_path('no_image'), size: "210x210", class:"img-thumbnail", id:'preview_1' %></div>
+          </div>
+          <div class="col-md-4 col-12 text-center">
+            <label>
+              <span class="text-primary">
+                <i class="fas fa-camera"></i>&nbsp;画像を選択する
+                <%= f.file_field :topic_image_2, accept:'image/*', style:"display:none", id:"input-file_2" %>
+              </span>
+            </label>
+            <div><%= image_tag asset_path('no_image'), size: "210x210", class:"img-thumbnail", id:'preview_2' %></div>
+          </div>
+          <div class="col-md-4 col-12 text-center">
+            <label>
+              <span class="text-primary">
+                <i class="fas fa-camera"></i>&nbsp;画像を選択する
+                <%= f.file_field :topic_image_1, accept:'image/*', style:"display:none", id:"input-file_3" %>
+              </span>
+            </label>
+            <div><%= image_tag asset_path('no_image'), size: "210x210", class:"img-thumbnail", id:'preview_3' %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="form-group row justify-content-center">
       <%= link_to '戻る', community_topics_path(@community), class: 'btn btn-secondary mt-5 mx-3', style:"width: 25%" %>
       <%= f.submit class: 'btn btn-info mt-5 mx-3', style:"width: 25%" %>

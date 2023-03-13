@@ -24,14 +24,19 @@ Rails.application.routes.draw do
       resource 'relationships', only: [:create, :destroy]
       get :following, on: :member
       get :follower, on: :member
+      get :unsubscribe, on: :member
+      patch :withdraw, on: :member
     end
-    get '/end_users/:id/unsubscribe' => 'end_users#unsubscribe', as: 'unsubscribe_end_user'
-    patch '/end_users/:id/withdraw' => 'end_users#withdraw', as: 'withdraw_end_user'
 
     # コミュニティ関連
     resources 'communities', except: [:destroy] do
+      get :member, on: :member
+      get :question, on: :member
       post :invitation
-      resource 'community_users', only: [:create, :destroy]
+      resources 'community_messages', only: [:new, :create, :destroy]
+      resource 'community_users', only: [:create, :destroy] do
+        delete :evict
+      end
       # トピック関連
       resources 'topics', except: [:destroy] do
         resource 'bookmarks', only: [:create, :destroy]
@@ -49,14 +54,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'homes/top', as: 'home'
+    get 'topics/topic_list', as: 'topics'
+    get 'topic_comments/topic_comment_list', as: 'topic_comments'
     resources 'end_users', only: [:show, :edit, :update]
     resources 'communities', only: [:index, :show, :edit, :update, :destroy] do
       resources 'topics', only: [:index, :show, :edit, :update, :destroy] do
         resources 'topic_comments', only: [:update, :destroy]
       end
     end
-    get 'topics/topic_list', as: 'topics'
-    get 'topic_comments/topic_comment_list', as: 'topic_comments'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

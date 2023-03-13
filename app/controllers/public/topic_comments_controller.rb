@@ -7,12 +7,14 @@ class Public::TopicCommentsController < ApplicationController
     @topic_comment.topic_id = @topic.id
     if @topic_comment.save
       render 'topic_comment'
+      @topic.comment_reply_notification(current_end_user, @topic_comment.id)
     else
       render 'topic_comment'
     end
   end
 
   def destroy
+    @topic = Topic.find(params[:topic_id])
     @topic_comment = TopicComment.find(params[:id])
     @topic_comment.destroy
     render 'topic_comment'

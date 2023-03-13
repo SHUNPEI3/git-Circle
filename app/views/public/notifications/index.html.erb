@@ -8,11 +8,12 @@
         <li class="list-group-item p-3">
           <div class="mx-2"><small><%= notification.created_at.strftime("%Y/%m/%d\ %R") %></small></div>
           <div class="mx-2">
-            <%= link_to end_user_path(notification.visitor),class:"text-start"  do %>
+            <%= link_to end_user_path(notification.visitor) do %>
               <%= image_tag notification.visitor.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
               <span class="text-info"><%= notification.visitor.nickname %></span>
             <% end %>
           さん が
+
           <% if notification.action == 'invitation' %>
             あなたを
             <%= link_to community_path(notification.community) do %>
@@ -21,6 +22,7 @@
             <% end %>
             に招待しています!!
           </div>
+
           <% elsif notification.action == 'join' %>
             <%= link_to community_path(notification.community) do %>
               <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
@@ -28,20 +30,46 @@
             <% end %>
             に参加しました！！
           </div>
+
           <% elsif notification.action == 'post' %>
             <%= link_to community_path(notification.community) do %>
               <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
               <span class="text-info"><%= notification.community.name %></span>
             <% end %>
-            に、
-            <%= link_to community_topic_path(notification.community, notification.topic) do %>
-              <span class="text-info"><%= notification.topic.title %></span>
-            <% end %>
-            を投稿しました！
+            に <%= link_to notification.topic.title, community_topic_path(notification.topic.community, notification.topic), class:"text-info" %> を投稿しました！
           </div>
+
           <% elsif notification.action == 'follow' %>
-            さん が あなたをフォローしました！
+            あなたをフォローしました！
           </div>
+
+          <% elsif notification.action == 'comment' %>
+            <% if notification.topic.end_user_id == notification.visited.id %>
+              あなた
+            <% else %>
+              <%= link_to end_user_path(notification.visitor) do %>
+                <%= image_tag notification.topic.end_user.get_profile_image(30, 30), class: "img-thumbnail rounded-circle" %>
+                <span class="text-info"><%= notification.topic.end_user.nickname %></span>
+              <% end %>
+              さん
+            <% end %>
+            の投稿（<%= link_to notification.topic.title, community_topic_path(notification.topic.community, notification.topic), class:"text-info" %>）に、コメントしました！
+          </div>
+
+          <% elsif notification.action == 'messages_post' %>
+            <%= link_to question_community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            にメッセージを投稿しました！
+
+          <% elsif notification.action == 'messages_reply' %>
+            <%= link_to question_community_path(notification.community) do %>
+              <%= image_tag notification.community.get_community_image(30, 30), class: "img-thumbnail rounded-circle" %>
+              <span class="text-info"><%= notification.community.name %></span>
+            <% end %>
+            のメッセージに返信しました！
+
           <% end %>
           <div class="text-right"><small class="text-muted"><%= time_ago_in_words(notification.created_at) %>前</small></div>
         </li>
