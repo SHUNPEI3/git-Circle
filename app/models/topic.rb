@@ -1,4 +1,7 @@
 class Topic < ApplicationRecord
+  has_one_attached :topic_image_1
+  has_one_attached :topic_image_2
+  has_one_attached :topic_image_3
   belongs_to :end_user
   belongs_to :community
   has_many :topic_comments, dependent: :destroy
