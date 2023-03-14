@@ -1,0 +1,64 @@
+<div class="container py-5">
+  <div class="row justify-content-end">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      <%= render 'admin/searches/form' %>
+    </div>
+  </div>
+  <div class="row m-4">
+    <h3>"<%= @content %>"を含む検索結果</h3>
+  </div>
+  <div class="table-responsive-md">
+    <table class="table text-nowrap">
+      <% if @model == "end_user" %>
+        <thead class="thead-light">
+          <th>会員ID</th>
+          <th>名前</th>
+          <th>ニックネーム</th>
+          <th>E-mail</th>
+          <th>会員ステータス</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= render 'admin/end_users/list', end_users: @records %>
+        </tbody>
+     <% elsif @model == "community" %>
+        <thead class="thead-light">
+          <th>ComuID</th>
+          <th>コミュニティ名</th>
+          <th>作成者</th>
+          <th>メンバー</th>
+          <th>参加条件設定</th>
+          <th>募集状況</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= render 'admin/communities/list', communities: @records %>
+        </tbody>
+      <% elsif @model == "topic" %>
+        <thead class="thead-light">
+          <th>TopicID</th>
+          <th>タイトル</th>
+          <th>投稿者</th>
+          <th>投稿日</th>
+          <th>コミュニティ名</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= render 'admin/topics/list', topics: @records %>
+        </tbody>
+      <% elsif @model == "comment" %>
+        <thead class="thead-light">
+          <th>CommentID</th>
+          <th>コメント</th>
+          <th>投稿者</th>
+          <th>投稿日</th>
+          <th>表示</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= render 'admin/topic_comments/list', topic_comments: @records %>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>

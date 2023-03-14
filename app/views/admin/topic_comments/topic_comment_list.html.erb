@@ -1,4 +1,9 @@
 <div class="container py-5">
+  <div class="row justify-content-end">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      <%= render 'admin/searches/form' %>
+    </div>
+  </div>
   <div class="row m-4">
     <h3>コメント一覧</h3>
   </div>
@@ -13,31 +18,7 @@
         <th></th>
       </thead>
       <tbody>
-        <% @topic_comments.each do |comment| %>
-          <tr>
-            <td><%= comment.id %></td>
-            <td><%= comment.comment.truncate(25) %></td>
-            <td><%= link_to comment.end_user.nickname, admin_end_user_path(comment.end_user) %></td>
-            <td><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></td>
-            <td>
-              <% if comment.is_active? %>
-                <span class="text-success">有効</span>
-              <% else %>
-                <span class="text-danger">非表示</span>
-              <% end %>
-            </td>
-            <td>
-              <div class="dropdown">
-                <button type="button" id="dropdown-<%=comment.id %>" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">メニュー</button>
-                <div class="dropdown-menu" aria-labelledby="dropdown-<%=comment.id %>">
-                  <%= link_to "詳細", admin_community_topic_path(comment.topic.community, comment.topic), class: "dropdown-item" %>
-                  <%= link_to '非表示', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :patch, data: {confirm: "非表示にしますか？"}, class:"dropdown-item" if comment.is_active %>
-                  <%= link_to '削除', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, data: {confirm: "削除しますか？"}, class:"dropdown-item" %>
-                </div>
-              </div>
-            </td>
-          </tr>
-        <% end %>
+        <%= render 'admin/topic_comments/list', topic_comments: @topic_comments %>
       </tbody>
     </table>
   </div>

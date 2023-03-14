@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     get 'homes/top', as: 'home'
     get 'topics/topic_list', as: 'topics'
     get 'topic_comments/topic_comment_list', as: 'topic_comments'
+    get 'search' => 'searches#search'
     resources 'end_users', only: [:show, :edit, :update]
     resources 'communities', only: [:index, :show, :edit, :update, :destroy] do
       get :member, on: :member
