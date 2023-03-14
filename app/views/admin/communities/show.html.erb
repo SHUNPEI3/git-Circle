@@ -3,106 +3,69 @@
     <h3><i class="fas fa-object-group"></i>「<%= @community.name %>」のコミュニティ詳細</h3>
   </div>
   <div class="row justify-content-around">
-    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-      <div class="text-center"><%= image_tag @community.get_community_image(220, 220), class:"img-thumbnail" %></div>
-      <div class="border mx-auto my-2", style="width: 220px">
-        <h6 class="m-3">リーダー(作成者)</h6>
-        <%= link_to admin_end_user_path(@community.owner) do %>
-          <%= image_tag @community.owner.get_profile_image(60, 60), class:"img-thumbnail rounded-circle ml-3" %>
-          <%= @community.owner.last_name %>&nbsp;<%= @community.owner.first_name %>
-        <% end %>
-        <h6 class="m-3">メンバー(参加者)</h6>
-        <% @community.end_users.each do |member| %>
-          <% unless !member.active_for_authentication? || @community.owner == member %>
-            <li style="list-style: none;">
-              <%= link_to admin_end_user_path(member) do %>
-                <%= image_tag member.get_profile_image(50, 50), class:"img-thumbnail rounded-circle ml-3 mb-2" %>
-                <%= member.last_name %>&nbsp;<%= member.first_name %>
-              <% end %>
-            </li>
-          <% end %>
-        <% end %>
-      </div>
-      <div class="row justify-content-center mt-2">
-        <%= link_to '編集する', edit_admin_community_path(@community), class: "btn btn-success", style:"width: 80%" %>
-        <%= link_to '削除する', admin_community_path(@community), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-danger mt-2", style:"width: 80%" %>
-      </div>
-    </div>
-    <div class="col-lg-9 col-md-8">
-      <div class="card shadow mx-3 mb-4">
+    <div class="col-lg-12 col-md-10 col-12">
+      <div class="card shadow">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a href="#contents1" class="nav-link active text-dark" data-toggle="tab">コミュニティ紹介</a>
-            </li>
-            <li class="nav-item">
-              <a href="#contents2" class="nav-link text-dark" data-toggle="tab">参加条件</a>
-            </li>
+            <li class="nav-item"><a href="#contents1" class="nav-link active text-dark" data-toggle="tab">コミュニティ紹介</a></li>
+            <li class="nav-item"><a href="#contents2" class="nav-link text-dark" data-toggle="tab">設定詳細</a></li>
           </ul>
         </div>
-        <div class="card-body">
-          <div class="tab-content">
-            <div id="contents1" class="tab-pane active p-2">
-              <h5 class="font-weight-bold"><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></h5>
-              <p class="mt-3">メンバー数：<span class="h5 text-danger"><%= @community.end_users.count %></span>人が参加中</p>
-              <p class="">設立日：<%= @community.created_at.strftime("%Y/%m/%d") %></p>
-              <i class="fas fa-tag"></i>
-                <% @community.tags.each do |community_tag| %>
-                  &nbsp;<%= "#" + community_tag.name  %>
-                <% end %>
-            </div>
-            <div id="contents2" class="tab-pane p-2">
-              <% detail = @community.community_detail %>
-                <% if !detail.max_join_number && !detail.sex_limit && !detail.activity_area_limit && !detail.age_min_limit && !detail.age_max_limit %>
-                  <p>参加条件の設定はありません</p>
-                <% end %>
-                <% if detail.max_join_number? %>
-                  <li class="my-2">参加人数は「<span class="font-weight-bold text-warning"><%= detail.max_join_number %>人</span>」まで&nbsp;（現在<%= @community.end_users.count %>人参加中）</li>
-                <% end %>
-                <% if detail.sex_limit? %>
-                  <li class="my-2"><span class="font-weight-bold text-warning"><%= detail.sex_limit_i18n %></span></li>
-                <% end %>
-                <% if detail.activity_area_limit? %>
-                  <li class="my-2">主な活動エリアが「<span class="font-weight-bold text-warning"><%= detail.activity_area_limit_i18n %></span>」の人</li>
-                <% end %>
-                <% if detail.age_min_limit && detail.age_max_limit %>
-                  <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳〜<%= detail.age_max_limit %>歳</span>」の人</li>
-                <% elsif !detail.age_min_limit && detail.age_max_limit %>
-                  <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_max_limit %>歳以下</span>」の人</li>
-                <% elsif detail.age_min_limit && !detail.age_max_limit %>
-                  <li class="my-2">年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳以上</span>」の人</li>
-                <% end %>
+        <div class="row no-gutters">
+          <div class="col-xl-4 col-lg-5 align-self-center sample-box">
+            <%= image_tag @community.get_community_image(560, 560), class:"img-fluid d-block mx-auto p-1" %>
+            <%= image_tag asset_path("stop_label.png"), size: "250x250", class:"d-block recruiting-stop" if @community.community_detail.recruiting_status == "closed" %>
+          </div>
+          <div class="col-xl-8 col-lg-7">
+            <div class="tab-content">
+              <div id="contents1" class="tab-pane active p-3">
+                <div class="overflow-auto" style="height: 250px">
+                  <p><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></p>
+                </div>
+                <h6 class="text-secondary">設立日：<%= @community.created_at.strftime("%Y/%m/%d") %></h6>
+                <h6><i class="fas fa-th-large mr-3"></i><span class="text-secondary"><%= @community.category.name if @community.category_id %></span></h6>
+                <h6><i class="fas fa-tag mr-2"></i>
+                  <% @community.tags.each do |community_tag| %>
+                    <span class="text-secondary mr-1"><%= "#" + community_tag.name  %></span>
+                  <% end %>
+                </h6>
+                <div class="d-flex justify-content-end">
+                  <%= link_to '編集する', edit_admin_community_path(@community), class: "btn btn-info mr-2", style:"width: 30%" %>
+                  <%= link_to '削除する', admin_community_path(@community), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-danger ml-2", style:"width: 30%" %>
+                </div>
+              </div>
+              <div id="contents2" class="tab-pane p-3">
+                <%= render 'admin/community_details/community_detail', detail: @community.community_detail %>
+                <li><%= "募集ステータス：#{@community.community_detail.recruiting_status_i18n}" %></li>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-between">
-        <h4 class="ml-3">トピックス一覧</h4>
-        <%= link_to 'もっと見る>>', admin_community_topics_path(@community), class:"mt-3 mr-3" %>
-      </div>
-      <div class="border mx-3"></div>
-      <div class=" col-md-12 mt-3">
-        <table class="table">
-          <thead class="thead-light">
-            <th>ID</th>
-            <th>タイトル</th>
-            <th>投稿者</th>
-            <th>投稿日</th>
-            <th></th>
-          </thead>
-          <tbody>
-            <% @topics.each do |topic| %>
-              <tr>
-                <td><%= topic.id %></td>
-                <td><%= topic.title.truncate(20) %></td>
-                <td><%= topic.end_user.last_name %>&nbsp;<%= topic.end_user.first_name %></td>
-                <td><small><%= topic.created_at.strftime("%Y/%m/%d") %></small></td>
-                <td><%= link_to "詳細", admin_community_topic_path(topic.community_id, topic), class: "btn btn-sm btn-primary" %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
     </div>
+  </div>
+  <div class="mt-3">
+    <%= render 'admin/communities/member', community: @community %>
+  </div>
+
+  <div class="d-flex justify-content-between mt-3">
+    <h4>新着トピックス</h4>
+    <%= link_to 'もっと見る>>', admin_community_topics_path(@community), class:"mt-2" %>
+  </div>
+  <div class="border mb-3"></div>
+  <div class="table-responsive-xl overflow-auto", style="max-height:300px" >
+    <table class="table text-nowrap">
+      <thead class="thead-light sticky-top">
+        <th>ID</th>
+        <th>タイトル</th>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>コミュニティ名</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <%= render 'admin/topics/list', topics: @topics %>
+      </tbody>
+    </table>
   </div>
 </div>

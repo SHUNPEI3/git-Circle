@@ -1,11 +1,11 @@
 <div class="container py-5">
   <div class="row m-4">
-    <h2>トピックス一覧</h2>
+    <h3>トピックス一覧</h3>
   </div>
-  <div class="row">
-    <table class="table">
+  <div class="table-responsive-xl">
+    <table class="table text-nowrap">
       <thead class="thead-light">
-        <th>ID</th>
+        <th>TopicID</th>
         <th>タイトル</th>
         <th>投稿者</th>
         <th>投稿日</th>
@@ -13,16 +13,7 @@
         <th></th>
       </thead>
       <tbody>
-        <% @topics.each do |topic| %>
-          <tr>
-            <td><%= topic.id %></td>
-            <td><%= topic.title.truncate(25) %></td>
-            <td><%= link_to "#{topic.end_user.last_name + topic.end_user.first_name}", admin_end_user_path(topic.end_user) %></td>
-            <td><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></td>
-            <td><%= link_to "#{topic.community.name}", admin_community_path(topic.community) %></td>
-            <td><%= link_to "詳細", admin_community_topic_path(topic.community_id, topic), class: "btn btn-primary" %></td>
-          </tr>
-        <% end %>
+        <%= render 'admin/topics/list', topics: @topics %>
       </tbody>
     </table>
   </div>

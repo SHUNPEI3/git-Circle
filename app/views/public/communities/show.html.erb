@@ -23,7 +23,7 @@
                   <p><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></p>
                 </div>
                 <h6 class="text-secondary">設立日：<%= @community.created_at.strftime("%Y/%m/%d") %></h6>
-                <h6><i class="fas fa-th-large mr-3"></i><span class="text-secondary"><%= link_to @community.category.name, category_path(@community.category), class:"text-secondary" if @community.category_id %></span></h6>
+                <h6><i class="fas fa-th-large mr-3"></i><%= link_to @community.category.name, category_path(@community.category), class:"text-secondary" if @community.category_id %></h6>
                 <h6><i class="fas fa-tag mr-2"></i>
                   <% @community.tags.each do |community_tag| %>
                     <%= link_to "#{"#" + community_tag.name}", tag_path(community_tag), class:"text-secondary mr-1" %>

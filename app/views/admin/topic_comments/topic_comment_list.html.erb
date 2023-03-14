@@ -1,11 +1,11 @@
 <div class="container py-5">
   <div class="row m-4">
-    <h2>コメント一覧</h2>
+    <h3>コメント一覧</h3>
   </div>
-  <div class="row">
-    <table class="table">
+  <div class="table-responsive-xl">
+    <table class="table text-nowrap">
       <thead class="thead-light">
-        <th>ID</th>
+        <th>CommentID</th>
         <th>コメント</th>
         <th>投稿者</th>
         <th>投稿日</th>
@@ -17,7 +17,7 @@
           <tr>
             <td><%= comment.id %></td>
             <td><%= comment.comment.truncate(25) %></td>
-            <td><%= link_to "#{comment.end_user.last_name + comment.end_user.first_name}", admin_end_user_path(comment.end_user) %></td>
+            <td><%= link_to comment.end_user.nickname, admin_end_user_path(comment.end_user) %></td>
             <td><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></td>
             <td>
               <% if comment.is_active? %>
@@ -26,12 +26,15 @@
                 <span class="text-danger">非表示</span>
               <% end %>
             </td>
-            <td class="text-center">
-              <%= link_to "詳細", admin_community_topic_path(comment.topic.community, comment.topic), class: "btn btn-sm btn-primary my-1", style:"width:60%" %>
-              <% if comment.is_active %>
-                <%= link_to '非表示', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :patch, class:"btn btn-sm btn-secondary my-1",style:"width:60%" %>
-              <% end %>
-              <%= link_to '削除', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, class:"btn btn-sm btn-danger my-1", style:"width:60%" %>
+            <td>
+              <div class="dropdown">
+                <button type="button" id="dropdown-<%=comment.id %>" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">メニュー</button>
+                <div class="dropdown-menu" aria-labelledby="dropdown-<%=comment.id %>">
+                  <%= link_to "詳細", admin_community_topic_path(comment.topic.community, comment.topic), class: "dropdown-item" %>
+                  <%= link_to '非表示', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :patch, data: {confirm: "非表示にしますか？"}, class:"dropdown-item" if comment.is_active %>
+                  <%= link_to '削除', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, data: {confirm: "削除しますか？"}, class:"dropdown-item" %>
+                </div>
+              </div>
             </td>
           </tr>
         <% end %>

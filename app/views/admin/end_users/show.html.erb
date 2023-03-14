@@ -19,7 +19,6 @@
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item"><a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a></li>
             <li class="nav-item"><a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a></li>
-            <li class="nav-item"><a href="#contents3" class="nav-link text-dark" data-toggle="tab">トピック</a></li>
           </ul>
         </div>
         <div class="tab-content">
@@ -29,18 +28,6 @@
           <div id="contents2" class="tab-pane">
             <%= render 'admin/end_users/profile_2', end_user: @end_user %>
           </div>
-          <div id="contents3" class="tab-pane">
-            <% if @topics.exists? %>
-              <% @topics.each do |topic| %>
-                <div class="d-flex justify-content-between mt-2">
-                  <h6><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(20), admin_community_topic_path(topic.community,topic) %></h6>
-                  <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d") %></small></p>
-                </div>
-              <% end %>
-            <% else %>
-              <p>投稿はありません</p>
-            <% end %>
-          </div>
     　　  </div>
       </div>
     </div>
@@ -48,7 +35,7 @@
   <div class="row mt-3 mx-0">
     <h4>参加中のコミュニティリスト</h4>
   </div>
-  <div class="table-responsive-md overflow-auto", style="max-height:300px" >
+  <div class="table-responsive-md overflow-auto", style="max-height:300px">
     <table class="table text-nowrap">
       <thead class="thead-light sticky-top">
         <th>ComuID</th>
@@ -60,46 +47,26 @@
         <th></th>
       </thead>
       <tbody>
-        <% @communities.each do |community| %>
-          <tr>
-            <td><%= community.id %></td>
-            <td><%= community.name %></td>
-            <td>
-              <%= link_to admin_end_user_path(community.owner) do %>
-                <%= community.owner.nickname %>
-              <% end %>
-              </td>
-            <td><span class="h5 text-danger"><%= community.end_users.count %></span>人が参加</span></td>
-            <td>
-              <% detail = community.community_detail %>
-              <% if detail.max_join_number? %>
-                <li>参加人数は「<span class="font-weight-bold text-warning"><%= detail.max_join_number %></span>」人まで</li>
-              <% end %>
-              <% if detail.sex_limit? %>
-                <li><span class="font-weight-bold text-warning"><%= detail.sex_limit_i18n %></span></li>
-              <% end %>
-              <% if detail.activity_area_limit? %>
-                <li>主な活動エリアが「<span class="font-weight-bold text-warning"><%= detail.activity_area_limit_i18n %></span>」の人</li>
-              <% end %>
-              <% if detail.age_min_limit && detail.age_max_limit %>
-                <li>年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳〜<%= detail.age_max_limit %>歳</span>」の人</li>
-              <% elsif !detail.age_min_limit && detail.age_max_limit %>
-                <li>年齢が「<span class="font-weight-bold text-warning"><%= detail.age_max_limit %>歳以下</span>」の人</li>
-              <% elsif detail.age_min_limit && !detail.age_max_limit %>
-                <li>年齢が「<span class="font-weight-bold text-warning"><%= detail.age_min_limit %>歳以上</span>」の人</li>
-              <% end %>
-            </td>
-            <td><%= detail.recruiting_status_i18n %></td>
-            <td><%= link_to "詳細", admin_community_path(community), class: "btn btn-primary" %></td>
-          </tr>
-        <% end %>
+        <%= render 'admin/communities/list', communities: @communities %>
       </tbody>
     </table>
   </div>
   <div class="row mt-3 mx-0">
     <h4>投稿トピックリスト</h4>
   </div>
-  <div class="table-responsive-md overflow-auto", style="max-height:300px" >
+  <div class="table-responsive-md overflow-auto", style="max-height: 300px">
+    <table class="table text-nowrap">
+      <thead class="thead-light sticky-top">
+        <th>TopicID</th>
+        <th>タイトル</th>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>コミュニティ名</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <%= render 'admin/topics/list', topics: @topics %>
+      </tbody>
+    </table>
   </div>
-
 </div>

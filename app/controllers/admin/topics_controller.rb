@@ -1,5 +1,6 @@
 class Admin::TopicsController < ApplicationController
   before_action :authenticate_admin!
+  before_action :find_community, except: [:topic_list, :update]
   before_action :find_topic, only: [:show, :edit, :update, :destroy]
 
   def topic_list
@@ -11,12 +12,11 @@ class Admin::TopicsController < ApplicationController
   end
 
   def show
-    @community = Community.find(params[:community_id])
     @topic_comment = TopicComment.new
+    @topic_comments = @topic.topic_comments
   end
 
   def edit
-    @community = Community.find(params[:community_id])
   end
 
   def update
@@ -35,7 +35,11 @@ class Admin::TopicsController < ApplicationController
   private
 
   def topic_params
-    params.require(:topic).permit(:title, :body)
+    params.require(:topic).permit(:title, :body, :topic_image_1, :topic_image_2, :topic_image_3)
+  end
+
+  def find_community
+    @community = Community.find(params[:community_id])
   end
 
   def find_topic
