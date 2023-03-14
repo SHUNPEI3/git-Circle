@@ -16,6 +16,10 @@ class Topic < ApplicationRecord
     bookmarks.exists?(end_user_id: user.id)
   end
 
+  def self.search_for(content)
+    Topic.where("title Like?", "%#{content}%")
+  end
+
   # コメント返信時の通知メソッド ※トピックメンバー全員（通知を作成）
   def comment_reply_notification(current_end_user, comment_id)
     temp_ids = TopicComment.where(topic_id: id).where.not(end_user_id: current_end_user.id).distinct.pluck(:end_user_id)

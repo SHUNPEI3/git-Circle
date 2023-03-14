@@ -11,4 +11,8 @@ class TopicComment < ApplicationRecord
   def good_by?(user)
     goods.exists?(end_user_id: user.id)
   end
+
+  def self.search_for(content)
+    TopicComment.where("comment Like?", "%#{content}%")
+  end
 end

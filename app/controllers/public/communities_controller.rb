@@ -39,7 +39,6 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def show
-    @detail = @community.community_detail
     @follow_users = current_end_user.followings
     @topics = @community.topics.order(id: "DESC").limit(6)
   end

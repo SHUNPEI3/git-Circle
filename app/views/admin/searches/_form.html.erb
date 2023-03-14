@@ -1,0 +1,11 @@
+<%= form_with url: admin_search_path, method: :get do |f| %>
+  <div class="input-group">
+    <%= f.select :model, options_for_select({"ユーザー名"=>"end_user", "コミュニティ"=>"community", "トピック"=>"topic", "コメント"=>"comment"}), {}, {class:"form-control"} %>
+    <%= f.text_field :content, placeholder:"キーワードを入力", class:"form-control", style:"width: 25%", required: true %>
+    <span class="input-group-btn input-group-append">
+      <%= button_tag(type: "submit", class: "btn btn-warning") do %>
+        <span class="text-light"><i class="fas fa-search"></i></span>
+      <% end %>
+    </span>
+  </div>
+<% end %>

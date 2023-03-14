@@ -1,0 +1,52 @@
+<div class="container py-5">
+  <div class="row justify-content-center my-4">
+    <div class="message-index col-md-11 col-12">
+      <ul class="list-group">
+        <% @community.community_messages.each do |message| %>
+          <% unless message.parent_id %>
+            <li class="list-group-item p-3">
+              <div class="row mx-2">
+                <%= link_to admin_end_user_path(message.end_user) do %>
+                  <%= image_tag message.end_user.get_profile_image(40, 40), class:"img-thumbnail rounded-circle mr-2" %>
+                <% end %>
+                <div>
+                  <span class="text-info"><%= message.end_user.nickname %></span>
+                  <% if message.community.owner == message.end_user %>
+                    <span class="badge badge-info ml-3">リーダー</span>
+                  <% end %><br>
+                  <small><%= message.created_at.strftime("%Y/%m/%d\ %R") %></small>
+                </div>
+              </div>
+              <div class="ml-4 my-3"><%= message.message %></div>
+              <div class="row justify-content-end">
+                <%= link_to '削除', admin_community_community_message_path(message.community, message), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger mr-3" %>
+              </div>
+              <% if message.replies.any? %>
+                <% message.replies.each do |reply| %>
+                  <div class="ml-5">
+                    <div class="row mx-0">
+                      <%= link_to admin_end_user_path(reply.end_user) do %>
+                        <%= image_tag reply.end_user.get_profile_image(40, 40), class:"img-thumbnail rounded-circle mr-2" %>
+                      <% end %>
+                      <div>
+                        <span class="text-info"><%= reply.end_user.nickname %></span>
+                        <% if message.community.owner == reply.end_user %>
+                          <span class="badge badge-info ml-3">リーダー</span>
+                        <% end %><br>
+                        <small><%= reply.created_at.strftime("%Y/%m/%d\ %R") %></small>
+                      </div>
+                    </div>
+                    <div class="ml-4 my-3"><%= reply.message %></div>
+                    <div class="row justify-content-end">
+                      <%= link_to '削除', admin_community_community_message_path(reply.community, reply), method: :delete, data: {confirm: "コメントを削除しますか？"}, class:"btn btn-sm btn-danger mr-3" %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
