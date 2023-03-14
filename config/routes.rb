@@ -58,6 +58,10 @@ Rails.application.routes.draw do
     get 'topic_comments/topic_comment_list', as: 'topic_comments'
     resources 'end_users', only: [:show, :edit, :update]
     resources 'communities', only: [:index, :show, :edit, :update, :destroy] do
+      get :member, on: :member
+      get :question, on: :member
+      resource 'community_users', only: [:destroy]
+      resources 'community_messages', only: [:destroy]
       resources 'topics', only: [:index, :show, :edit, :update, :destroy] do
         resources 'topic_comments', only: [:update, :destroy]
       end

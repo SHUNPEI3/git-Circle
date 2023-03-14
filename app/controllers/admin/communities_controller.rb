@@ -1,6 +1,6 @@
 class Admin::CommunitiesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :find_community, only: [:show, :edit, :update, :destroy]
+  before_action :find_community, except: [:index]
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(20)
@@ -27,6 +27,13 @@ class Admin::CommunitiesController < ApplicationController
   def destroy
     @community.destroy
     redirect_to admin_communities_path
+  end
+
+  def member
+    @members = CommunityUser.where(community_id: @community.id)
+  end
+
+  def question
   end
 
   private

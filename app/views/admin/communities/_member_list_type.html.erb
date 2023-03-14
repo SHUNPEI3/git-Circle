@@ -1,0 +1,36 @@
+<ul class="list-group bg-white">
+  <li class="media border p-3">
+    <div class='text-center mr-3'>
+      <%= link_to admin_end_user_path(community.owner_id) do %>
+        <%= image_tag community.owner.get_profile_image(80, 80), class:"d-block img-thumbnail" %>
+      <% end %>
+    </div>
+    <div class="media-body">
+      <h5><%= community.owner.nickname %><span class="badge badge-info ml-3">リーダー</span></h5>
+      <p><%= community.owner.introduction.truncate(100) %></p>
+      <% community.owner.personal_tags.each do |tag| %>
+        <small class="mr-2"><%= link_to "#" + tag.name, personal_tag_path(tag), class:"text-secondary" %></small>
+      <% end %>
+    </div>
+  </li>
+  <% members.each do |member| %>
+    <% unless !member.end_user.active_for_authentication? || community.owner == member.end_user %>
+      <li class="media border p-3">
+        <div class='text-center mr-3'>
+          <%= link_to admin_end_user_path(member.end_user.id) do %>
+            <%= image_tag member.end_user.get_profile_image(80, 80), class:"d-block img-thumbnail" %>
+          <% end %>
+          <%= link_to '退出', admin_community_community_users_path(community, user_id: member.end_user.id), method: :delete, data: {confirm: "本当にこのメンバーを退出させますか？"}, class:"btn btn-secondary btn-sm", style:"width: 85px" %>
+        </div>
+        <div class="media-body">
+          <h5><%= member.end_user.nickname %></h5>
+          <p><%= member.end_user.introduction.truncate(100) %></p>
+          <% member.end_user.personal_tags.each do |tag| %>
+            <small class="text-secondary mr-2"><%= "#" + tag.name %></small>
+          <% end %><br>
+          <small class=""><%= "加入日：#{member.created_at.strftime("%Y/%m/%d")}" %></small>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
