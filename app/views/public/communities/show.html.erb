@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <div class="mt-3">
+  <div class="mt-3" id="community-member-<%= @community.id %>">
     <%= render 'public/communities/community_member', community: @community %>
   </div>
 
@@ -68,16 +68,8 @@
   <% end %>
 
   <% unless @community.owner_id == current_end_user.id %>  <%# unless (current_end_user.guest_user?) || (@community.owner_id == current_end_user.id) %>
-    <div class="text-center mx-auto mt-5">
-      <% if @community.already_joined?(current_end_user) %>
-        <%= link_to 'コミュニティから退出する', community_community_users_path(@community), method: :delete, data: {confirm: "本当に退出しますか？"}, class: "btn btn-danger py-2", style:"width: 75%" %>
-      <% else %>
-        <% unless @community.community_detail.recruiting_status == "closed" %>
-          <%= link_to 'コミュニティに参加する', community_community_users_path(@community), method: :post, class: "btn btn-info py-2", style:"width: 75%" %>
-        <% else %>
-          <button type="button" class="btn btn-secondary py-2" style="width: 75%" disabled>募集を中止しております</button>
-        <% end %>
-      <% end %>
+    <div class="text-center mx-auto mt-5" id="join-or-exit-button-<%= @community.id %>">
+      <%= render 'public/community_users/join_or_exit_btn', community: @community %>
     </div>
   <% end %>
 
