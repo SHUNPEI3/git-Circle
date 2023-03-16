@@ -9,10 +9,10 @@ class Public::CommunityUsersController < ApplicationController
       community_invitation_notification_delete
       @community.community_join_notification(current_end_user)
       flash.now[:notice] = 'コミュニティに参加しました！'
-      render 'community_user'
+      render 'join_or_exit'
     else
       flash.now[:alert] = '参加条件に一致していないため、加入ができません。参加条件をご確認ください。'
-      render 'community_user'
+      render 'join_or_exit'
     end
   end
 
@@ -20,13 +20,15 @@ class Public::CommunityUsersController < ApplicationController
     community_user = CommunityUser.find_by(end_user_id: current_end_user.id, community_id: @community.id)
     community_user.destroy
     flash.now[:notice] = 'コミュニティから退出しました！'
-    render 'community_user'
+    render 'join_or_exit'
   end
 
   def evict
+    @members = CommunityUser.where(community_id: @community.id)
     community_user = CommunityUser.find_by(end_user_id: params[:user_id], community_id: @community.id)
     community_user.destroy
-    redirect_to request.referer, notice: 'コミュニティから退出させました'
+    flash.now[:notice] = 'コミュニティから退出させました。'
+    render 'evict'
   end
 
   private
