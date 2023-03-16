@@ -1,0 +1,14 @@
+<% communities.each do |community| %>
+  <tr>
+    <td><%= community.id %></td>
+    <td><%= community.name %></td>
+    <td><%= link_to community.owner.nickname, admin_end_user_path(community.owner) %></td>
+    <td><span class="h5 text-danger"><%= community.end_users.count %></span>人が参加</span></td>
+    <td>
+      <% detail = community.community_detail %>
+      <%= render 'admin/community_details/community_detail', detail: detail %>
+    </td>
+    <td><%= detail.recruiting_status_i18n %></td>
+    <td><%= link_to "詳細", admin_community_path(community), class: "btn btn-primary btn-sm" %></td>
+  </tr>
+<% end %>

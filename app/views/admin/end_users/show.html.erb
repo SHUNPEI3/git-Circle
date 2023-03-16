@@ -1,165 +1,72 @@
 <div class="container py-5">
   <div class="row m-4">
-    <h2><%= @end_user.last_name %><%= @end_user.first_name %>さんの詳細ページ</h2>
+    <h3><%= @end_user.last_name %><%= @end_user.first_name %>さん (<%= @end_user.nickname %>) の詳細ページ</h3>
   </div>
   <div class="row justify-content-around">
-    <div class="col-md-3 col-sm-12 text-center mb-3">
-      <%= image_tag @end_user.get_profile_image(200, 200) %>
-      <%= link_to 'ユーザー情報を編集する', edit_admin_end_user_path(@end_user), class:"btn btn-success mt-3" %>
+    <div class="col-lg-4 col-md-9 col-12 mb-3">
+      <div><%= image_tag @end_user.get_profile_image(500, 500), class:"img-thumbnail" %></div>
+      <div class="row justify-content-around text-center text-secondary my-2">
+        <div></div>
+          <span class="h6">コミュニティ<br><%= @end_user.communities.count %></span>
+        <div class="border"></div>
+          <span class="h6">投稿トピック<br><%= @end_user.topics.count %></span>
+        <div></div>
+      </div>
     </div>
-    <div class="col-md-8 col-12">
+    <div class="col-lg-8 col-md-9 col-12 mb-3">
       <div class="card shadow">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a>
-            </li>
-            <li class="nav-item">
-              <a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a>
-            </li>
-            <li class="nav-item">
-              <a href="#contents3" class="nav-link text-dark" data-toggle="tab">最近の投稿</a>
-            </li>
+            <li class="nav-item"><a href="#contents1" class="nav-link active text-dark" data-toggle="tab">基本情報</a></li>
+            <li class="nav-item"><a href="#contents2" class="nav-link text-dark" data-toggle="tab">自己紹介</a></li>
           </ul>
         </div>
-        <div class="card-body">
-          <div class="tab-content">
-            <div id="contents1" class="tab-pane active">
-              <table class="table table-borderless table-sm">
-                <tr>
-                  <th style="width: 40%">ユーザーID</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.id %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">メールアドレス</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.email %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">名前</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.last_name %> <%= @end_user.first_name %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">フリガナ</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.last_name_kana %> <%= @end_user.first_name_kana %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">ニックネーム</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.nickname %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">年齢</th>
-                  <td style="width: 60%"><span class="h5"><%= (@end_user.age).to_s + "歳" %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">性別</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.sex_i18n %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">主な活動エリア</th>
-                  <td style="width: 60%"><span class="h5"><%= @end_user.activity_area_i18n %></span></td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">マイタグ</th>
-                  <td style="width: 60%">
-                    <% if @end_user.personal_tags.exists? %>
-                      <% @end_user.personal_tags.each do |personal_tag| %>
-                        <span class="mr-2"><%= "#{"#" + personal_tag.name}" %></span>
-                      <% end %>
-                    <% else %>
-                      <small>マイタグが未設定です</small>
-                    <% end %>
-                  </td>
-                </tr>
-                <tr>
-                  <th style="width: 40%">ユーザーステータス</th>
-                  <td style="width: 60%">
-                    <% if @end_user.is_deleted? %>
-                      <span class="text-danger">退会済み</span>
-                    <% else %>
-                      <span class="text-success">有効</span>
-                    <% end %>
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div id="contents2" class="tab-pane p-2">
-              <% if @end_user.introduction.present? %>
-                <h5><%= safe_join(@end_user.introduction.split("\n"), tag(:br)) %></h5>
-              <% else %>
-                <p>自己紹介が未設定です</p>
-              <% end %>
-            </div>
-            <div id="contents3" class="tab-pane p-2">
-              <% if @topics.exists? %>
-                <% @topics.each do |topic| %>
-                  <div class="d-flex justify-content-between mt-2">
-                    <h6><i class="far fa-flag"></i>&ensp;<%= link_to topic.title.truncate(20), admin_community_topic_path(topic.community,topic) %></h6>
-                    <p class="text-right"><small><%= topic.created_at.strftime("%Y/%m/%d") %></small></p>
-                  </div>
-                <% end %>
-              <% else %>
-                <p>投稿はありません</p>
-              <% end %>
-            </div>
+        <div class="tab-content">
+          <div id="contents1" class="tab-pane active">
+            <%= render 'admin/end_users/profile_1', end_user: @end_user %>
           </div>
-        </div>
+          <div id="contents2" class="tab-pane">
+            <%= render 'admin/end_users/profile_2', end_user: @end_user %>
+          </div>
+    　　  </div>
       </div>
     </div>
   </div>
-  <div class="row mt-3">
-    <h4>参加しているコミュニティ</h4>
+  <div class="row mt-3 mx-0">
+    <h4>参加中のコミュニティリスト</h4>
   </div>
-  <div class="row">
-    <table class="table">
-      <thead class="thead-light">
+  <div class="table-responsive-md overflow-auto", style="max-height:300px">
+    <table class="table text-nowrap">
+      <thead class="thead-light sticky-top">
         <th>ComuID</th>
         <th>コミュニティ名</th>
         <th>作成者</th>
         <th>メンバー</th>
         <th>参加条件設定</th>
+        <th>募集状況</th>
         <th></th>
       </thead>
       <tbody>
-        <% @communities.each do |community| %>
-          <tr>
-            <td><%= community.id %></td>
-            <td><%= community.name %></td>
-            <td>
-              <%= link_to admin_end_user_path(community.owner) do %>
-                <%= community.owner.last_name %>&nbsp;<%= community.owner.first_name %>
-              <% end %>
-              </td>
-            <td>
-              <% community.end_users.each do |member| %>
-                <% unless community.owner == member %>
-                  <li style="list-style: none;">
-                    <%= link_to "#{member.last_name + member.first_name }", admin_end_user_path(member) %>
-                    <% if member.is_deleted? %>
-                      <span class="text-danger">&nbsp; ※退会済み</span>
-                    <% end %>
-                  </li>
-                <% end %>
-              <% end %>
-            </td>
-            <td>
-              <% detail = community.community_detail %>
-                <% if detail.max_join_number? %>
-                 <li>上限数：<%= detail.max_join_number %>人まで</li>
-                <% end %>
-                <% if detail.sex_limit? %>
-                  <li>性別：<%= detail.sex_limit_i18n %></li>
-                <% end %>
-                <% if detail.activity_area_limit? %>
-                  <li>活動地：<%= detail.activity_area_limit_i18n %></li>
-                <% end %>
-                <% if detail.age_min_limit || detail.age_max_limit %>
-                  <li>年齢：<%= detail.age_min_limit %>〜<%= detail.age_max_limit %>歳まで</li>
-                <% end %>
-              </td>
-            <td><%= link_to "詳細", admin_community_path(community), class: "btn btn-primary" %></td>
-          </tr>
-        <% end %>
+        <%= render 'admin/communities/list', communities: @communities %>
       </tbody>
     </table>
-   </div>
+  </div>
+  <div class="row mt-3 mx-0">
+    <h4>投稿トピックリスト</h4>
+  </div>
+  <div class="table-responsive-md overflow-auto", style="max-height: 300px">
+    <table class="table text-nowrap">
+      <thead class="thead-light sticky-top">
+        <th>TopicID</th>
+        <th>タイトル</th>
+        <th>投稿者</th>
+        <th>投稿日</th>
+        <th>コミュニティ名</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <%= render 'admin/topics/list', topics: @topics %>
+      </tbody>
+    </table>
+  </div>
 </div>

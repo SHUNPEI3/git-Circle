@@ -1,0 +1,8 @@
+<div class="container py-5">
+  <div class="row m-4">
+    <h3><i class="fas fa-users"></i>「<%= @community.name %>」の参加メンバー</h3>
+  </div>
+    <div>
+      <%= render 'admin/communities/member_list_type', members: @members, community: @community %>
+    </div>
+</div>

@@ -1,34 +1,24 @@
 <div class="container py-5">
-  <div class="row m-4">
-    <h2>ユーザー一覧</h2>
+  <div class="row justify-content-end">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      <%= render 'admin/searches/form' %>
+    </div>
   </div>
-  <div class="row">
-    <table class="table">
+  <div class="row m-4">
+    <h3>ユーザー一覧</h3>
+  </div>
+  <div class="table-responsive-md">
+    <table class="table text-nowrap">
       <thead class="thead-light">
         <th>会員ID</th>
         <th>名前</th>
-        <th>フリガナ</th>
-        <th>メースアドレス</th>
-        <th>ユーザーステータス</th>
+        <th>ニックネーム</th>
+        <th>E-mail</th>
+        <th>会員ステータス</th>
         <th></th>
       </thead>
       <tbody>
-        <% @end_users.each do |end_user| %>
-          <tr>
-            <td><%= end_user.id %></td>
-            <td><%= end_user.last_name %><%= end_user.first_name %></td>
-            <td><%= end_user.last_name_kana %><%= end_user.first_name_kana %></td>
-            <td><%= end_user.email %></td>
-            <td>
-              <% if end_user.is_deleted? %>
-                <span class="text-danger">退会済み</span>
-              <% else %>
-                <span class="text-success">有効</span>
-              <% end %>
-            </td>
-            <td><%= link_to "詳細", admin_end_user_path(end_user), class: "btn btn-primary" %></td>
-          </tr>
-        <% end %>
+        <%= render 'admin/end_users/list', end_users: @end_users %>
       </tbody>
     </table>
    </div>

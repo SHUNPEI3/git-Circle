@@ -1,0 +1,9 @@
+<% if community.already_joined?(current_end_user) %>
+  <%= link_to 'コミュニティから退出する', community_community_users_path(community), method: :delete, remote: true, data: {confirm: "本当に退出しますか？"}, class: "btn btn-danger py-2", style:"width: 75%" %>
+<% else %>
+  <% unless community.community_detail.recruiting_status == "closed" %>
+    <%= link_to 'コミュニティに参加する', community_community_users_path(community), method: :post, remote: true, class: "btn btn-info py-2", style:"width: 75%" %>
+  <% else %>
+    <button type="button" class="btn btn-secondary py-2" style="width: 75%" disabled>募集を中止しております</button>
+  <% end %>
+<% end %>

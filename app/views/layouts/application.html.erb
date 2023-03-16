@@ -16,7 +16,9 @@
       <%= render "layouts/header" %>
     </header>
     <main class="site-thema">
-      <%= render 'layouts/flash_message' %>
+      <div id="flash-message">
+        <%= render 'layouts/flash_message' %>
+      </div>
       <%= yield %>
       <span id="back">
         <a href="#"><img src="<%= asset_path("arrow.png") %>" alt=""></a>

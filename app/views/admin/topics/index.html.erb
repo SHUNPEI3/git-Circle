@@ -2,33 +2,42 @@
   <div class="row m-4">
     <h3><i class="fas fa-list"></i>&nbsp;トピック一覧</h3>
   </div>
-  <div class="row">
-    <table class="table table-hover bg-white border rounded">
-      <% @topics.each do |topic| %>
-        <tr>
-          <td class="col-2 col-md-1 align-middle text-center">
-            <%= link_to admin_end_user_path(topic.end_user) do %>
-              <%= image_tag topic.end_user.get_profile_image(50, 50), class: "rounded-circle" %><br>
-              <small class="text-info"><%= topic.end_user.nickname %></small>
-            <% end %>
-          </td>
-          <td class="col-10 col-md-11 align-middle">
-            <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
-            <% if topic.end_user.active_for_authentication? %>
-              <h4 class="mt-2"><%= link_to topic.title.truncate(35), admin_community_topic_path(topic.community, topic) %></h4>
-            <% else %>
-              <h4 class="mt-2"><%= link_to topic.title.truncate(35), admin_community_topic_path(topic.community, topic) %></h4>
-              <small>※このトピックは、投稿したユーザーアカウントが利用停止中です</small>
-            <% end %>
-            <div class="row justify-content-end mx-2">
-              <small class="mr-3"><%= link_to topic.community.name, admin_community_path(topic.community) %></small>
-              <small class="mx-2"><span><i class="far fa-heart"></i>&nbsp;<%= topic.bookmarks.count %></span></small>
-              <small><%= "#{topic.topic_comments.count}" + "コメント" %></small>
+  <div class="mt-3">
+    <%= render 'admin/communities/member', community: @community %>
+  </div>
+  <div class="row mx-1">
+    <div class="col-12">
+      <ul class="list-group">
+        <% @topics.each do |topic| %>
+          <li class="list-group-item p-3">
+            <div class="row mx-2">
+              <%= link_to admin_end_user_path(topic.end_user) do %>
+                <%= image_tag topic.end_user.get_profile_image(40, 40), class: "img-thumbnail rounded-circle mr-2" %>
+              <% end %>
+              <div>
+                <small class="text-info"><%= topic.end_user.nickname %></small><br>
+                <small><%= topic.created_at.strftime("%Y/%m/%d\ %R") %></small>
+              </div>
             </div>
-          </td>
-        </tr>
-      <% end %>
-    </table>
+            <div class="m-3">
+              <% if topic.end_user.active_for_authentication? %>
+                <h5 class="mt-2"><%= link_to topic.title.truncate(35), admin_community_topic_path(topic.community, topic) %></h5>
+                <p><%= topic.body.truncate(100) %></p>
+              <% else %>
+                <h5 class="mt-2"><%= link_to topic.title.truncate(35), admin_community_topic_path(topic.community, topic) %></h5>
+                <p><%= topic.body.truncate(100) %></p>
+                <small>※このトピックは、投稿したユーザーアカウントが利用停止中です</small>
+              <% end %>
+            </div>
+            <div class="row justify-content-end">
+              <small class="mr-2"><%= link_to topic.community.name, admin_community_path(topic.community) %></small>
+              <small class="mx-2"><span><i class="far fa-heart"></i>&nbsp;<%= topic.bookmarks.count %></span></small>
+              <small class="mx-2"><%= "#{topic.topic_comments.count}" + "コメント" %></small>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
   <%= paginate @topics %>
 </div>

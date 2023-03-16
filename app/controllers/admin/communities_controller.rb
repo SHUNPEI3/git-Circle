@@ -1,6 +1,6 @@
 class Admin::CommunitiesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :find_community, only: [:show, :edit, :update, :destroy]
+  before_action :find_community, except: [:index]
 
   def index
     @communities = Community.all.order(id: "DESC").page(params[:page]).per(20)
@@ -29,10 +29,17 @@ class Admin::CommunitiesController < ApplicationController
     redirect_to admin_communities_path
   end
 
+  def member
+    @members = CommunityUser.where(community_id: @community.id)
+  end
+
+  def question
+  end
+
   private
 
   def community_params
-    params.require(:community).permit(:name, :introduction, :community_image, community_details_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :_destroy, :id])
+    params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :_destroy, :id])
   end
 
   def find_community

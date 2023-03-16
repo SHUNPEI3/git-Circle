@@ -14,16 +14,16 @@
         <div class="row no-gutters">
           <div class="col-xl-4 col-lg-5 align-self-center sample-box">
             <%= image_tag @community.get_community_image(560, 560), class:"img-fluid d-block mx-auto p-1" %>
-            <%= image_tag asset_path("stop_label.png"),size: "250x250", class:"d-block recruiting-stop" if @community.community_detail.recruiting_status == "closed" %>
+            <%= image_tag asset_path("stop_label.png"), size: "250x250", class:"d-block recruiting-stop" if @community.community_detail.recruiting_status == "closed" %>
           </div>
           <div class="col-xl-8 col-lg-7">
             <div class="tab-content">
               <div id="contents1" class="tab-pane active p-3">
-                <div class="overflow-auto" style="height:250px">
+                <div class="overflow-auto" style="height: 250px">
                   <p><%= safe_join(@community.introduction.split("\n"), tag(:br)) %></p>
                 </div>
                 <h6 class="text-secondary">設立日：<%= @community.created_at.strftime("%Y/%m/%d") %></h6>
-                <h6><i class="fas fa-th-large mr-3"></i><span class="text-secondary"><%= @community.category.name if @community.category_id %></span></h6>
+                <h6><i class="fas fa-th-large mr-3"></i><%= link_to @community.category.name, category_path(@community.category), class:"text-secondary" if @community.category_id %></h6>
                 <h6><i class="fas fa-tag mr-2"></i>
                   <% @community.tags.each do |community_tag| %>
                     <%= link_to "#{"#" + community_tag.name}", tag_path(community_tag), class:"text-secondary mr-1" %>
@@ -34,31 +34,7 @@
                 </div>
               </div>
               <div id="contents2" class="tab-pane p-3">
-                <div class="overflow-auto" style="height:250px">
-                  <% if !@detail.max_join_number && !@detail.sex_limit && !@detail.activity_area_limit && !@detail.age_min_limit && !@detail.age_max_limit && @detail.recruiting_status == "recruiting" %>
-                    <li class="my-3">どなたでも自由に参加可</li>
-                  <% end %>
-                  <% if @detail.max_join_number? %>
-                    <li class="my-3">参加人数は「<span class="font-weight-bold text-warning"><%= @detail.max_join_number %>人</span>」まで&nbsp;（現在<%= @community.end_users.count %>人参加中）</li>
-                  <% end %>
-                  <% if @detail.sex_limit? %>
-                    <li class="my-3"><span class="font-weight-bold text-warning"><%= @detail.sex_limit_i18n %></span></li>
-                  <% end %>
-                  <% if @detail.activity_area_limit? %>
-                    <li class="my-3">主な活動エリアが「<span class="font-weight-bold text-warning"><%= @detail.activity_area_limit_i18n %></span>」の人</li>
-                  <% end %>
-                  <% if @detail.age_min_limit && @detail.age_max_limit %>
-                    <li class="my-3">年齢が「<span class="font-weight-bold text-warning"><%= @detail.age_min_limit %>歳〜<%= @detail.age_max_limit %>歳</span>」の人</li>
-                  <% elsif !@detail.age_min_limit && @detail.age_max_limit %>
-                    <li class="my-3">年齢が「<span class="font-weight-bold text-warning"><%= @detail.age_max_limit %>歳以下</span>」の人</li>
-                  <% elsif @detail.age_min_limit && !@detail.age_max_limit %>
-                    <li class="my-3">年齢が「<span class="font-weight-bold text-warning"><%= @detail.age_min_limit %>歳以上</span>」の人</li>
-                  <% end %>
-                  <li class="my-3"><%= "募集ステータス：#{@detail.recruiting_status_i18n}" %></li>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <%= link_to '＋参加条件を変更する', edit_community_path(@community), class: "btn btn-info" if @community.owner_id == current_end_user.id %>
-                </div>
+                <%= render 'public/community_details/community_detail', detail: @community.community_detail %>
               </div>
             </div>
           </div>
@@ -67,7 +43,7 @@
     </div>
   </div>
 
-  <div class="mt-3">
+  <div class="mt-3" id="community-member-<%= @community.id %>">
     <%= render 'public/communities/community_member', community: @community %>
   </div>
 
@@ -91,23 +67,15 @@
     <% end %>
   <% end %>
 
-  <% unless (current_end_user.guest_user?) || (@community.owner_id == current_end_user.id) %>
-    <div class="text-center mx-auto mt-5">
-      <% if @community.already_joined?(current_end_user) %>
-        <%= link_to 'コミュニティから退出する', community_community_users_path(@community), method: :delete, data: {confirm: "本当に退出しますか？"}, class: "btn btn-danger py-2", style:"width: 75%" %>
-      <% else %>
-        <% unless @detail.recruiting_status == "closed" %>
-          <%= link_to 'コミュニティに参加する', community_community_users_path(@community), method: :post, class: "btn btn-info py-2", style:"width: 75%" %>
-        <% else %>
-          <button type="button" class="btn btn-secondary py-2" style="width: 75%" disabled>募集を中止しております</button>
-        <% end %>
-      <% end %>
+  <% unless @community.owner_id == current_end_user.id %>  <%# unless (current_end_user.guest_user?) || (@community.owner_id == current_end_user.id) %>
+    <div class="text-center mx-auto mt-5" id="join-or-exit-button-<%= @community.id %>">
+      <%= render 'public/community_users/join_or_exit_btn', community: @community %>
     </div>
   <% end %>
 
-  <% unless (current_end_user.guest_user?) %>
+  <%# unless current_end_user.guest_user? %>
     <div class="text-center mx-auto mt-5">
       <%= link_to '質問・問い合わせページへ', question_community_path(@community), class: "btn btn-outline-warning py-2", style:"width: 75%" %>
     </div>
-  <% end %>
+  <%# end %>
 </div>

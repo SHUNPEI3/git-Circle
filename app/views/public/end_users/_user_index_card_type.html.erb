@@ -1,5 +1,5 @@
 <% end_users.each do |user| %>
-  <% unless user.guest_user? || !user.active_for_authentication? %>
+  <% if user.active_for_authentication? %>
     <div class="col-lg-3 col-md-4 col-sm-6 col-10 mb-3">
       <div class="card shadow">
         <div class="card-header">

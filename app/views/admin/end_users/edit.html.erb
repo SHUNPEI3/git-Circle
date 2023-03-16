@@ -1,73 +1,77 @@
 <div class="container py-5">
   <div class="row m-4">
-    <h2><%= @end_user.last_name %><%= @end_user.first_name %>さんの情報編集ページ</h2>
+    <h3><%= @end_user.last_name %><%= @end_user.first_name %>さんの情報編集ページ</h3>
   </div>
   <%= form_with model:@end_user, url: admin_end_user_path(@end_user), methd: :patch do |f| %>
-    <div class="row">
-      <div class="col-md-3">
-        <%= image_tag @end_user.get_profile_image(250, 250) %>
-        <%= f.label :profile_image do %>
-          <span class="text-primary ml-5"><i class="fas fa-camera"></i>&nbsp;画像を選択する</span>
-          <%= f.file_field :profile_image, accept:'image/*', style:"display:none;" %>
-        <% end %>
-      </div>
-      <div class="col-md-9">
-        <table class="table table-borderless">
-          <tr>
-            <th class="align-middle pl-3">ユーザーID</th>
-            <td><%= @end_user.id %></td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3">名前</th>
-            <td>
-              <%= f.label :last_name, "姓：" %><%= f.text_field :last_name, autofocus: true, placeholder:"田中", class:"d-inline form-control w-25" %>&nbsp;
-              <%= f.label :first_name, "名：" %><%= f.text_field :first_name, placeholder:"太郎", class:"d-inline form-control w-25" %>
-            </td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3">フリガナ</th>
-            <td>
-              <%= f.label :last_name_kana, "姓：" %><%= f.text_field :last_name_kana, placeholder:"タナカ", class:"d-inline form-control w-25" %>&nbsp;
-              <%= f.label :first_name_kana, "名：" %><%= f.text_field :first_name_kana, placeholder:"タロウ", class:"d-inline form-control w-25" %>
-            </td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3"><%= f.label :nickname, "ニックネーム", class:"col-form-label" %></th>
-            <td><%= f.text_field :nickname, placeholder:"たなやん", class:"form-control w-50" %></td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3"><%= f.label :age, "年齢", class:"col-form-label" %></th>
-            <td><%= f.select :age, (18..100).to_a, {}, class:"d-inline form-control w-25" %>&nbsp;歳</td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3"><%= f.label :sex, "性別", class:"col-form-label" %></th>
-            <td><%= f.select :sex, EndUser.sexes_i18n.invert, {}, class:"form-control w-25" %></td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3"><%= f.label :activity_area, "主な活動エリア", class:"col-form-label" %></th>
-            <td><%= f.select :activity_area, EndUser.activity_areas_i18n.invert, {}, class:"form-control w-25"%></td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3"><%= f.label :email, "メールアドレス", class:"col-form-label" %></th>
-            <td><%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", class:"form-control w-50" %></td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3"><%= f.label :introduction, "自己紹介", class:"col-form-label" %></th>
-            <td><%= f.text_area :introduction, rows:"6", class:"form-control" %></td>
-          </tr>
-          <tr>
-            <th class="align-middle pl-3">会員ステータス</th>
-            <td>
-              <%= f.radio_button :is_deleted, false %><%= f.label :is_deleted, "有効", class: "text-success mr-5" %>
-					    <%= f.radio_button :is_deleted, true %><%= f.label :is_deleted, "退会済み", class: "text-danger" %>
-					   </td>
-				  </tr>
-        </table>
-      </div>
-    </div>
-
     <div class="row justify-content-center">
-      <%= f.submit "変更を保存する", class:"btn btn-primary mx-5" %>
-    </div>
+      <div class="col-lg-8">
+        <div class="text-center">
+          <div><%= image_tag @end_user.profile_image, size: "400x400", class:"img-thumbnail", id:'preview' %></div>
+          <label>
+            <span class="text-primary">
+              <i class="fas fa-camera"></i>&nbsp;画像を選択する
+              <%= f.file_field :profile_image, accept:'image/*', style:"display:none", id:"input-file" %>
+            </span>
+          </label>
+        </div>
+        <div class="form-row was-validated">
+          <div class="form-group col-md-6">
+            <small><%= f.label :last_name, "姓" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :last_name, autofocus: true, placeholder:"田中", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
+          </div>
+          <div class="form-group col-md-6">
+            <small><%= f.label :first_name, "名" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :first_name, placeholder:"太郎", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
+          </div>
+        </div>
+        <div class="form-row was-validated">
+          <div class="form-group col-md-6">
+            <small><%= f.label :last_name_kana, "セイ" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :last_name_kana, placeholder:"タナカ", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
+          </div>
+          <div class="form-group col-md-6">
+            <small><%= f.label :first_name_kana, "メイ" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.text_field :first_name_kana, placeholder:"タロウ", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
+          </div>
+        </div>
+        <div class="form-group was-validated">
+          <small><%= f.label :nickname, "ニックネーム", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+          <%= f.text_field :nickname, placeholder:"ニックネームを入力", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
+        </div>
+        <div class="form-row was-validated">
+          <div class="form-group col-md-6">
+            <small><%= f.label :age, "年齢", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.select :age, (18..100).to_a, {}, class:"d-inline form-control", required:true, style:"width:100%" %>
+            <div class="invalid-feedback">入力されていません</div>
+          </div>
+          <div class="form-group col-md-6">
+            <small><%= f.label :sex, "性別", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+            <%= f.select :sex, EndUser.sexes_i18n.invert, {}, class:"form-control", required:true, style:"width:100%" %>
+            <div class="invalid-feedback">入力されていません</div>
+          </div>
+        </div>
+        <div class="form-group was-validated">
+          <small><%= f.label :activity_area, "主な活動エリア", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+          <%= f.select :activity_area, EndUser.activity_areas_i18n.invert, {}, class:"form-control", required:true, style:"width:70%" %>
+            <div class="invalid-feedback">入力されていません</div>
+        </div>
+        <div class="form-group was-validated">
+          <small><%= f.label :email, "メールアドレス", class:"col-form-label" %><span class="badge badge-danger ml-2">必須</span></small>
+          <%= f.email_field :email, autocomplete: "email", placeholder:"sample@sample.com", required:true, class:"form-control" %>
+            <div class="invalid-feedback">入力されていません</div>
+        </div>
+        <div class="form-group">
+          <small><%= f.label :introduction, "自己紹介", class:"col-form-label" %></small>
+          <%= f.text_area :introduction, rows:"8", class:"form-control" %>
+        </div>
+        <div class="row justify-content-center">
+          <%= f.submit "変更を保存する", class:"btn btn-info mx-5 my-2 py-2", style:"width:45%" %>
+        </div>
+      </div>
    <% end %>
 </div>

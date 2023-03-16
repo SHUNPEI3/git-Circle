@@ -1,0 +1,40 @@
+<table class="table">
+  <% topic_comments.each do |comment| %>
+    <tr>
+      <td>
+        <% if comment.is_active %>
+          <div class="row align-items-center mx-2">
+            <div class="mr-2">
+              <%= link_to admin_end_user_path(comment.end_user) do %>
+                <%= image_tag comment.end_user.get_profile_image(50, 50), class:"d-block rounded-circle mx-auto" %>
+              <% end %>
+            </div>
+            <div>
+              <span class="text-info"><%= comment.end_user.nickname %></span><br>
+              <small><%= comment.created_at.strftime("%Y/%m/%d\ %R") %></small>
+            </div>
+          </div>
+          <div class="row content-body mx-4 mt-3">
+            <%= comment.comment %>
+          </div>
+        <% else %>
+          <div class="row mx-4 mt-3">
+            <span>このコメントは管理者によって不適切と判定されました。</span>
+          </div>
+        <% end %>
+        <div class="row justify-content-end align-items-center mx-2">
+          <small class="mx-2"><i class="far fa-heart"></i>&nbsp;<%= comment.goods.count %></small>
+        </div>
+      </td>
+      <td class="col-1 align-middle">
+        <div class="dropdown">
+          <button type="button" id="dropdown-<%=comment.id %>" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">メニュー</button>
+          <div class="dropdown-menu" aria-labelledby="dropdown-<%=comment.id %>">
+            <%= link_to '非表示', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :patch, data: {confirm: "非表示にしますか？"}, class:"dropdown-item" if comment.is_active %>
+            <%= link_to '削除', admin_community_topic_topic_comment_path(comment.topic.community,comment.topic,comment), method: :delete, data: {confirm: "削除しますか？"}, class:"dropdown-item" %>
+          </div>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>
