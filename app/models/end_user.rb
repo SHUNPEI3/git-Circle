@@ -18,8 +18,8 @@ class EndUser < ApplicationRecord
   has_many :followings, through: :active_relationships, source: :follower
   has_many :passive_relationships, class_name: "Relationship", foreign_key: :follower_id, dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :following
-  has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
-  has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
+  has_many :active_notifications, class_name: "Notification", foreign_key: "visitor_id", dependent: :destroy
+  has_many :passive_notifications, class_name: "Notification", foreign_key: "visited_id", dependent: :destroy
 
   validates :last_name, presence: true
   validates :first_name, presence: true
@@ -44,16 +44,16 @@ class EndUser < ApplicationRecord
     fukuoka: 40, saga: 41, nagasaki: 42, kumamoto: 43, oita: 44, miyazaki: 45, kagoshima: 46, okinawa: 47
   }
 
-  def get_profile_image(width,height)
+  def get_profile_image(width, height)
     unless profile_image.attached?
-      file_path = Rails.root.join('app/assets/images/no_image.jpg')
-      profile_image.attach(io: File.open(file_path), filename: 'no-image.jpg', content_type: 'image/jpeg')
+      file_path = Rails.root.join("app/assets/images/no_image.jpg")
+      profile_image.attach(io: File.open(file_path), filename: "no-image.jpg", content_type: "image/jpeg")
     end
-    profile_image.variant(resize_to_fill:[width, height]).processed
+    profile_image.variant(resize_to_fill: [width, height]).processed
   end
 
   def self.guest
-    find_or_create_by!(last_name: 'guest' ,email: 'guest@example.com') do |user|
+    find_or_create_by!(last_name: "guest", email: "guest@example.com") do |user|
       user.password = SecureRandom.urlsafe_base64
       user.last_name = "guest"
       user.first_name = "user"
@@ -61,14 +61,14 @@ class EndUser < ApplicationRecord
       user.first_name_kana = "ユーザー"
       user.nickname = "ゲストユーザー"
       user.sex = 0
-      user.age = 0
+      user.age = 18
       user.activity_area = 0
     end
   end
 
   # ゲストユーザーかの判定メソッド
   def guest_user?
-    self.email == 'guest@example.com'
+    self.email == "guest@example.com"
   end
 
   # 退会済みユーザーの判定メソッド
@@ -80,7 +80,7 @@ class EndUser < ApplicationRecord
   def followed_by?(user)
     passive_relationships.find_by(following_id: user.id).present?
   end
-  
+
   # フォロー時の通知メソッド（通知を作成）
   def user_follow_notification(current_end_user)
     temp = Notification.where(visitor_id: current_end_user.id, visited_id: id, action: "follow")
@@ -89,7 +89,7 @@ class EndUser < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
   # タグの保存メソッド
   def save_tag(sent_tags)
     current_tags = self.personal_tags.pluck(:name) unless self.personal_tags.nil?
@@ -107,6 +107,6 @@ class EndUser < ApplicationRecord
   def self.search_for(content)
     EndUser.where("nickname Like?", "%#{content}%")
   end
-  
+
   paginates_per 8
 end

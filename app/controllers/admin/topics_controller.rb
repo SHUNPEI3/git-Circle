@@ -33,16 +33,15 @@ class Admin::TopicsController < ApplicationController
   end
 
   private
+    def topic_params
+      params.require(:topic).permit(:title, :body, :topic_image_1, :topic_image_2, :topic_image_3)
+    end
 
-  def topic_params
-    params.require(:topic).permit(:title, :body, :topic_image_1, :topic_image_2, :topic_image_3)
-  end
+    def find_community
+      @community = Community.find(params[:community_id])
+    end
 
-  def find_community
-    @community = Community.find(params[:community_id])
-  end
-
-  def find_topic
-    @topic = Topic.find(params[:id])
-  end
+    def find_topic
+      @topic = Topic.find(params[:id])
+    end
 end
