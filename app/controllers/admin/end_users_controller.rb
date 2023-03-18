@@ -12,8 +12,9 @@ class Admin::EndUsersController < ApplicationController
 
   def update
     if @end_user.update(end_user_params)
-      redirect_to admin_end_user_path(@end_user)
+      redirect_to admin_end_user_path(@end_user), notice: "更新に成功しました"
     else
+      flash.now[:alert] = "更新に失敗しました"
       render edit
     end
   end

@@ -8,12 +8,12 @@ class Admin::TopicCommentsController < ApplicationController
   def update
     topic_comment = TopicComment.find(params[:id])
     topic_comment.update(is_active: false)
-    redirect_to admin_community_topic_path(params[:community_id], params[:topic_id])
+    redirect_to request.referer, notice: "コメントを非表示にしました"
   end
 
   def destroy
     topic_comment = TopicComment.find(params[:id])
     topic_comment.destroy
-    redirect_to admin_community_topic_path(params[:community_id], params[:topic_id])
+    redirect_to request.referer, notice: "コメントを削除しました"
   end
 end

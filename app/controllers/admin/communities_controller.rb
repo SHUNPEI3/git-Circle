@@ -16,17 +16,23 @@ class Admin::CommunitiesController < ApplicationController
 
   def update
     tag_list = params[:community][:community_tag_name].split(nil)
-    if @community.update(community_params)
-      @community.save_tag(tag_list)
-      redirect_to admin_community_path
+    if (params[:community][:community_detail_attributes][:age_max_limit] == "") || (params[:community][:community_detail_attributes][:age_min_limit] <= params[:community][:community_detail_attributes][:age_max_limit])
+      if @community.update(community_params)
+        @community.save_tag(tag_list)
+        redirect_to admin_community_path, notice: "更新完了しました！"
+      else
+        flash.now[:alert] = "更新に失敗しました"
+        render "edit"
+      end
     else
-      render edit
+      flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
+      render "edit"
     end
   end
 
   def destroy
     @community.destroy
-    redirect_to admin_communities_path
+    redirect_to admin_communities_path, notice: "削除が完了しました！"
   end
 
   def member

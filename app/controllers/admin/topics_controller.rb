@@ -21,15 +21,16 @@ class Admin::TopicsController < ApplicationController
 
   def update
     if @topic.update(topic_params)
-      redirect_to admin_community_topic_path(@topic.community_id, @topic)
+      redirect_to admin_community_topic_path(@topic.community_id, @topic), notice: "更新が完了しました！"
     else
+      flash.now[:alert] = "更新に失敗しました"
       render edit
     end
   end
 
   def destroy
     @topic.destroy
-    redirect_to admin_topics_path
+    redirect_to admin_topics_path, notice: "削除が完了しました！"
   end
 
   private
