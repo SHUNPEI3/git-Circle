@@ -6,7 +6,7 @@ class Public::EndUsersController < ApplicationController
 
   def index
     @tag_list = PersonalTag.all.order(id: "DESC").page params[:page]
-    @end_users = EndUser.where(is_deleted: false).where.not(email: "guest@example.com").order(id: "DESC").page(params[:page])
+    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page])  # @end_users = EndUser.where(is_deleted: false).where.not(email: "guest@example.com").order(id: "DESC").page(params[:page])
   end
 
   def show

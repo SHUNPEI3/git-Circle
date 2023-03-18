@@ -1,7 +1,7 @@
 <div class="container py-5">
   <% if @model == "end_user" || @model == "personal_tag" %>
     <div class="row justify-content-end">
-      <div class="col-lg-6 col-md-8 col-sm-12">
+      <div class="col-lg-6 col-md-8 col-sm-12 mb-2">
         <%= render 'public/searches/user_search_form' %>
       </div>
     </div>
@@ -9,6 +9,9 @@
     <div class="row justify-content-end">
       <div class="col-lg-6 col-md-8 col-sm-12">
         <%= render 'public/searches/community_search_form' %>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-warning text-white" data-toggle="modal" data-target="#myModal"><i class="fas fa-th-large"></i> カテゴリー</button>
       </div>
     </div>
   <% end %>
@@ -33,3 +36,5 @@
     </div>
   <% end %>
 </div>
+
+<%= render 'public/categories/category_list', category_list: @category_list %>

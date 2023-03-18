@@ -8,8 +8,10 @@ class Public::SearchesController < ApplicationController
       @records = PersonalTag.search_for(@content)
     elsif @model == "community"
       @records = Community.search_for(@content)
+      @category_list = Category.all
     elsif @model == "community_tag"
       @records = Tag.search_for(@content)
+      @category_list = Category.all
     end
   end
 end
