@@ -21,7 +21,7 @@ class Public::TopicsController < ApplicationController
       redirect_to community_topics_path, notice: "投稿完了しました！"
     else
       flash.now[:alert] = "投稿に失敗しました"
-      render 'new'
+      render "new"
     end
   end
 
@@ -38,36 +38,35 @@ class Public::TopicsController < ApplicationController
       redirect_to community_topic_path(@topic.community_id, @topic), notice: "更新が完了しました！"
     else
       flash.now[:alert] = "更新に失敗しました"
-      render 'edit'
+      render "edit"
     end
   end
 
   private
-
-  def topic_params
-    params.require(:topic).permit(:title, :body, :topic_image_1, :topic_image_2, :topic_image_3)
-  end
-
-  def find_community
-    @community = Community.find(params[:community_id]) #form_withには親のインスタンス変数を渡す必要がある
-  end
-
-  def find_topic
-    @topic = Topic.find(params[:id])
-  end
-
-  # コミュニティメンバーの確認（メンバーでなければトピックを参照できない）
-  def ensure_community_mennber
-    community = Community.find(params[:community_id])
-    unless community.community_users.exists?(end_user_id: current_end_user.id)
-      redirect_to community_path(community), alert: '〔注意〕コミュニティの参加者のみ閲覧が可能です。'
+    def topic_params
+      params.require(:topic).permit(:title, :body, :topic_image_1, :topic_image_2, :topic_image_3)
     end
-  end
 
-  def is_matching_topic_author
-    @topic = Topic.find(params[:id])
-    unless @topic.end_user == current_end_user
-     redirect_to end_user_path(current_end_user), alert: '投稿者以外はトピック編集画面へ遷移できません。'
+    def find_community
+      @community = Community.find(params[:community_id])
     end
-  end
+
+    def find_topic
+      @topic = Topic.find(params[:id])
+    end
+
+    # コミュニティメンバーの確認（メンバーでなければトピックを参照できない）
+    def ensure_community_mennber
+      community = Community.find(params[:community_id])
+      unless community.community_users.exists?(end_user_id: current_end_user.id)
+        redirect_to community_path(community), alert: "〔注意〕コミュニティの参加者のみ閲覧が可能です。"
+      end
+    end
+
+    def is_matching_topic_author
+      @topic = Topic.find(params[:id])
+      unless @topic.end_user == current_end_user
+        redirect_to end_user_path(current_end_user), alert: "投稿者以外はトピック編集画面へ遷移できません。"
+      end
+    end
 end

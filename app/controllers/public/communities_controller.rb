@@ -34,7 +34,7 @@ class Public::CommunitiesController < ApplicationController
       end
     else
       flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
-      render 'new'
+      render "new"
     end
   end
 
@@ -44,11 +44,11 @@ class Public::CommunitiesController < ApplicationController
   end
 
   def edit
-    @tag_list = @community.tags.pluck(:name).join(' ')
+    @tag_list = @community.tags.pluck(:name).join(" ")
   end
 
   def update
-    category_name =  Language.get_category(community_params[:name])
+    category_name = Language.get_category(community_params[:name])
     tag_list = params[:community][:community_tag_name].split(nil)
     if (params[:community][:community_detail_attributes][:age_max_limit] == "") || (params[:community][:community_detail_attributes][:age_min_limit] <= params[:community][:community_detail_attributes][:age_max_limit])
       if @community.update(community_params)
@@ -57,18 +57,18 @@ class Public::CommunitiesController < ApplicationController
         redirect_to community_path, notice: "更新完了しました！"
       else
         flash.now[:alert] = "更新に失敗しました"
-        render 'edit'
+        render "edit"
       end
     else
       flash.now[:alert] = "最少年齢設定が最大年齢設定を上回っています"
-      render 'edit'
+      render "edit"
     end
   end
 
   def member
     @members = CommunityUser.where(community_id: @community.id)
   end
-  
+
   def question
     @message = CommunityMessage.new
   end
@@ -88,19 +88,18 @@ class Public::CommunitiesController < ApplicationController
   end
 
   private
-
-  def community_params
-    params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :recruiting_status, :_destroy, :id])
-  end
-
-  def find_community
-    @community = Community.find(params[:id])
-  end
-
-  def is_matching_community_owner
-    @community = Community.find(params[:id])
-    unless @community.owner == current_end_user
-     redirect_to end_user_path(current_end_user), alert: '作成者以外はコミュニティ編集画面へ遷移できません。'
+    def community_params
+      params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :recruiting_status, :_destroy, :id])
     end
-  end
+
+    def find_community
+      @community = Community.find(params[:id])
+    end
+
+    def is_matching_community_owner
+      @community = Community.find(params[:id])
+      unless @community.owner == current_end_user
+        redirect_to end_user_path(current_end_user), alert: "作成者以外はコミュニティ編集画面へ遷移できません。"
+      end
+    end
 end

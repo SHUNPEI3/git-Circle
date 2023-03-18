@@ -6,7 +6,7 @@ class Public::EndUsersController < ApplicationController
 
   def index
     @tag_list = PersonalTag.all.order(id: "DESC").page params[:page]
-    @end_users = EndUser.where(is_deleted: false).where.not(email: 'guest@example.com').order(id: "DESC").page(params[:page])
+    @end_users = EndUser.where(is_deleted: false).order(id: "DESC").page(params[:page])  # @end_users = EndUser.where(is_deleted: false).where.not(email: "guest@example.com").order(id: "DESC").page(params[:page])
   end
 
   def show
@@ -17,7 +17,7 @@ class Public::EndUsersController < ApplicationController
   end
 
   def edit
-    @tag_list = @end_user.personal_tags.pluck(:name).join(' ')
+    @tag_list = @end_user.personal_tags.pluck(:name).join(" ")
   end
 
   def update
@@ -27,7 +27,7 @@ class Public::EndUsersController < ApplicationController
       redirect_to end_user_path(@end_user), notice: "更新に成功しました"
     else
       flash.now[:alert] = "更新に失敗しました"
-      render 'edit'
+      render "edit"
     end
   end
 
@@ -49,24 +49,23 @@ class Public::EndUsersController < ApplicationController
   end
 
   private
-
-  def end_user_params
-    params.require(:end_user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :nickname, :age, :sex, :activity_area, :introduction, :profile_image, :email)
-  end
-
-  def find_end_user
-    @end_user = EndUser.find(params[:id])
-  end
-
-  # def ensure_guest_user
-  #   if @end_user.guest_user?
-  #     redirect_to end_user_path(current_end_user), alert: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
-  #   end
-  # end
-
-  def is_matching_login_user
-    unless current_end_user.id == params[:id].to_i
-     redirect_to end_user_path(current_end_user), alert: '他のユーザーはプロフィール編集画面へ遷移できません。'
+    def end_user_params
+      params.require(:end_user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :nickname, :age, :sex, :activity_area, :introduction, :profile_image, :email)
     end
-  end
+
+    def find_end_user
+      @end_user = EndUser.find(params[:id])
+    end
+
+    # def ensure_guest_user
+    #   if @end_user.guest_user?
+    #     redirect_to end_user_path(current_end_user), alert: "ゲストユーザーはプロフィール編集画面へ遷移できません。""
+    #   end
+    # end
+
+    def is_matching_login_user
+      unless current_end_user.id == params[:id].to_i
+        redirect_to end_user_path(current_end_user), alert: "他のユーザーはプロフィール編集画面へ遷移できません。"
+      end
+    end
 end
