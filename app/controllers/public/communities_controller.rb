@@ -4,7 +4,7 @@ class Public::CommunitiesController < ApplicationController
   before_action :is_matching_community_owner, only: [:edit, :update]
 
   def index
-    @new_communities = Community.all.order(id: "DESC").page(params[:page])
+    @new_communities = Community.all.order(id: "DESC").page(params[:community_page])
     @category_list = Category.all
     @tag_list = Tag.all.order(id: "DESC").page(params[:page])
   end

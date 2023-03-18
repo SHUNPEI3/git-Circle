@@ -15,5 +15,5 @@
   <div class="row justify-content-sm-start justify-content-around mt-2">
     <%= render 'public/end_users/user_index_card_type', end_users: @end_users %>
   </div>
-  <%= paginate @end_users %>
+  <%= paginate @end_users, :param_name => 'end_user_page' %>
 </div>

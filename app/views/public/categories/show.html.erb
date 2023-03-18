@@ -18,7 +18,7 @@
   <div class="row justify-content-sm-start justify-content-around mt-2">
     <%= render 'public/communities/community_index_card_type', communities: @communities %>
   </div>
-  <%= paginate @communities %>
+  <%= paginate @communities, :param_name => 'community_page' %>
 </div>
 
 <%= render 'public/categories/category_list', category_list: @category_list %>
