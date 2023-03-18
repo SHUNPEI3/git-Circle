@@ -7,7 +7,7 @@ class TopicComment < ApplicationRecord
 
   validates :comment, presence: true, length: { maximum: 1000 }
 
-  #コメントにいいねされているかの判定メソッド
+  # コメントにいいねされているかの判定メソッド
   def good_by?(user)
     goods.exists?(end_user_id: user.id)
   end

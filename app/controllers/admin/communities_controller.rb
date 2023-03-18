@@ -11,7 +11,7 @@ class Admin::CommunitiesController < ApplicationController
   end
 
   def edit
-    @tag_list = @community.tags.pluck(:name).join(' ')
+    @tag_list = @community.tags.pluck(:name).join(" ")
   end
 
   def update
@@ -37,12 +37,11 @@ class Admin::CommunitiesController < ApplicationController
   end
 
   private
+    def community_params
+      params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :recruiting_status, :_destroy, :id])
+    end
 
-  def community_params
-    params.require(:community).permit(:name, :introduction, :community_image, community_detail_attributes: [:max_join_number, :sex_limit, :activity_area_limit, :age_min_limit, :age_max_limit, :recruiting_status, :_destroy, :id])
-  end
-
-  def find_community
-    @community = Community.find(params[:id])
-  end
+    def find_community
+      @community = Community.find(params[:id])
+    end
 end

@@ -1,6 +1,6 @@
 class Admin::EndUsersController < ApplicationController
   before_action :authenticate_admin!
-  before_action :find_end_user, only:[:show, :edit, :update]
+  before_action :find_end_user, only: [:show, :edit, :update]
 
   def show
     @communities = @end_user.communities
@@ -19,13 +19,11 @@ class Admin::EndUsersController < ApplicationController
   end
 
   private
+    def find_end_user
+      @end_user = EndUser.find(params[:id])
+    end
 
-  def find_end_user
-    @end_user = EndUser.find(params[:id])
-  end
-
-  def end_user_params
-    params.require(:end_user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :nickname, :age, :sex, :activity_area, :introduction, :profile_image, :email, :is_deleted)
-  end
-
+    def end_user_params
+      params.require(:end_user).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :nickname, :age, :sex, :activity_area, :introduction, :profile_image, :email, :is_deleted)
+    end
 end

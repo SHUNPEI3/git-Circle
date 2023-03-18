@@ -11,7 +11,7 @@ class Topic < ApplicationRecord
   validates :title, presence: true, length: { maximum: 100 }
   validates :body, presence: true, length: { maximum: 600 }
 
-  #ブックマークされているかの判定メソッド
+  # ブックマークされているかの判定メソッド
   def bookmarked_by?(user)
     bookmarks.exists?(end_user_id: user.id)
   end
@@ -25,12 +25,12 @@ class Topic < ApplicationRecord
     temp_ids = TopicComment.where(topic_id: id).where.not(end_user_id: current_end_user.id).distinct.pluck(:end_user_id)
     # コメントされていない場合は、トピック投稿者に通知を送る
     if temp_ids.blank?
-      notification = current_end_user.active_notifications.new(topic_id: id, topic_comment_id: comment_id, visited_id: end_user_id, action: 'comment')
+      notification = current_end_user.active_notifications.new(topic_id: id, topic_comment_id: comment_id, visited_id: end_user_id, action: "comment")
       notification.save if notification.valid?
-    else
     # コメントされている場合は、コメント欄のメンバーに通知を送る
+    else
       temp_ids.each do |temp_id|
-        notification = current_end_user.active_notifications.new(topic_id: id, topic_comment_id: comment_id, visited_id: temp_id, action: 'comment')
+        notification = current_end_user.active_notifications.new(topic_id: id, topic_comment_id: comment_id, visited_id: temp_id, action: "comment")
         if notification.visitor_id == notification.visited_id
           notification.checked = true
         end

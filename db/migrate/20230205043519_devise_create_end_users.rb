@@ -3,7 +3,7 @@
 class DeviseCreateEndUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :end_users do |t|
-      ##追加カラム
+      # 追加カラム
       t.string  :last_name,       null: false
       t.string  :first_name,      null: false
       t.string  :last_name_kana,  null: false

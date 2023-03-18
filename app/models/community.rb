@@ -2,7 +2,7 @@ class Community < ApplicationRecord
   has_one_attached :community_image
   has_many :community_users, dependent: :destroy
   has_many :end_users, through: :community_users
-  belongs_to :owner, class_name: 'EndUser'
+  belongs_to :owner, class_name: "EndUser"
   has_many :community_messages, dependent: :destroy
   has_one :community_detail, dependent: :destroy
   accepts_nested_attributes_for :community_detail
@@ -16,14 +16,14 @@ class Community < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   validates :introduction, presence: true, length: { maximum: 600 }
 
-  def get_community_image(width,height)
+  def get_community_image(width, height)
     unless community_image.attached?
-      file_path = Rails.root.join('app/assets/images/no_image.jpg')
-      community_image.attach(io: File.open(file_path), filename: 'no-image.jpg', content_type: 'image/jpeg')
+      file_path = Rails.root.join("app/assets/images/no_image.jpg")
+      community_image.attach(io: File.open(file_path), filename: "no-image.jpg", content_type: "image/jpeg")
     end
-    community_image.variant(resize_to_fill:[width, height]).processed
+    community_image.variant(resize_to_fill: [width, height]).processed
   end
-  
+
   # トピックが投稿された順でのコミュニティ情報を取得
   def self.lasted_post_community_get
     Community.find(Topic.order(created_at: :desc).pluck(:community_id))
@@ -32,8 +32,8 @@ class Community < ApplicationRecord
   # カテゴリー情報の保存メソッド
   def save_category(category_name)
     unless category_name == []
-     category = Category.find_or_create_by(name: category_name)
-     self.update(category_id: category.id)
+      category = Category.find_or_create_by(name: category_name)
+      self.update(category_id: category.id)
     end
   end
 
@@ -73,7 +73,7 @@ class Community < ApplicationRecord
   def community_join_notification(current_end_user)
     temp_ids = CommunityUser.where(community_id: id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
     temp_ids.each do |temp_id|
-      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, action: 'join')
+      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, action: "join")
       notification.save if notification.valid?
     end
   end
@@ -82,10 +82,10 @@ class Community < ApplicationRecord
   def topic_post_notification(current_end_user, topic_id)
     temp_ids = CommunityUser.where(community_id: id).where.not(end_user_id: current_end_user.id).pluck(:end_user_id)
     temp_ids.each do |temp_id|
-      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, topic_id: topic_id, action: 'post')
+      notification = current_end_user.active_notifications.new(visited_id: temp_id, community_id: id, topic_id: topic_id, action: "post")
       notification.save if notification.valid?
     end
   end
-  
+
   paginates_per 8
 end

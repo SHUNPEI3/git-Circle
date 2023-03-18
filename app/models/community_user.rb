@@ -26,7 +26,7 @@ class CommunityUser < ApplicationRecord
   def ensure_limit_of_area
     # コミュニティの活動エリア制限が設定されていない or コミュニティの活動エリア制限が設定されているが、自分の設定エリアと同じであれば次へ
     if !@community_detail.activity_area_limit || (@community_detail.activity_area_limit_before_type_cast == (@user.activity_area_before_type_cast - 1))
-     ensure_limit_of_age
+      ensure_limit_of_age
     end
   end
 
