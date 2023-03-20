@@ -22,14 +22,17 @@
   - 気軽に話せる友達or雑談相手を探している人
 
 ### 主な利用シーン
-自分が始めた趣味やスポーツで一緒に楽しめる人を探す時  
-&emsp;例）気になるオンラインゲームを一緒に遊びたい  
-複数人集まらないと楽しむことができない際のメンバーを募集する時  
-&emsp;例）サッカーをしたい  
-特定の人（同年代や同性）だけでの会話や集まりたい時  
-etc...  
+自分が始めた趣味やスポーツで一緒に楽しめる人を探す時
+&emsp;例）気になるオンラインゲームを一緒に遊びたい
+複数人集まらないと楽しむことができない際のメンバーを募集する時
+&emsp;例）サッカーをしたい
+特定の人（同年代や同性）だけでの会話や集まりたい時
+etc...
 
 ## 設計書
+- ER図：https://drive.google.com/file/d/1FMS0XFuOi72i-qJxa543N2M5wc_HRNku/view?usp=sharing
+- テーブル定義書：https://docs.google.com/spreadsheets/d/18wSoAB30w3r5b6SAsyrJTMlIrlTpS_NwRNN5M5soqg4/edit?usp=sharing
+- アプリケーション詳細設計書：https://docs.google.com/spreadsheets/d/1HiUccs4s8uJm5EXmvuHItYcZOZUMv61BsWOCSay19iA/edit?usp=sharing
 
 ## 開発環境
 - OS：Linux(CentOS)
